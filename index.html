@@ -1,205 +1,94 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Agrinho Paraná 2026</title>
-
-  <link rel="stylesheet" href="reset.css">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGROSTREAM - Telemetria Avançada</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-  <div class="container nav">
+    <header>
+        <h1 id="txt-logo">AGROSTREAM // TELEMETRIA</h1>
+        <div class="controles">
+            <select id="seletor-idioma" onchange="mudarIdioma(this.value)">
+                <option value="pt">🇧🇷 Português</option>
+                <option value="en">🇺🇸 English</option>
+                <option value="es">🇪🇸 Español</option>
+                <option value="fr">🇫🇷 Français</option>
+            </select>
+            <button id="btn-tema" onclick="alternarTema()">🌙 Mode</button>
+        </div>
+    </header>
 
-    <div class="logo">
-      AGRINHO 2026
+    <div class="abas-maquinas">
+        <button class="aba-btn ativo" id="aba-trator" onclick="mudarMaquina('trator')">🚜 TRATOR</button>
+        <button class="aba-btn" id="aba-colheitadeira" onclick="mudarMaquina('colheitadeira')">🌾 COLHEITADEIRA</button>
+        <button class="aba-btn" id="aba-pulverizador" onclick="mudarMaquina('pulverizador')">💨 PULVERIZADOR</button>
     </div>
 
-    <ul>
-      <li><a href="#">Início</a></li>
-      <li><a href="#">Dashboard</a></li>
-      <li><a href="#">Alertas</a></li>
-      <li><a href="#">Sustentabilidade</a></li>
-    </ul>
-
-  </div>
-</header>
-
-<section class="hero container">
-
-  <div class="hero-text">
-
-    <span class="tag">
-      Concurso Agrinho Paraná 2026
-    </span>
-
-    <h1>
-      Telemetria de Máquinas Agrícolas
-    </h1>
-
-    <p>
-      Sistema inteligente de monitoramento de tratores e colheitadeiras para aumentar a produtividade no campo.
-    </p>
-
-    <div class="buttons">
-      <button>Explorar Dashboard</button>
-      <button class="btn2">Saiba Mais</button>
-    </div>
-
-  </div>
-
-  <div class="hero-card">
-
-    <h2>Monitoramento em Tempo Real</h2>
-
-    <div class="stats">
-
-      <div class="card">
-        <p>Tratores</p>
-        <h3>18</h3>
-      </div>
-
-      <div class="card">
-        <p>Colheitadeiras</p>
-        <h3>7</h3>
-      </div>
-
-      <div class="card full">
-        <p>Economia de Diesel</p>
-        <h3 class="green">23%</h3>
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<section class="dashboard container">
-
-  <h2>Dashboard Inteligente</h2>
-
-  <div class="dashboard-grid">
-
-    <div class="graph-box">
-
-      <h3>Consumo de Diesel</h3>
-
-      <div class="bars">
-
-        <div class="bar-item">
-          <div class="bar" style="height:140px"></div>
-          <span>Seg</span>
+    <main class="painel-container">
+        
+        <div class="card">
+            <h3 id="lbl-velocidade">Velocidade</h3>
+            <div class="valor"><span id="val-velocidade">0</span> km/h</div>
+            <div class="sub-valor" id="lbl-status-desempenho">Desempenho em tempo real</div>
         </div>
 
-        <div class="bar-item">
-          <div class="bar" style="height:180px"></div>
-          <span>Ter</span>
+        <div class="card">
+            <h3 id="lbl-combustivel">Combustível</h3>
+            <div class="valor"><span id="val-tanque">0</span>%</div>
+            <div class="sub-valor"><span id="lbl-consumo">Consumo</span>: <span id="val-consumo">0.0</span> L/h</div>
+            <div class="barra-progresso"><div class="progresso-preenchido" id="barra-combustivel"></div></div>
         </div>
 
-        <div class="bar-item">
-          <div class="bar" style="height:160px"></div>
-          <span>Qua</span>
+        <div class="card">
+            <h3 id="lbl-pressao">Pressão dos Pneus</h3>
+            <div class="valor"><span id="val-pressao-psi">0</span> PSI</div>
+            <div class="sub-valor"><span id="val-pressao-bar">0.0</span> bar</div>
         </div>
 
-        <div class="bar-item">
-          <div class="bar" style="height:210px"></div>
-          <span>Qui</span>
+        <div class="card">
+            <h3 id="lbl-temperatura">Temperaturas dos Líquidos</h3>
+            <div class="valor"><span id="val-temp-motor">0</span>°C</div>
+            <div class="sub-valor"><span id="lbl-oleo">Óleo Hidráulico</span>: <span id="val-temp-oleo">0</span>°C</div>
         </div>
 
-      </div>
-
-    </div>
-
-    <div class="graph-box">
-
-      <h3>Velocidade das Máquinas</h3>
-
-      <div class="speed-item">
-        <p>Seg - 12 km/h</p>
-        <div class="speed-bar">
-          <div class="speed-fill" style="width:50%"></div>
+        <div class="card">
+            <h3 id="lbl-co2">Emissões de CO₂</h3>
+            <div class="valor"><span id="val-co2">0.0</span> kg/h</div>
+            <div class="sub-valor" id="lbl-pegada-carbono">Pegada Ecológica de Operação</div>
         </div>
-      </div>
 
-      <div class="speed-item">
-        <p>Ter - 18 km/h</p>
-        <div class="speed-bar">
-          <div class="speed-fill" style="width:75%"></div>
+        <div class="card" id="card-especifico">
+            <h3 id="lbl-especifico-titulo">Carga do Graneleiro</h3>
+            <div class="valor"><span id="val-especifico">0</span>%</div>
+            <div class="sub-valor" id="lbl-especifico-sub">0 kg carregados</div>
+            <div class="barra-progresso"><div class="progresso-preenchido" id="barra-especifica"></div></div>
         </div>
-      </div>
 
-      <div class="speed-item">
-        <p>Qua - 15 km/h</p>
-        <div class="speed-bar">
-          <div class="speed-fill" style="width:60%"></div>
+    </main>
+
+    <section class="explicacao-ti">
+        <h2 id="lbl-ti-titulo">Como Funciona a Captura de Dados Remota?</h2>
+        <p id="lbl-ti-desc">A telemetria de precisão conecta o ecossistema do campo diretamente às decisões gerenciais de forma instantânea através de três camadas vitais:</p>
+        
+        <div class="passos-fluxo">
+            <div class="passo">
+                <h4 id="lbl-passo1-tit">1. Coleta Física (Sensores IoT)</h4>
+                <p id="lbl-passo1-txt">Sensores eletrônicos espalhados nos sistemas térmicos, pneumáticos e de combustível realizam a leitura direta via protocolo de Rede CAN da máquina.</p>
+            </div>
+            <div class="passo">
+                <h4 id="lbl-passo2-tit">2. Transmissão Remota</h4>
+                <p id="lbl-passo2-txt">Os dados convertidos em pacotes digitais são transmitidos via conexões de longo alcance (Rádio UHF, 4G/5G Rural ou Satélite) diretamente do campo para nuvens seguras.</p>
+            </div>
+            <div class="passo">
+                <h4 id="lbl-passo3-tit">3. Análise em Tempo Real</h4>
+                <p id="lbl-passo3-txt">Algoritmos organizam métricas como consumo em L/h, pressões em PSI/bar e alertas urgentes, permitindo controle absoluto de frotas e redução de quebras.</p>
+            </div>
         </div>
-      </div>
+    </section>
 
-    </div>
-
-  </div>
-
-</section>
-
-<section class="alerts container">
-
-  <h2>Alertas em Tempo Real</h2>
-
-  <div class="alerts-grid">
-
-    <div class="alert red">
-      <h3>Trator T-15</h3>
-      <p>Temperatura do motor acima do normal.</p>
-    </div>
-
-    <div class="alert yellow">
-      <h3>Colheitadeira C-08</h3>
-      <p>Consumo de combustível acima da média.</p>
-    </div>
-
-    <div class="alert blue">
-      <h3>GPS</h3>
-      <p>Nova rota inteligente calculada.</p>
-    </div>
-
-  </div>
-
-</section>
-
-<section class="sustainability container">
-
-  <h2>Sustentabilidade</h2>
-
-  <div class="s-grid">
-
-    <div class="s-card">
-      <h3>🌱 Menos Poluição</h3>
-      <p>Redução de emissão de gases poluentes.</p>
-    </div>
-
-    <div class="s-card">
-      <h3>💰 Economia</h3>
-      <p>Menos gastos com combustível.</p>
-    </div>
-
-    <div class="s-card">
-      <h3>📡 Tecnologia</h3>
-      <p>Uso de sensores e GPS modernos.</p>
-    </div>
-
-  </div>
-
-</section>
-
-<footer>
-  Projeto Agrinho Paraná 2026
-</footer>
-
-<script src="main.js"></script>
-
-</body>
-</html>
+<script src="script.js"></script>
+    <script src="main.js"></script> </body>
