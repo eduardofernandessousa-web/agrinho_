@@ -23,9 +23,9 @@ select, button { padding: 10px; border-radius: 8px; border: 1px solid var(--prim
 .btn-play { background: var(--primaria) !important; color: white !important; }
 
 #painel { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-.card { background: var(--card); padding: 20px; border-radius: 20px; border-left: 66px solid var(--primaria); border-left-width: 6px; backdrop-filter: blur(10px); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+.card { background: var(--card); padding: 20px; border-radius: 20px; border-left: 6px solid var(--primaria); backdrop-filter: blur(10px); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
 .card h3 { font-size: 11px; color: var(--primaria); text-transform: uppercase; margin-bottom: 10px; font-weight: bold; }
-.valor { font-size: 38px; font-weight: 900; margin-bottom: 10px; }
+.valor { font-size: 32px; font-weight: 900; margin-bottom: 10px; }
 .barra { width: 100%; height: 12px; background: rgba(0,0,0,0.1); border-radius: 6px; overflow: hidden; margin: 10px 0; }
 .fill { height: 100%; background: var(--primaria); width: 0%; transition: 0.5s; }
 
@@ -34,36 +34,20 @@ input { width: 110px; padding: 6px; border-radius: 6px; border: 1px solid var(--
 .btn-confirmar { width: 100%; padding: 10px; background: #3498db; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 5px; }
 .btn-confirmar:hover { background: #2980b9; }
 
-.gps { background: rgba(0,0,0,0.05); padding: 5px; border-radius: 5px; font-family: monospace; font-size: 13px; margin-top: 5px; }
+.gps { background: rgba(0,0,0,0.05); padding: 5px; border-radius: 5px; font-family: monospace; font-size: 12px; margin-top: 5px; }
 .sub-info { font-size: 13px; font-weight: bold; opacity: 0.8; }
 
-/* Estilos específicos para o Log IOT e Custos */
+.precos-mercado { background: rgba(0, 0, 0, 0.15); padding: 10px; border-radius: 8px; margin: 12px 0; font-size: 12px; border: 1px dashed var(--primaria); text-align: left; }
+.precos-mercado h4 { color: var(--primaria); margin-bottom: 5px; font-size: 11px; text-transform: uppercase; }
+.preco-item { display: flex; justify-content: space-between; opacity: 0.85; margin-bottom: 2px; }
+.preco-item span { font-weight: bold; color: #f1c40f; }
+
 .card-log { border-left-color: #9b59b6; }
 .card-log h3 { color: #9b59b6; }
-#log-mensagens { font-family: monospace; font-size: 12px; height: 95px; overflow-y: auto; line-height: 1.5; padding: 5px; background: rgba(0,0,0,0.1); border-radius: 5px; text-align: left; }
+#log-mensagens { font-family: monospace; font-size: 11px; height: 95px; overflow-y: auto; line-height: 1.5; padding: 5px; background: rgba(0,0,0,0.1); border-radius: 5px; text-align: left; }
 .log-info { color: #3498db; }
 .log-warn { color: #e67e22; font-weight: bold; }
 .log-danger { color: #e74c3c; font-weight: bold; }
 .log-ok { color: #2ecc71; }
 
-.card-custo { border-left-color: #f1c40f; }
-.card-custo h3 { color: #f1c40f; }
-#status-custo { font-size: 13px; font-weight: bold; }
-
-.modal-erro { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); background: #e74c3c; color: white; padding: 40px; border-radius: 20px; text-align: center; z-index: 100; box-shadow: 0 0 100px rgba(0,0,0,0.5); }
-.modal-erro button { margin-top: 15px; background: white; color: #e74c3c; border: none; }
-
-/* Estilo da Seção Educativa no Final da Página */
-.secao-educativa { margin-top: 40px; display: flex; flex-direction: column; gap: 25px; padding-bottom: 40px; }
-.bloco-info { background: var(--card); padding: 30px; border-radius: 20px; border-top: 4px solid var(--primaria); box-shadow: 0 8px 32px rgba(0,0,0,0.15); backdrop-filter: blur(10px); }
-.bloco-info h2 { font-size: 22px; color: var(--primaria); margin-bottom: 15px; font-weight: bold; }
-.bloco-info p { font-size: 16px; line-height: 1.6; margin-bottom: 12px; text-align: justify; opacity: 0.9; }
-
-/* RECURSO DE SUCESSO: CSS PARA IMPRESSÃO DO RELATÓRIO DO AGRINHO */
-@media print {
-    body { background: white !important; color: black !important; }
-    header, .card-setup, #btn-start, #btn-tema, #btn-print, select, .secao-educativa { display: none !important; }
-    #painel { display: block !important; }
-    .card { border: 1px solid #333 !important; margin-bottom: 15px !important; page-break-inside: avoid !important; background: #fff !important; color: #000 !important; }
-    body::before { content: "RELATÓRIO OFICIAL DE TELEMETRIA AGROSTREAM - CONCURSO AGRINHO"; display: block; font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 30px; border-bottom: 2px solid #000; padding-bottom: 10px; }
-}
+.card-custo

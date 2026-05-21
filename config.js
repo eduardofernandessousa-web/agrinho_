@@ -27,6 +27,7 @@ function trocarCategoria(c) {
     });
     mudarModelo(0);
     
+    // Altera dinamicamente os textos dos inputs baseados na máquina escolhida
     document.getElementById("tit-agua").innerText = (c === 'pulverizador') ? "Tanque de Calda" : "Reservatório de Água";
     document.getElementById("lbl-liquido-nome").innerText = (c === 'pulverizador') ? "Calda (L):" : "Água (L):";
 }
@@ -35,13 +36,4 @@ function mudarModelo(index) {
     modAtivo = frota[catAtiva][index];
     document.getElementById("max-diesel").innerText = modAtivo.tanque;
     document.getElementById("max-agua").innerText = modAtivo.agua;
-    document.getElementById("lbl-status-carga").innerText = modAtivo.txtCarga;
-}
-
-function alternarTema() {
-    const h = document.documentElement;
-    const tema = h.getAttribute("data-theme") === "dark" ? "light" : "dark";
-    h.setAttribute("data-theme", tema);
-}
-
-window.onload = () => trocarCategoria('trator');
+    document.getElementById("lbl-status-carga").innerText = modAtivo

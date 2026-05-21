@@ -41,24 +41,38 @@
             </div>
             <div class="input-group">
                 <label>Diesel (L):</label>
-                <input type="number" id="in-diesel" placeholder="Ex: 500">
+                <input type="number" id="in-diesel" placeholder="Ex: 500" value="300">
             </div>
             <div class="input-group">
                 <label id="lbl-liquido-nome">Água (L):</label>
-                <input type="number" id="in-agua" placeholder="Ex: 40">
+                <input type="number" id="in-agua" placeholder="Ex: 40" value="50">
             </div>
             <div class="input-group">
-                <label>Carga (kg):</label>
-                <input type="number" id="in-carga" placeholder="Ex: 2000">
+                <label>Carga Inicial (kg):</label>
+                <input type="number" id="in-carga" placeholder="Ex: 2000" value="2000">
             </div>
+            
+            <div class="precos-mercado">
+                <h4>Cotações Atuais (Painel Cooperativa):</h4>
+                <div class="input-group" style="margin: 5px 0;">
+                    <label style="font-size: 11px;">⛽ Diesel (R$/L):</label>
+                    <input type="number" id="in-preco-diesel" step="0.01" value="6.10" style="width: 70px; padding: 3px; font-size: 11px;">
+                </div>
+                <div class="input-group" style="margin: 5px 0 0 0;">
+                    <label style="font-size: 11px;">🌾 Preço da Saca (R$):</label>
+                    <input type="number" id="in-preco-saca" step="1" value="125" style="width: 70px; padding: 3px; font-size: 11px;">
+                </div>
+            </div>
+
             <button class="btn-confirmar" onclick="carregarDadosIniciais()">✅ APLICAR CARGA</button>
         </div>
 
         <div class="card card-vel">
-            <h3>Velocidade e KM</h3>
+            <h3>Telemetria de Movimento</h3>
             <div class="valor"><span id="val-vel">0</span> <small>km/h</small></div>
             <p>ODÔMETRO: <span id="val-km">120.50</span> km</p>
-            <div class="gps">📍 <span id="val-gps">Lat: -23.31 | Lon: -51.41</span></div>
+            <p style="margin-top: 5px; font-weight: bold; color: #3498db;">⏱️ TEMPO ATIVO: <span id="val-tempo-job">00:00:00</span></p>
+            <div class="gps">📍 <span id="val-gps">Lat: -23.3100 | Lon: -51.4100</span></div>
         </div>
 
         <div class="card card-comb">
@@ -83,9 +97,10 @@
         </div>
 
         <div class="card card-carga-total">
-            <h3>Peso da Carga Atual</h3>
-            <div class="valor"><span id="val-carga-kg">0</span> <small>kg</small></div>
+            <h3>Armazenamento & Produtividade</h3>
+            <div class="valor"><span id="val-carga-kg">0</span> <small style="font-size: 14px;">/ <span id="val-carga-max">0</span> kg</small></div>
             <div class="barra"><div id="bar-carga" class="fill"></div></div>
+            <p style="font-weight: bold; color: #2ecc71; margin-bottom: 5px;">🚜 SACAS COLHIDAS: <span id="val-sacas-cont">0</span> SC</p>
             <p id="lbl-status-carga">CAPACIDADE MÁXIMA</p>
         </div>
 
@@ -94,6 +109,13 @@
             <div class="valor" style="color: #f1c40f;">R$ <span id="val-custo">0</span><small>/h</small></div>
             <div class="barra"><div id="bar-custo" class="fill" style="background: #f1c40f;"></div></div>
             <p id="status-custo">MÁQUINA EM REPOUSO</p>
+        </div>
+
+        <div class="card card-eco" style="border-left-color: #27ae60;">
+            <h3 style="color: #27ae60;">Sustentabilidade (Pegada de Carbono)</h3>
+            <div class="valor" style="color: #2ecc71;"><span id="val-co2">0.0</span> <small>kg CO₂</small></div>
+            <div class="barra"><div id="bar-eco" class="fill" style="background: #2ecc71;"></div></div>
+            <p id="status-eco" style="font-size: 13px; font-weight: bold;">MÁQUINA NEUTRA</p>
         </div>
 
         <div class="card card-log" style="grid-column: span 1;">
@@ -119,12 +141,12 @@
         </div>
 
         <div class="bloco-info">
-            <h2>🎯 Para que serve este Site? (AGROSTREAM v3.0)</h2>
+            <h2>🎯 Para que serve este Site? (AGROSTREAM v3.5)</h2>
             <p>
                 Este sistema foi desenvolvido como uma **plataforma pedagógica e simuladora de eficiência agro**. Ele serve para demonstrar, de forma prática e interativa, como as tomadas de decisão e os fatores de carga influenciam diretamente na saúde mecânica do maquinário e na economia da fazenda. 
             </p>
             <p>
-                Ao simular variáveis como o tipo de cultura (Soja, Milho ou Trigo) e o peso transportado, o AGROSTREAM ensina o operador e o estudante a evitarem o desperdício de combustível, prevenirem quebras catastróficas por superaquecimento e otimizarem o gerenciamento de insumos, unindo tecnologia, produtividade e sustentabilidade no campo.
+                Ao simular variáveis como o tipo de cultura (Soja, Milho ou Trigo), o peso transportado e os preços reais das sacas negociadas no mercado, o AGROSTREAM ensina o operador e o estudante a evitarem o desperdício de combustível, prevenirem quebras catastróficas por superaquecimento e otimizarem a rentabilidade líquida da lavoura, unindo tecnologia de ponta, produtividade e sustentabilidade no campo.
             </p>
         </div>
     </section>
