@@ -18,7 +18,6 @@ header {
 h1 span { color: var(--primaria); font-size: 14px; }
 .status-sim { font-weight: bold; font-size: 13px; margin-top: 5px; }
 
-/* AJUSTADO: Alinhamento vertical perfeito para incluir o seletor de idioma */
 .controles-topo { display: flex; gap: 10px; align-items: center; }
 select, button { padding: 10px; border-radius: 8px; border: 1px solid var(--primaria); background: var(--card); color: var(--txt); font-weight: bold; cursor: pointer; }
 .btn-play { background: var(--primaria) !important; color: white !important; }

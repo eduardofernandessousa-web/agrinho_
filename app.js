@@ -17,22 +17,14 @@ function mudarIdioma(lang) {
     idiomaAtivo = lang;
     const txts = dicionario[lang];
     
-    // Atualiza elementos estáticos que possuem IDs correspondentes nas chaves
     for (let id in txts) {
         let el = document.getElementById("txt-" + id);
         if (el) {
-            if (el.tagName === "BUTTON" || el.tagName === "INPUT") {
-                el.innerText = txts[id];
-            } else {
-                el.innerText = txts[id];
-            }
+            el.innerText = txts[id];
         }
     }
     
-    // Atualiza tags de status dinâmicos baseado no estado
     document.getElementById("status-tag").innerText = isRunning ? txts.statusRodando : txts.statusParada;
-    
-    // Força atualização dos textos das frotas
     document.getElementById("tit-agua").innerText = (catAtiva === 'pulverizador') ? txts.titCalda : txts.titAgua;
     document.getElementById("lbl-liquido-nome").innerText = (catAtiva === 'pulverizador') ? txts.lblCalda : txts.lblAgua;
     document.getElementById("lbl-status-carga").innerText = modAtivo.txtCarga[idiomaAtivo];
@@ -279,7 +271,6 @@ function resetarMotor() {
     registrarLog(txts.logReset, "ok");
 }
 
-// Inicia de forma segura quando a janela terminar de carregar os arquivos
 window.addEventListener('DOMContentLoaded', () => {
     trocarCategoria('trator');
     mudarIdioma('pt');
