@@ -9,187 +9,197 @@
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <!-- HERO -->
-  <header class="hero">
+<header>
+  <div class="container nav">
 
-    <div class="hero-text">
-
-      <span class="tag">
-        Concurso Agrinho Paraná 2026
-      </span>
-
-      <h1>
-        Telemetria de Máquinas Agrícolas
-      </h1>
-
-      <p>
-        Monitoramento inteligente de tratores e colheitadeiras em tempo real.
-      </p>
-
+    <div class="logo">
+      AGRINHO 2026
     </div>
 
-    <div class="hero-card">
+    <ul>
+      <li><a href="#">Início</a></li>
+      <li><a href="#">Dashboard</a></li>
+      <li><a href="#">Alertas</a></li>
+      <li><a href="#">Sustentabilidade</a></li>
+    </ul>
 
-      <h2>Monitoramento em Tempo Real</h2>
+  </div>
+</header>
 
-      <div class="stats">
+<section class="hero container">
 
-        <div class="card">
-          <p>Tratores Ativos</p>
-          <h3>18</h3>
-        </div>
+  <div class="hero-text">
 
-        <div class="card">
-          <p>Colheitadeiras</p>
-          <h3>7</h3>
-        </div>
+    <span class="tag">
+      Concurso Agrinho Paraná 2026
+    </span>
 
-        <div class="card full">
-          <p>Economia de Diesel</p>
-          <h3 class="green">23%</h3>
-        </div>
+    <h1>
+      Telemetria de Máquinas Agrícolas
+    </h1>
 
+    <p>
+      Sistema inteligente de monitoramento de tratores e colheitadeiras para aumentar a produtividade no campo.
+    </p>
+
+    <div class="buttons">
+      <button>Explorar Dashboard</button>
+      <button class="btn2">Saiba Mais</button>
+    </div>
+
+  </div>
+
+  <div class="hero-card">
+
+    <h2>Monitoramento em Tempo Real</h2>
+
+    <div class="stats">
+
+      <div class="card">
+        <p>Tratores</p>
+        <h3>18</h3>
+      </div>
+
+      <div class="card">
+        <p>Colheitadeiras</p>
+        <h3>7</h3>
+      </div>
+
+      <div class="card full">
+        <p>Economia de Diesel</p>
+        <h3 class="green">23%</h3>
       </div>
 
     </div>
 
-  </header>
+  </div>
 
-  <!-- DASHBOARD -->
-  <section class="dashboard">
+</section>
 
-    <h2>Dashboard Inteligente</h2>
+<section class="dashboard container">
 
-    <div class="dashboard-grid">
+  <h2>Dashboard Inteligente</h2>
 
-      <!-- DIESEL -->
-      <div class="graph-box">
+  <div class="dashboard-grid">
 
-        <h3>Consumo de Diesel</h3>
+    <div class="graph-box">
 
-        <div class="bars">
+      <h3>Consumo de Diesel</h3>
 
-          <div class="bar-item">
-            <div class="bar" style="height: 140px;"></div>
-            <span>Seg</span>
-          </div>
+      <div class="bars">
 
-          <div class="bar-item">
-            <div class="bar" style="height: 170px;"></div>
-            <span>Ter</span>
-          </div>
-
-          <div class="bar-item">
-            <div class="bar" style="height: 150px;"></div>
-            <span>Qua</span>
-          </div>
-
-          <div class="bar-item">
-            <div class="bar" style="height: 200px;"></div>
-            <span>Qui</span>
-          </div>
-
-          <div class="bar-item">
-            <div class="bar" style="height: 180px;"></div>
-            <span>Sex</span>
-          </div>
-
+        <div class="bar-item">
+          <div class="bar" style="height:140px"></div>
+          <span>Seg</span>
         </div>
 
-      </div>
+        <div class="bar-item">
+          <div class="bar" style="height:180px"></div>
+          <span>Ter</span>
+        </div>
 
-      <!-- VELOCIDADE -->
-      <div class="graph-box">
+        <div class="bar-item">
+          <div class="bar" style="height:160px"></div>
+          <span>Qua</span>
+        </div>
 
-        <h3>Velocidade das Máquinas</h3>
-
-        <div class="speed-list">
-
-          <div class="speed-item">
-            <p>Seg - 12 km/h</p>
-            <div class="speed-bar">
-              <div class="speed-fill" style="width: 48%;"></div>
-            </div>
-          </div>
-
-          <div class="speed-item">
-            <p>Ter - 18 km/h</p>
-            <div class="speed-bar">
-              <div class="speed-fill" style="width: 72%;"></div>
-            </div>
-          </div>
-
-          <div class="speed-item">
-            <p>Qua - 15 km/h</p>
-            <div class="speed-bar">
-              <div class="speed-fill" style="width: 60%;"></div>
-            </div>
-          </div>
-
+        <div class="bar-item">
+          <div class="bar" style="height:210px"></div>
+          <span>Qui</span>
         </div>
 
       </div>
 
     </div>
 
-  </section>
+    <div class="graph-box">
 
-  <!-- ALERTAS -->
-  <section class="alerts">
+      <h3>Velocidade das Máquinas</h3>
 
-    <h2>Alertas em Tempo Real</h2>
-
-    <div class="alerts-grid">
-
-      <div class="alert red">
-        <h3>Trator T-15</h3>
-        <p>Temperatura do motor acima do normal.</p>
+      <div class="speed-item">
+        <p>Seg - 12 km/h</p>
+        <div class="speed-bar">
+          <div class="speed-fill" style="width:50%"></div>
+        </div>
       </div>
 
-      <div class="alert yellow">
-        <h3>Colheitadeira C-08</h3>
-        <p>Consumo de combustível acima da média.</p>
+      <div class="speed-item">
+        <p>Ter - 18 km/h</p>
+        <div class="speed-bar">
+          <div class="speed-fill" style="width:75%"></div>
+        </div>
       </div>
 
-      <div class="alert blue">
-        <h3>Sistema GPS</h3>
-        <p>Nova rota inteligente calculada.</p>
-      </div>
-
-    </div>
-
-  </section>
-
-  <!-- SUSTENTABILIDADE -->
-  <section class="sustainability">
-
-    <h2>Sustentabilidade e Economia</h2>
-
-    <div class="sustain-grid">
-
-      <div class="s-card">
-        <h3>🌱 Menos Poluição</h3>
-        <p>Redução do consumo de diesel e menos emissão de gases.</p>
-      </div>
-
-      <div class="s-card">
-        <h3>💰 Economia Rural</h3>
-        <p>Menos gastos com combustível e manutenção.</p>
-      </div>
-
-      <div class="s-card">
-        <h3>📡 Tecnologia</h3>
-        <p>Sensores e GPS modernizando o agronegócio do Paraná.</p>
+      <div class="speed-item">
+        <p>Qua - 15 km/h</p>
+        <div class="speed-bar">
+          <div class="speed-fill" style="width:60%"></div>
+        </div>
       </div>
 
     </div>
 
-  </section>
+  </div>
 
-  <script src="script.js"></script>
+</section>
+
+<section class="alerts container">
+
+  <h2>Alertas em Tempo Real</h2>
+
+  <div class="alerts-grid">
+
+    <div class="alert red">
+      <h3>Trator T-15</h3>
+      <p>Temperatura do motor acima do normal.</p>
+    </div>
+
+    <div class="alert yellow">
+      <h3>Colheitadeira C-08</h3>
+      <p>Consumo de combustível acima da média.</p>
+    </div>
+
+    <div class="alert blue">
+      <h3>GPS</h3>
+      <p>Nova rota inteligente calculada.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="sustainability container">
+
+  <h2>Sustentabilidade</h2>
+
+  <div class="s-grid">
+
+    <div class="s-card">
+      <h3>🌱 Menos Poluição</h3>
+      <p>Redução de emissão de gases poluentes.</p>
+    </div>
+
+    <div class="s-card">
+      <h3>💰 Economia</h3>
+      <p>Menos gastos com combustível.</p>
+    </div>
+
+    <div class="s-card">
+      <h3>📡 Tecnologia</h3>
+      <p>Uso de sensores e GPS modernos.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<footer>
+  Projeto Agrinho Paraná 2026
+</footer>
+
+<script src="main.js"></script>
 
 </body>
 </html>
