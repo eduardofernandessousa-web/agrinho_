@@ -11,7 +11,7 @@
 
     <header>
         <div class="logo-area">
-            <h1>AGROSTREAM <span>v3.0</span></h1>
+            <h1>AGROSTREAM <span>v3.5 Premium</span></h1>
             <div class="status-sim">SIMULAÇÃO: <span id="status-tag">PARADA</span></div>
         </div>
         
@@ -23,6 +23,7 @@
             </select>
             <select id="seletor-modelo" onchange="mudarModelo(this.value)"></select>
             <button id="btn-tema" onclick="alternarTema()">☀️ MODO</button>
+            <button id="btn-print" onclick="window.print()" style="background: #34495e; color: white;">🖨️ LAUDO</button>
             <button id="btn-start" onclick="toggleSimulacao()" class="btn-play">▶ START</button>
         </div>
     </header>
@@ -32,7 +33,7 @@
             <h3>Configuração de Carga</h3>
             <div class="input-group">
                 <label>Cultura:</label>
-                <select id="sel-cultura">
+                <select id="sel-cultura" onchange="atualizarCulturaLog()">
                     <option value="soja">🌱 Soja</option>
                     <option value="milho">🌽 Milho</option>
                     <option value="trigo">🌾 Trigo</option>
@@ -87,6 +88,20 @@
             <div class="barra"><div id="bar-carga" class="fill"></div></div>
             <p id="lbl-status-carga">CAPACIDADE MÁXIMA</p>
         </div>
+
+        <div class="card card-custo">
+            <h3>Análise Financeira</h3>
+            <div class="valor" style="color: #f1c40f;">R$ <span id="val-custo">0</span><small>/h</small></div>
+            <div class="barra"><div id="bar-custo" class="fill" style="background: #f1c40f;"></div></div>
+            <p id="status-custo">MÁQUINA EM REPOUSO</p>
+        </div>
+
+        <div class="card card-log" style="grid-column: span 1;">
+            <h3>Histórico de Alertas (IoT Log)</h3>
+            <div id="log-mensagens">
+                <span class="log-ok">[OK]</span> Sistema de Telemetria AGROSTREAM Inicializado.
+            </div>
+        </div>
     </main>
 
     <div id="aviso-calor" class="modal-erro" style="display:none">
@@ -94,6 +109,25 @@
         <p>Motor desligado automaticamente (>102°C).</p>
         <button onclick="resetarMotor()">REINICIAR SISTEMA</button>
     </div>
+
+    <section class="secao-educativa">
+        <div class="bloco-info">
+            <h2>🛰️ O que é Telemetria de Máquinas Agrícolas?</h2>
+            <p>
+                A telemetria é uma tecnologia avançada que permite a **coleta, medição e transmissão de dados de um veículo à distância** em tempo real. No meio rural, ela funciona como o "sistema nervoso" da Agricultura 4.0. Através de sensores instalados nos tratores, colheitadeiras e pulverizadores, informações cruciais como consumo de combustível, temperatura do motor, velocidade de operação, peso da carga e localização via GPS são enviadas instantaneamente para o computador ou celular do produtor.
+            </p>
+        </div>
+
+        <div class="bloco-info">
+            <h2>🎯 Para que serve este Site? (AGROSTREAM v3.0)</h2>
+            <p>
+                Este sistema foi desenvolvido como uma **plataforma pedagógica e simuladora de eficiência agro**. Ele serve para demonstrar, de forma prática e interativa, como as tomadas de decisão e os fatores de carga influenciam diretamente na saúde mecânica do maquinário e na economia da fazenda. 
+            </p>
+            <p>
+                Ao simular variáveis como o tipo de cultura (Soja, Milho ou Trigo) e o peso transportado, o AGROSTREAM ensina o operador e o estudante a evitarem o desperdício de combustível, prevenirem quebras catastróficas por superaquecimento e otimizarem o gerenciamento de insumos, unindo tecnologia, produtividade e sustentabilidade no campo.
+            </p>
+        </div>
+    </section>
 
     <script src="config.js"></script>
     <script src="app.js"></script>

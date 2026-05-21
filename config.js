@@ -27,7 +27,6 @@ function trocarCategoria(c) {
     });
     mudarModelo(0);
     
-    // Mudança dinâmica de textos dependendo do veículo escolhido
     document.getElementById("tit-agua").innerText = (c === 'pulverizador') ? "Tanque de Calda" : "Reservatório de Água";
     document.getElementById("lbl-liquido-nome").innerText = (c === 'pulverizador') ? "Calda (L):" : "Água (L):";
 }
