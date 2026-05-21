@@ -18,7 +18,8 @@ header {
 h1 span { color: var(--primaria); font-size: 14px; }
 .status-sim { font-weight: bold; font-size: 13px; margin-top: 5px; }
 
-.controles-topo { display: flex; gap: 10px; }
+/* AJUSTADO: Alinhamento vertical perfeito para incluir o seletor de idioma */
+.controles-topo { display: flex; gap: 10px; align-items: center; }
 select, button { padding: 10px; border-radius: 8px; border: 1px solid var(--primaria); background: var(--card); color: var(--txt); font-weight: bold; cursor: pointer; }
 .btn-play { background: var(--primaria) !important; color: white !important; }
 
@@ -37,10 +38,8 @@ input { width: 110px; padding: 6px; border-radius: 6px; border: 1px solid var(--
 .gps { background: rgba(0,0,0,0.05); padding: 5px; border-radius: 5px; font-family: monospace; font-size: 12px; margin-top: 5px; }
 .sub-info { font-size: 13px; font-weight: bold; opacity: 0.8; }
 
-.precos-mercado { background: rgba(0, 0, 0, 0.15); padding: 10px; border-radius: 8px; margin: 12px 0; font-size: 12px; border: 1px dashed var(--primaria); text-align: left; }
-.precos-mercado h4 { color: var(--primaria); margin-bottom: 5px; font-size: 11px; text-transform: uppercase; }
-.preco-item { display: flex; justify-content: space-between; opacity: 0.85; margin-bottom: 2px; }
-.preco-item span { font-weight: bold; color: #f1c40f; }
+.precos-market { background: rgba(0, 0, 0, 0.15); padding: 10px; border-radius: 8px; margin: 12px 0; font-size: 12px; border: 1px dashed var(--primaria); text-align: left; }
+.precos-market h4 { color: var(--primaria); margin-bottom: 5px; font-size: 11px; text-transform: uppercase; }
 
 .card-log { border-left-color: #9b59b6; }
 .card-log h3 { color: #9b59b6; }
@@ -50,4 +49,22 @@ input { width: 110px; padding: 6px; border-radius: 6px; border: 1px solid var(--
 .log-danger { color: #e74c3c; font-weight: bold; }
 .log-ok { color: #2ecc71; }
 
-.card-custo
+.card-custo { border-left-color: #f1c40f; }
+.card-custo h3 { color: #f1c40f; }
+#status-custo { font-size: 13px; font-weight: bold; }
+
+.modal-erro { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); background: #e74c3c; color: white; padding: 40px; border-radius: 20px; text-align: center; z-index: 100; box-shadow: 0 0 100px rgba(0,0,0,0.5); }
+.modal-erro button { margin-top: 15px; background: white; color: #e74c3c; border: none; }
+
+.secao-educativa { margin-top: 40px; display: flex; flex-direction: column; gap: 25px; padding-bottom: 40px; text-align: left; }
+.bloco-info { background: var(--card); padding: 30px; border-radius: 20px; border-top: 4px solid var(--primaria); box-shadow: 0 8px 32px rgba(0,0,0,0.15); backdrop-filter: blur(10px); }
+.bloco-info h2 { font-size: 22px; color: var(--primaria); margin-bottom: 15px; font-weight: bold; }
+.bloco-info p { font-size: 16px; line-height: 1.6; margin-bottom: 12px; text-align: justify; opacity: 0.9; }
+
+@media print {
+    body { background: white !important; color: black !important; }
+    header, .card-setup, #btn-start, #btn-tema, #btn-print, select, .secao-educativa { display: none !important; }
+    #painel { display: block !important; }
+    .card { border: 1px solid #333 !important; margin-bottom: 15px !important; page-break-inside: avoid !important; background: #fff !important; color: #000 !important; }
+    body::before { content: "RELATÓRIO OFICIAL DE TELEMETRIA AGROSTREAM - CONCURSO AGRINHO"; display: block; font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 30px; border-bottom: 2px solid #000; padding-bottom: 10px; }
+}
