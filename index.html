@@ -1,101 +1,101 @@
 <!DOCTYPE html>
-<html lang="pt" data-theme="light">
+<html lang="pt" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGROSTREAM - Telemetria 2026</title>
-    <link rel="stylesheet" href="reset.css">
+    <title>AGROSTREAM - Telemetria Pro</title>
+    <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
         <div class="logo-area">
-            <h1 id="txt-logo">AGROSTREAM</h1>
-            <span id="txt-maquina-ativa">SISTEMA ATIVO</span>
+            <h1>AGROSTREAM <span>v3.0</span></h1>
+            <div class="status-sim">SIMULAÇÃO: <span id="status-tag">PARADA</span></div>
         </div>
         
         <div class="controles-topo">
-            <select id="seletor-tipo-maquina" onchange="trocarCategoria(this.value)">
+            <select id="seletor-tipo" onchange="trocarCategoria(this.value)">
                 <option value="trator">🚜 TRATORES</option>
                 <option value="colheitadeira">🌾 COLHEITADEIRAS</option>
                 <option value="pulverizador">💨 PULVERIZADORES</option>
             </select>
-
             <select id="seletor-modelo" onchange="mudarModelo(this.value)"></select>
-
-            <select id="seletor-idioma" onchange="mudarIdioma(this.value)">
-                <option value="pt">🇧🇷 PT</option>
-                <option value="en">🇺🇸 EN</option>
-                <option value="es">🇪🇸 ES</option>
-                <option value="fr">🇫🇷 FR</option>
-            </select>
-            
-            <button id="btn-tema" onclick="alternarTema()">🌙</button>
+            <button id="btn-tema" onclick="alternarTema()">☀️ MODO</button>
+            <button id="btn-start" onclick="toggleSimulacao()" class="btn-play">▶ START</button>
         </div>
     </header>
 
-    <div id="painel-shutdown" class="alerta-fatal" style="display: none;">
-        <h2 id="lbl-shutdown-tit">ALERTA CRÍTICO: SUPERAQUECIMENTO</h2>
-        <p id="lbl-shutdown-txt">Motor desligado preventivamente (>102°C).</p>
-    </div>
+    <main id="painel">
+        <div class="card card-setup">
+            <h3>Configuração de Carga</h3>
+            <div class="input-group">
+                <label>Cultura:</label>
+                <select id="sel-cultura">
+                    <option value="soja">🌱 Soja</option>
+                    <option value="milho">🌽 Milho</option>
+                    <option value="trigo">🌾 Trigo</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Diesel (L):</label>
+                <input type="number" id="in-diesel" placeholder="Ex: 500">
+            </div>
+            <div class="input-group">
+                <label id="lbl-liquido-nome">Água (L):</label>
+                <input type="number" id="in-agua" placeholder="Ex: 40">
+            </div>
+            <div class="input-group">
+                <label>Carga (kg):</label>
+                <input type="number" id="in-carga" placeholder="Ex: 2000">
+            </div>
+            <button class="btn-confirmar" onclick="carregarDadosIniciais()">✅ APLICAR CARGA</button>
+        </div>
 
-    <main id="dashboard">
         <div class="card card-vel">
-            <h3 id="lbl-velocidade">Velocidade</h3>
-            <div class="valor"><span id="val-velocidade">0</span> <small>km/h</small></div>
-            <p><b id="lbl-odometro">Total:</b> <span id="val-odometro">0.0</span> km</p>
+            <h3>Velocidade e KM</h3>
+            <div class="valor"><span id="val-vel">0</span> <small>km/h</small></div>
+            <p>ODÔMETRO: <span id="val-km">120.50</span> km</p>
+            <div class="gps">📍 <span id="val-gps">Lat: -23.31 | Lon: -51.41</span></div>
         </div>
 
         <div class="card card-comb">
-            <h3 id="lbl-combustivel">Tanque Diesel</h3>
-            <div class="valor"><span id="val-tanque-pct">0</span>%</div>
-            <div class="barra"><div id="barra-combustivel" class="fill"></div></div>
-            <div class="info-extra">
-                <span id="val-tanque-litros">0</span>L / <span id="val-tanque-max">0</span>L
-                <br><small id="lbl-consumo">Consumo:</small> <span id="val-consumo">0.0</span> L/h
-            </div>
+            <h3>Tanque Diesel</h3>
+            <div class="valor"><span id="val-diesel-pct">0</span>%</div>
+            <div class="barra"><div id="bar-diesel" class="fill"></div></div>
+            <div class="sub-info"><span id="val-diesel-l">0</span>L / <span id="max-diesel">0</span>L</div>
         </div>
 
         <div class="card card-agua">
-            <h3 id="lbl-agua">Reservatório de Água</h3>
+            <h3 id="tit-agua">Reservatório de Água</h3>
             <div class="valor"><span id="val-agua-pct">0</span>%</div>
-            <div class="barra"><div id="barra-agua" class="fill"></div></div>
-            <div class="info-extra">
-                <span id="val-agua-litros">0</span>L / <span id="val-agua-max">50</span>L
-                <br><small id="lbl-agua-status">Limpadores e Arrefecimento</small>
-            </div>
+            <div class="barra"><div id="bar-agua" class="fill"></div></div>
+            <div class="sub-info"><span id="val-agua-l">0</span>L / <span id="max-agua">0</span>L</div>
         </div>
 
         <div class="card card-temp">
-            <h3 id="lbl-temperatura">Temp. Motor</h3>
-            <div class="valor"><span id="val-temp-motor">0</span>°C</div>
-            <div class="barra"><div id="barra-temp" class="fill"></div></div>
-            <p id="lbl-temp-status">Operação Normal</p>
+            <h3>Temperatura Motor</h3>
+            <div class="valor"><span id="val-temp">0</span>°C</div>
+            <div class="barra"><div id="bar-temp" class="fill"></div></div>
+            <p id="status-temp">ESTÁVEL</p>
         </div>
 
-        <div class="card card-pneu">
-            <h3 id="lbl-pressao">Pressão Pneus</h3>
-            <div class="valor"><span id="val-pressao-psi">0</span> <small>PSI</small></div>
-            <p><span id="val-pressao-bar">0.0</span> bar</p>
-        </div>
-
-        <div class="card card-especifico" id="card-esp">
-            <h3 id="lbl-esp-tit">DADOS DA CARGA</h3>
-            <div class="valor"><span id="val-esp">0</span>%</div>
-            <div class="barra"><div id="barra-esp" class="fill"></div></div>
-            <p id="lbl-esp-sub">Carregamento</p>
+        <div class="card card-carga-total">
+            <h3>Peso da Carga Atual</h3>
+            <div class="valor"><span id="val-carga-kg">0</span> <small>kg</small></div>
+            <div class="barra"><div id="bar-carga" class="fill"></div></div>
+            <p id="lbl-status-carga">CAPACIDADE MÁXIMA</p>
         </div>
     </main>
 
-    <div class="agendamento-card">
-        <span id="lbl-agenda">Jornada:</span>
-        <input type="time" id="hora-inicio" value="06:00"> 
-        <span id="lbl-ate">até</span> 
-        <input type="time" id="hora-fim" value="18:00">
+    <div id="aviso-calor" class="modal-erro" style="display:none">
+        <h1>🚨 SUPERAQUECIMENTO CRÍTICO 🚨</h1>
+        <p>Motor desligado automaticamente (>102°C).</p>
+        <button onclick="resetarMotor()">REINICIAR SISTEMA</button>
     </div>
 
-    <script src="script.js"></script>
-    <script src="main.js"></script>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
