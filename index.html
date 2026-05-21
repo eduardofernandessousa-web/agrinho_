@@ -3,128 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGROSTREAM - Telemetria Avançada</title>
+    <title>AGROSTREAM - Telemetria 2026</title>
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="video-overlay"></div>
-
     <header>
-        <h1 id="txt-logo">AGROSTREAM // TELEMETRIA</h1>
-        <div class="controles">
-            <select id="seletor-modelo" onchange="mudarModelo(this.value)">
-                </select>
+        <div class="logo-area">
+            <h1 id="txt-logo">AGROSTREAM</h1>
+            <span id="txt-maquina-ativa">SISTEMA ATIVO</span>
+        </div>
+        
+        <div class="controles-topo">
+            <select id="seletor-tipo-maquina" onchange="trocarCategoria(this.value)">
+                <option value="trator">🚜 TRATORES</option>
+                <option value="colheitadeira">🌾 COLHEITADEIRAS</option>
+                <option value="pulverizador">💨 PULVERIZADORES</option>
+            </select>
+
+            <select id="seletor-modelo" onchange="mudarModelo(this.value)"></select>
 
             <select id="seletor-idioma" onchange="mudarIdioma(this.value)">
-                <option value="pt">🇧🇷 Português</option>
-                <option value="en">🇺🇸 English</option>
-                <option value="es">🇪🇸 Español</option>
-                <option value="fr">🇫🇷 Français</option>
+                <option value="pt">🇧🇷 PT</option>
+                <option value="en">🇺🇸 EN</option>
+                <option value="es">🇪🇸 ES</option>
+                <option value="fr">🇫🇷 FR</option>
             </select>
-            <button id="btn-tema" onclick="alternarTema()">🌙 Dark Mode</button>
+            
+            <button id="btn-tema" onclick="alternarTema()">🌙</button>
         </div>
     </header>
 
-    <div class="abas-maquinas">
-        <button class="aba-btn ativo" id="aba-trator" onclick="mudarMaquina('trator')">🚜 TRATOR</button>
-        <button class="aba-btn" id="aba-colheitadeira" onclick="mudarMaquina('colheitadeira')">🌾 COLHEITADEIRA</button>
-        <button class="aba-btn" id="aba-pulverizador" onclick="mudarMaquina('pulverizador')">💨 PULVERIZADOR</button>
+    <div id="painel-shutdown" class="alerta-fatal" style="display: none;">
+        <h2 id="lbl-shutdown-tit">ALERTA CRÍTICO: SUPERAQUECIMENTO</h2>
+        <p id="lbl-shutdown-txt">Motor desligado preventivamente (>102°C).</p>
     </div>
 
-    <div class="card card-agenda">
-        <h3 id="lbl-agenda-tit">Programação de Jornada de Trabalho</h3>
-        <div class="agenda-inputs">
-            <div>
-                <label id="lbl-agenda-inicio" for="hora-inicio">Início:</label>
-                <input type="time" id="hora-inicio" value="06:00">
-            </div>
-            <div>
-                <label id="lbl-agenda-fim" for="hora-fim">Término:</label>
-                <input type="time" id="hora-fim" value="18:00">
-            </div>
-        </div>
-    </div>
-
-    <div id="painel-shutdown" class="painel-alerta-fatal" style="display: none;">
-        <h2 id="lbl-shutdown-tit">⚠️ CRITICAL SHUTDOWN ⚠️</h2>
-        <p id="lbl-shutdown-txt">Veículo desligado automaticamente para proteção do motor devido ao superaquecimento dos líquidos (&gt;102°C).</p>
-    </div>
-
-    <main class="painel-container" id="painel-dados">
-        
-        <div class="card card-velocidade">
+    <main id="dashboard">
+        <div class="card card-vel">
             <h3 id="lbl-velocidade">Velocidade</h3>
-            <div class="valor"><span id="val-velocidade">0</span> km/h</div>
-            <div class="sub-valor"><b id="lbl-odometro">Odômetro Total:</b> <span id="val-odometro">0.0</span> km</div>
+            <div class="valor"><span id="val-velocidade">0</span> <small>km/h</small></div>
+            <p><b id="lbl-odometro">Total:</b> <span id="val-odometro">0.0</span> km</p>
         </div>
 
-        <div class="card card-combustivel">
-            <h3 id="lbl-combustivel">Combustível</h3>
-            <div class="valor"><span id="val-tanque">0</span>%</div>
-            <div class="sub-valor"><span id="lbl-consumo">Consumo</span>: <span id="val-consumo">0.0</span> L/h</div>
-            <div class="barra-progresso"><div class="progresso-preenchido" id="barra-combustivel"></div></div>
-            <div class="capacidade-litros"><span id="val-combustivel-atual">0</span>L / <span id="val-combustivel-max">400</span>L</div>
-        </div>
-
-        <div class="card card-pressao">
-            <h3 id="lbl-pressao">Pressão dos Pneus</h3>
-            <div class="valor"><span id="val-pressao-psi">0</span> PSI</div>
-            <div class="sub-valor"><span id="val-pressao-bar">0.0</span> bar</div>
-        </div>
-
-        <div class="card card-temperatura">
-            <h3 id="lbl-temperatura">Temperaturas dos Líquidos</h3>
-            <div class="valor-duplo">
-                <div>
-                    <span class="mini-lbl" id="lbl-temp-mot-lbl">Motor:</span>
-                    <span class="valor-menor" id="val-temp-motor">0°C</span>
-                    <div class="barra-progresso-mini"><div class="progresso-preenchido-mini" id="barra-temp-motor"></div></div>
-                    <span class="capacidade-litros" id="val-liq-motor-vol">0L / 35L</span>
-                </div>
-                <div>
-                    <span class="mini-lbl" id="lbl-temp-hid-lbl">Hidráulico:</span>
-                    <span class="valor-menor" id="val-temp-oleo">0°C</span>
-                    <div class="barra-progresso-mini"><div class="progresso-preenchido-mini" id="barra-temp-oleo"></div></div>
-                    <span class="capacidade-litros" id="val-liq-oleo-vol">0L / 90L</span>
-                </div>
+        <div class="card card-comb">
+            <h3 id="lbl-combustivel">Tanque Diesel</h3>
+            <div class="valor"><span id="val-tanque-pct">0</span>%</div>
+            <div class="barra"><div id="barra-combustivel" class="fill"></div></div>
+            <div class="info-extra">
+                <span id="val-tanque-litros">0</span>L / <span id="val-tanque-max">0</span>L
+                <br><small id="lbl-consumo">Consumo:</small> <span id="val-consumo">0.0</span> L/h
             </div>
         </div>
 
-        <div class="card card-co2">
-            <h3 id="lbl-co2">Emissões de CO₂</h3>
-            <div class="valor"><span id="val-co2">0.0</span> kg/h</div>
-            <div class="sub-valor" id="lbl-pegada-carbono">Pegada Ecológica de Operação</div>
+        <div class="card card-agua">
+            <h3 id="lbl-agua">Reservatório de Água</h3>
+            <div class="valor"><span id="val-agua-pct">0</span>%</div>
+            <div class="barra"><div id="barra-agua" class="fill"></div></div>
+            <div class="info-extra">
+                <span id="val-agua-litros">0</span>L / <span id="val-agua-max">50</span>L
+                <br><small id="lbl-agua-status">Limpadores e Arrefecimento</small>
+            </div>
         </div>
 
-        <div class="card card-dinamico" id="card-especifico">
-            <h3 id="lbl-especifico-titulo">Carga do Graneleiro</h3>
-            <div class="valor"><span id="val-especifico">0</span>%</div>
-            <div class="sub-valor" id="lbl-especifico-sub">0 kg carregados</div>
-            <div class="barra-progresso"><div class="progresso-preenchido" id="barra-especifica"></div></div>
+        <div class="card card-temp">
+            <h3 id="lbl-temperatura">Temp. Motor</h3>
+            <div class="valor"><span id="val-temp-motor">0</span>°C</div>
+            <div class="barra"><div id="barra-temp" class="fill"></div></div>
+            <p id="lbl-temp-status">Operação Normal</p>
         </div>
 
+        <div class="card card-pneu">
+            <h3 id="lbl-pressao">Pressão Pneus</h3>
+            <div class="valor"><span id="val-pressao-psi">0</span> <small>PSI</small></div>
+            <p><span id="val-pressao-bar">0.0</span> bar</p>
+        </div>
+
+        <div class="card card-especifico" id="card-esp">
+            <h3 id="lbl-esp-tit">DADOS DA CARGA</h3>
+            <div class="valor"><span id="val-esp">0</span>%</div>
+            <div class="barra"><div id="barra-esp" class="fill"></div></div>
+            <p id="lbl-esp-sub">Carregamento</p>
+        </div>
     </main>
 
-    <section class="explicacao-ti">
-        <h2 id="lbl-ti-titulo">Como Funciona a Captura de Dados Remota?</h2>
-        <p id="lbl-ti-desc">A telemetria de precisão conecta o ecossistema do campo através de três camadas vitais:</p>
-        <div class="passos-fluxo">
-            <div class="passo">
-                <h4 id="lbl-passo1-tit">1. Coleta Física (Sensores IoT)</h4>
-                <p id="lbl-passo1-txt">Sensores eletrônicos nos sistemas térmicos, pneumáticos e mecânicos realizam a leitura via barramento CAN.</p>
-            </div>
-            <div class="passo">
-                <h4 id="lbl-passo2-tit">2. Transmissão Remota</h4>
-                <p id="lbl-passo2-txt">Os dados digitais são transmitidos via conexões de longo alcance (4G Rural ou Satélite) para nuvens seguras.</p>
-            </div>
-            <div class="passo">
-                <h4 id="lbl-passo3-tit">3. Análise em Tempo Real</h4>
-                <p id="lbl-passo3-txt">Métricas de consumo, quilometragem e segurança evitam quebras e reduzem a pegada de carbono.</p>
-            </div>
-        </div>
-    </section>
+    <div class="agendamento-card">
+        <span id="lbl-agenda">Jornada:</span>
+        <input type="time" id="hora-inicio" value="06:00"> 
+        <span id="lbl-ate">até</span> 
+        <input type="time" id="hora-fim" value="18:00">
+    </div>
 
     <script src="script.js"></script>
     <script src="main.js"></script>
