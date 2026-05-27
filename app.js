@@ -1,10 +1,11 @@
+// Estado do Sistema e Telemetria
 let isRunning = false;
 let motorFundido = false;
 let segs = 0;
 let horasAcumuladas = 0;
 let dieselL = 0;
 let cargaKg = 0;
-let lat = -23.3100;
+let lat = -23.3100; // Coordenadas baseadas no Norte do PR
 let lon = -51.4100;
 let hectares = 0;
 let custoTotal = 0;
@@ -13,19 +14,26 @@ let lucroLiquido = 0;
 let sacas = 0;
 let co2Total = 0;
 let temp = 85;
-let clima = 0; 
+let clima = 0; // 0 = Sol, 1 = Chuva
 let modAtivo = null;
 let idiomaAtivo = 'pt';
 
+// Gerenciamento de Gráfico
 let objGrafico = null;
 let historicoTempo = [];
 let historicoLucro = [];
 
+/**
+ * Controla a visibilidade do bloco de manual
+ */
 function toggleAjuda() {
     const p = document.getElementById("painel-ajuda");
     if (p) p.style.display = p.style.display === "none" ? "block" : "none";
 }
 
+/**
+ * Traduz os elementos da tela consultando o config.js
+ */
 function mudarIdioma(lang) {
     idiomaAtivo = lang;
     const elementos = document.querySelectorAll("[data-i18n]");
@@ -38,6 +46,9 @@ function mudarIdioma(lang) {
     registrarLog(`SISTEMA: Idioma alterado para [${lang.toUpperCase()}]`);
 }
 
+/**
+ * Alterna entre esquemas de cores e recalibra o contraste do gráfico
+ */
 function alternarTema() {
     const html = document.documentElement;
     const atual = html.getAttribute("data-theme");
@@ -56,6 +67,9 @@ function alternarTema() {
     registrarLog(`SISTEMA: Tema alterado para [${novo.toUpperCase()}]`);
 }
 
+/**
+ * Loga as transações e telemetria no console interno inferior
+ */
 function registrarLog(msg) {
     const log = document.getElementById("log-box");
     if (!log) return;
@@ -64,6 +78,9 @@ function registrarLog(msg) {
     log.scrollTop = log.scrollHeight;
 }
 
+/**
+ * Carrega a frota baseado no tipo de maquinário selecionado
+ */
 function trocarCategoria(cat) {
     const sel = document.getElementById("sel-modelo");
     if (!sel) return;
@@ -76,6 +93,9 @@ function trocarCategoria(cat) {
     mudarModelo(0);
 }
 
+/**
+ * Define o modelo ativo e calibra a capacidade do tanque
+ */
 function mudarModelo(idx) {
     const selTipo = document.getElementById("sel-tipo");
     if (!selTipo) return;
@@ -88,6 +108,9 @@ function mudarModelo(idx) {
     atualizarUI();
 }
 
+/**
+ * Inicializa a operação injetando cargas e limpando dados residuais
+ */
 function carregarDadosIniciais() {
     const inDiesel = document.getElementById("in-diesel");
     const inCarga = document.getElementById("in-carga");
@@ -118,6 +141,9 @@ function carregarDadosIniciais() {
     atualizarUI();
 }
 
+/**
+ * Ativa ou pausa o loop da simulação
+ */
 function toggleSimulacao() {
     if (motorFundido) return;
     isRunning = !isRunning;
@@ -128,6 +154,9 @@ function toggleSimulacao() {
     }
 }
 
+/**
+ * Modifica as restrições climáticas ambientais
+ */
 function mudarClima() {
     clima = clima === 0 ? 1 : 0;
     const valClima = document.getElementById("val-clima");
@@ -135,6 +164,9 @@ function mudarClima() {
     registrarLog(clima === 1 ? "⚠️ Sensor: Chuva detectada no PR. Patinagem de pneu ativa." : "Sensor: Clima Seco.");
 }
 
+/**
+ * Monta o gráfico de telemetria Chart.js na inicialização do DOM
+ */
 function criarGrafico() {
     const canvas = document.getElementById('grafico-telemetria');
     if (!canvas) return;
@@ -165,6 +197,10 @@ function criarGrafico() {
     });
 }
 
+/**
+ * Loop principal de simulação matemática (Executado a cada 1000ms)
+ * ATUALIZADO: Consumo de diesel proporcional às horas simuladas aceleradas.
+ */
 function simular() {
     if (!isRunning || motorFundido) return;
 
@@ -177,7 +213,8 @@ function simular() {
     }
 
     segs++;
-    horasAcumuladas += 0.1;
+    const passoHora = 0.1; 
+    horasAcumuladas += passoHora;
 
     const inPDiesel = document.getElementById("in-p-diesel");
     const inPSaca = document.getElementById("in-p-saca");
@@ -212,12 +249,22 @@ function simular() {
     const valHa = document.getElementById("val-ha");
     if (valHa) valHa.innerText = hectares.toFixed(2);
 
-    let consumoSg = 0.004 + (cargaKg / 100000);
-    dieselL -= consumoSg;
+    // Matemática Corrigida do Diesel por Hora
+    let consumoBaseHora = modAtivo ? (modAtivo.tanque * 0.05) : 30; 
+    let efeitoCarga = (cargaKg / 5000) * 10; 
+    let consumoPorHoraRealista = consumoBaseHora + efeitoCarga;
+    
+    if (vel === 0) {
+        consumoPorHoraRealista = 3.0; // Consumo residual em marcha lenta
+    }
+
+    let consumoDesteCiclo = consumoPorHoraRealista * passoHora;
+
+    dieselL -= consumoDesteCiclo;
     if (dieselL < 0) dieselL = 0;
 
-    co2Total += (consumoSg * 2.61); 
-    custoTotal += (consumoSg * pDiesel);
+    co2Total += (consumoDesteCiclo * 2.61); 
+    custoTotal += (consumoDesteCiclo * pDiesel);
 
     if (vel > 0) {
         sacas = Math.floor(hectares * 65);
@@ -259,6 +306,9 @@ function simular() {
     atualizarUI();
 }
 
+/**
+ * Atualiza e formata os dados visuais na tela de modo seguro
+ */
 function atualizarUI() {
     const valCusto = document.getElementById("val-custo");
     const valGanho = document.getElementById("val-ganho");
@@ -296,6 +346,7 @@ function atualizarUI() {
     if (barCo2) barCo2.style.width = Math.min(100, (co2Total / 5) * 100) + "%";
 }
 
+// Configurações de Boot do sistema
 window.onload = () => {
     trocarCategoria('trator');
     mudarIdioma('pt');
