@@ -40,7 +40,15 @@ const dicionario = {
         logShutdown: "SHUTDOWN REMOTO ATIVADO: Superaquecimento mecânico detectado.", logReset: "Sistema reinicializado após atuação preventiva.",
         titResumo: "--- RESUMO DE FECHAMENTO DA OPERAÇÃO ---", resTempo: "⏱️ Tempo total trabalhado:", resColheito: "🚜 Total colhido na sessão: {X} Sacas",
         resGasto: "💰 Gasto Operacional Total: R$", resLucro: "📈 Lucro Líquido Estimado: R$", txtBtnReiniciar: "REINICIAR SISTEMA",
-        txtCalorTitulo: "🚨 SUPERAQUECIMENTO CRÍTICO 🚨", txtCalorSub: "Motor desligado automaticamente (>102°C)."
+        txtCalorTitulo: "🚨 SUPERAQUECIMENTO CRÍTICO 🚨", txtCalorSub: "Motor desligado automaticamente (>102°C).",
+        // Novas chaves da apresentação inseridas no dicionário para a tradução total funcionar:
+        titBoasVindas: "🛰️ O que é Telemetria de Máquinas Agrícolas?",
+        pIntro1: "A telemetria é uma tecnologia avançada que permite a coleta, medição e transmissão de dados de um veículo à distância em tempo real. No meio rural, ela funciona como o \"sistema nervoso\" da Agricultura 4.0. Através de sensores instalados nos tratores, colheitadeiras e pulverizadores, informações cruciais como consumo de combustível, temperatura do motor, velocidade de operação, peso da carga e localização via GPS são enviadas instantaneamente para o computador ou celular do produtor.",
+        pIntro2: "Qual a funcionalidade deste site? O AGROSTREAM foi desenvolvido para capacitar estudantes e produtores rurais a entenderem o impacto financeiro, operacional e ecológico do uso de frotas agrícolas. Através deste painel, é possível prever gastos, otimizar colheitas e controlar a pegada de carbono da sua fazenda.",
+        btnAjudaTexto: "Como funciona o simulador? (Clique para ver)",
+        titComoFunciona: "Passo a Passo para Operar o Sistema:",
+        passo1Tit: "1. Escolha a sua Máquina:", passo2Tit: "2. Configure a Operação:", passo3Tit: "3. Ajuste o Mercado:", passo4Tit: "4. Aplique a Carga e Inicie:",
+        titPainelSim: "🖥️ Painel Integrado de Telemetria IoT", lblStatusSim: "SIMULAÇÃO:"
     },
     en: {
         statusParada: "STOPPED", statusRodando: "RUNNING", titSetup: "Load Configuration",
@@ -64,7 +72,14 @@ const dicionario = {
         logShutdown: "REMOTE SHUTDOWN ACTIVATED: Critical overheating detected.", logReset: "System rebooted after preventive maintenance.",
         titResumo: "--- OPERATION CLOSING REPORT ---", resTempo: "⏱️ Total time worked:", resColheito: "🚜 Total harvested this session: {X} Bags",
         resGasto: "💰 Total Operating Cost: R$", resLucro: "📈 Estimated Net Profit: R$", txtBtnReiniciar: "REBOOT SYSTEM",
-        txtCalorTitulo: "🚨 CRITICAL OVERHEATING 🚨", txtCalorSub: "Engine automatically shut down (>102°C)."
+        txtCalorTitulo: "🚨 CRITICAL OVERHEATING 🚨", txtCalorSub: "Engine automatically shut down (>102°C).",
+        titBoasVindas: "🛰️ What is Agricultural Machine Telemetry?",
+        pIntro1: "Telemetry is an advanced technology that allows the remote collection, measurement, and transmission of vehicle data in real-time. In rural environments, it acts as the \"nervous system\" of Agriculture 4.0. Through sensors installed on tractors, combines, and sprayers, vital information such as fuel consumption, engine temperature, operational speed, payload, and GPS location is sent instantly to the farmer's computer or mobile device.",
+        pIntro2: "What is the purpose of this website? AGROSTREAM was developed to empower students and farmers to understand the financial, operational, and ecological impacts of operating agricultural fleets. Through this dashboard, you can forecast expenses, optimize harvests, and control your farm's carbon footprint.",
+        btnAjudaTexto: "How does the simulator work? (Click to view)",
+        titComoFunciona: "Step-by-Step System Operations:",
+        passo1Tit: "1. Choose Your Machine:", passo2Tit: "2. Configure the Operation:", passo3Tit: "3. Adjust the Market:", passo4Tit: "4. Apply Load & Start:",
+        titPainelSim: "🖥️ IoT Telemetry Integrated Panel", lblStatusSim: "SIMULATION:"
     }
 };
 

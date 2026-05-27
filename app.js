@@ -13,6 +13,16 @@ let custoAcumuladoDinheiro = 0;
 let latBase = -23.3100;
 let lonBase = -51.4100;
 
+// Nova função para abrir/fechar as instruções clicando no botão
+function toggleInstrucoes() {
+    const painel = document.getElementById("painel-instrucoes");
+    if (painel.style.display === "none") {
+        painel.style.display = "block";
+    } else {
+        painel.style.display = "none";
+    }
+}
+
 function mudarIdioma(lang) {
     idiomaAtivo = lang;
     const txts = dicionario[lang];
@@ -20,7 +30,7 @@ function mudarIdioma(lang) {
     for (let id in txts) {
         let el = document.getElementById("txt-" + id);
         if (el) {
-            el.innerText = txts[id];
+            el.innerHTML = txts[id];
         }
     }
     

@@ -16,12 +16,33 @@ header {
     box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
 }
 h1 span { color: var(--primaria); font-size: 14px; }
-.status-sim { font-weight: bold; font-size: 13px; margin-top: 5px; }
-
 .controles-topo { display: flex; gap: 10px; align-items: center; }
 select, button { padding: 10px; border-radius: 8px; border: 1px solid var(--primaria); background: var(--card); color: var(--txt); font-weight: bold; cursor: pointer; }
-.btn-play { background: var(--primaria) !important; color: white !important; }
 
+/* Nova Seção de Apresentação no Topo */
+.secao-introducao { margin-bottom: 20px; text-align: left; }
+.bloco-apresentacao { background: var(--card); padding: 25px; border-radius: 20px; border-left: 6px solid #3498db; box-shadow: 0 8px 32px rgba(0,0,0,0.2); backdrop-filter: blur(10px); }
+.secao-introducao h2 { font-size: 22px; color: #3498db; margin-bottom: 12px; font-weight: bold; }
+.secao-introducao p { font-size: 15px; line-height: 1.6; margin-bottom: 10px; text-align: justify; opacity: 0.95; }
+
+/* Seção de Instruções Ocultáveis (Menu Retrátil) */
+.secao-instrucoes { margin-bottom: 25px; text-align: left; }
+.btn-ajuda { width: 100%; text-align: left; background: #9b59b6; color: white; font-size: 15px; border: none; padding: 14px; border-radius: 12px; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3); transition: 0.3s; }
+.btn-ajuda:hover { background: #8e44ad; }
+.instrucoes-conteudo { background: var(--card); padding: 20px; border-radius: 0 0 15px 15px; border: 1px solid #9b59b6; border-top: none; animation: fadeIn 0.4s ease; }
+.instrucoes-conteudo h4 { color: #9b59b6; margin-bottom: 10px; font-size: 14px; }
+.instrucoes-conteudo ul { list-style: none; }
+.instrucoes-conteudo li { margin-bottom: 8px; font-size: 14px; line-height: 1.5; }
+
+/* Container do Simulador reposicionado */
+.secao-simulador-container { background: rgba(0, 0, 0, 0.4); padding: 20px; border-radius: 25px; backdrop-filter: blur(5px); box-shadow: inset 0 0 40px rgba(0,0,0,0.5); }
+.barra-simulador-topo { background: var(--card); padding: 15px; border-radius: 15px; margin-bottom: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; border-right: 6px solid var(--primaria); }
+.barra-simulador-topo h2 { font-size: 18px; color: var(--primaria); font-weight: bold; }
+.controles-simulador { display: flex; gap: 10px; align-items: center; }
+.btn-play { background: var(--primaria) !important; color: white !important; }
+.status-sim { font-weight: bold; font-size: 14px; width: 100%; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 8px; text-align: left; }
+
+/* Grid de painéis do Simulador */
 #painel { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
 .card { background: var(--card); padding: 20px; border-radius: 20px; border-left: 6px solid var(--primaria); backdrop-filter: blur(10px); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
 .card h3 { font-size: 11px; color: var(--primaria); text-transform: uppercase; margin-bottom: 10px; font-weight: bold; }
@@ -55,14 +76,11 @@ input { width: 110px; padding: 6px; border-radius: 6px; border: 1px solid var(--
 .modal-erro { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); background: #e74c3c; color: white; padding: 40px; border-radius: 20px; text-align: center; z-index: 100; box-shadow: 0 0 100px rgba(0,0,0,0.5); }
 .modal-erro button { margin-top: 15px; background: white; color: #e74c3c; border: none; }
 
-.secao-educativa { margin-top: 40px; display: flex; flex-direction: column; gap: 25px; padding-bottom: 40px; text-align: left; }
-.bloco-info { background: var(--card); padding: 30px; border-radius: 20px; border-top: 4px solid var(--primaria); box-shadow: 0 8px 32px rgba(0,0,0,0.15); backdrop-filter: blur(10px); }
-.bloco-info h2 { font-size: 22px; color: var(--primaria); margin-bottom: 15px; font-weight: bold; }
-.bloco-info p { font-size: 16px; line-height: 1.6; margin-bottom: 12px; text-align: justify; opacity: 0.9; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
 @media print {
     body { background: white !important; color: black !important; }
-    header, .card-setup, #btn-start, #btn-tema, #btn-print, select, .secao-educativa { display: none !important; }
+    header, .card-setup, .secao-introducao, .secao-instrucoes, .barra-simulador-topo, select { display: none !important; }
     #painel { display: block !important; }
     .card { border: 1px solid #333 !important; margin-bottom: 15px !important; page-break-inside: avoid !important; background: #fff !important; color: #000 !important; }
     body::before { content: "RELATÓRIO OFICIAL DE TELEMETRIA AGROSTREAM - CONCURSO AGRINHO"; display: block; font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 30px; border-bottom: 2px solid #000; padding-bottom: 10px; }
