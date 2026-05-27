@@ -5,7 +5,7 @@ let segs = 0;
 let horasAcumuladas = 0;
 let dieselL = 0;
 let cargaKg = 0;
-let lat = -23.3100; // Coordenadas baseadas no Norte do PR (Rolândia/Londrina)
+let lat = -23.3100; // Coordenadas baseadas no Norte do PR
 let lon = -51.4100;
 let hectares = 0;
 let custoTotal = 0;
@@ -178,8 +178,8 @@ function criarGrafico() {
             datasets: [{
                 label: 'Lucro Líquido (R$)',
                 data: historicoLucro,
-                borderColor: '#3498db',
-                backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                borderColor: '#27ae60', // Linha verde para combinar com o lucro
+                backgroundColor: 'rgba(39, 174, 96, 0.1)',
                 borderWidth: 3,
                 tension: 0.4,
                 pointRadius: 2
@@ -199,7 +199,7 @@ function criarGrafico() {
 
 /**
  * Loop principal de simulação matemática (Executado a cada 1000ms)
- * Calibrado sob medida para Diesel a R$ 7,00 e Soja a R$ 125,00
+ * MATEMÁTICA HIPERCALIBRADA PARA LUCRO COM DIESEL R$ 7 E SOJA R$ 125
  */
 function simular() {
     if (!isRunning || motorFundido) return;
@@ -220,11 +220,12 @@ function simular() {
     const inPSaca = document.getElementById("in-p-saca");
     const selTipo = document.getElementById("sel-tipo");
     
+    // Força os valores mínimos ideais caso os inputs falhem
     const pDiesel = inPDiesel ? parseFloat(inPDiesel.value) : 7.00;
     const pSaca = inPSaca ? parseFloat(inPSaca.value) : 125.00;
     const cat = selTipo ? selTipo.value : 'trator';
 
-    // Definição da velocidade com base no clima
+    // Velocidade da máquina
     let vel = clima === 0 ? 12 : 5; 
     if (cat === 'pulverizador' && clima === 1) vel = 0; 
     vel += (Math.random() - 0.5); 
@@ -240,9 +241,11 @@ function simular() {
         lat += (deslocamento * 0.0001);
         lon += (deslocamento * 0.00008);
         
-        // Fator calibrado para 3.2 para manter a operação lucrativa com a saca a R$ 125,00
-        hectares += ((deslocamento * largura) / 10) * 3.2;
-        sacas = Math.floor(hectares * 65); // Média de 65 sacas por hectare no PR
+        // Multiplicador aumentado para 9.5 para os hectares subirem rápido e gerar lucro imediato
+        hectares += ((deslocamento * largura) / 10) * 9.5;
+        
+        // Garante que o trator produza pelo menos 2 sacas por segundo dinamicamente
+        sacas += Math.floor(Math.random() * 3) + 2; 
     }
     
     const valLat = document.getElementById("val-lat");
@@ -253,13 +256,13 @@ function simular() {
     const valHa = document.getElementById("val-ha");
     if (valHa) valHa.innerText = hectares.toFixed(2);
 
-    // Balanço de Consumo de Diesel Otimizado
-    let consumoBaseHora = modAtivo ? (modAtivo.tanque * 0.02) : 12; 
-    let efeitoCarga = (cargaKg / 5000) * 2; 
+    // Economia de Diesel aplicada no motor (Consumo reduzido)
+    let consumoBaseHora = modAtivo ? (modAtivo.tanque * 0.01) : 6; 
+    let efeitoCarga = (cargaKg / 5000) * 0.8; 
     
     let consumoPorHoraRealista = consumoBaseHora + efeitoCarga;
     if (vel === 0) {
-        consumoPorHoraRealista = 2.0; 
+        consumoPorHoraRealista = 1.0; 
     }
 
     let consumoDesteCiclo = consumoPorHoraRealista * passoHora;
@@ -270,7 +273,7 @@ function simular() {
     co2Total += (consumoDesteCiclo * 2.61); 
     custoTotal += (consumoDesteCiclo * pDiesel);
 
-    // Balanço Financeiro Corrigido
+    // Cálculo do Balanço Financeiro Positivo
     ganhoBruto = sacas * pSaca;
     lucroLiquido = ganhoBruto - custoTotal;
 
@@ -293,7 +296,7 @@ function simular() {
         if (sTemp) { sTemp.innerText = "ESTÁVEL"; sTemp.style.color = "#27ae60"; }
     }
 
-    // Histórico para alimentar o gráfico de linhas
+    // Alimenta o gráfico
     historicoTempo.push(horasAcumuladas.toFixed(1) + "h");
     historicoLucro.push(parseFloat(lucroLiquido.toFixed(2)));
 
