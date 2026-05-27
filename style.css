@@ -1,87 +1,52 @@
 :root {
     --bg: #f0f4f0; --card: #ffffff; --txt: #1a2e1a; --primaria: #27ae60;
-    --fundo: url('https://images.unsplash.com/photo-1594494424759-64568625331d?auto=format&fit=crop&w=1920');
+    --fundo: url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1920');
 }
 [data-theme="dark"] {
     --bg: #0a0e0a; --card: #141e14; --txt: #f0fdf4; --primaria: #2ecc71;
-    --fundo: url('https://images.unsplash.com/photo-1624439151520-21396b79761e?auto=format&fit=crop&w=1920');
+    --fundo: url('https://images.unsplash.com/photo-1594494424759-64568625331d?auto=format&fit=crop&w=1920');
 }
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 body { background: var(--fundo) no-repeat center center fixed; background-size: cover; color: var(--txt); padding: 20px; transition: 0.5s; }
 
-header { 
-    background: var(--card); padding: 15px; border-radius: 15px; 
-    display: flex; justify-content: space-between; align-items: center; 
-    border-bottom: 4px solid var(--primaria); margin-bottom: 20px; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
-}
+header { background: var(--card); padding: 15px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--primaria); margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 h1 span { color: var(--primaria); font-size: 14px; }
-.controles-topo { display: flex; gap: 10px; align-items: center; }
+.controles-topo { display: flex; gap: 10px; }
 select, button { padding: 10px; border-radius: 8px; border: 1px solid var(--primaria); background: var(--card); color: var(--txt); font-weight: bold; cursor: pointer; }
 
-/* Nova Seção de Apresentação no Topo */
-.secao-introducao { margin-bottom: 20px; text-align: left; }
-.bloco-apresentacao { background: var(--card); padding: 25px; border-radius: 20px; border-left: 6px solid #3498db; box-shadow: 0 8px 32px rgba(0,0,0,0.2); backdrop-filter: blur(10px); }
-.secao-introducao h2 { font-size: 22px; color: #3498db; margin-bottom: 12px; font-weight: bold; }
-.secao-introducao p { font-size: 15px; line-height: 1.6; margin-bottom: 10px; text-align: justify; opacity: 0.95; }
+.secao-introducao { display: flex; gap: 20px; margin-bottom: 20px; }
+.img-destaque { width: 300px; border-radius: 20px; background: url('https://images.unsplash.com/photo-1586771107445-d3afef115ce3?auto=format&fit=crop&w=600') center/cover; border: 4px solid var(--primaria); }
+.bloco-apresentacao { flex: 1; background: var(--card); padding: 25px; border-radius: 20px; border-left: 6px solid #3498db; backdrop-filter: blur(10px); }
+.bloco-apresentacao h2 { color: #3498db; margin-bottom: 12px; }
+.bloco-apresentacao p { font-size: 15px; line-height: 1.6; margin-bottom: 10px; }
 
-/* Seção de Instruções Ocultáveis (Menu Retrátil) */
-.secao-instrucoes { margin-bottom: 25px; text-align: left; }
-.btn-ajuda { width: 100%; text-align: left; background: #9b59b6; color: white; font-size: 15px; border: none; padding: 14px; border-radius: 12px; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3); transition: 0.3s; }
-.btn-ajuda:hover { background: #8e44ad; }
-.instrucoes-conteudo { background: var(--card); padding: 20px; border-radius: 0 0 15px 15px; border: 1px solid #9b59b6; border-top: none; animation: fadeIn 0.4s ease; }
-.instrucoes-conteudo h4 { color: #9b59b6; margin-bottom: 10px; font-size: 14px; }
-.instrucoes-conteudo ul { list-style: none; }
-.instrucoes-conteudo li { margin-bottom: 8px; font-size: 14px; line-height: 1.5; }
+.btn-ajuda { width: 100%; background: #9b59b6; color: white; border: none; padding: 14px; margin-bottom: 10px; }
+.instrucoes-conteudo { background: var(--card); padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #9b59b6; }
 
-/* Container do Simulador reposicionado */
-.secao-simulador-container { background: rgba(0, 0, 0, 0.4); padding: 20px; border-radius: 25px; backdrop-filter: blur(5px); box-shadow: inset 0 0 40px rgba(0,0,0,0.5); }
-.barra-simulador-topo { background: var(--card); padding: 15px; border-radius: 15px; margin-bottom: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; border-right: 6px solid var(--primaria); }
-.barra-simulador-topo h2 { font-size: 18px; color: var(--primaria); font-weight: bold; }
-.controles-simulador { display: flex; gap: 10px; align-items: center; }
+.secao-simulador-container { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 25px; backdrop-filter: blur(8px); }
+.barra-simulador-topo { background: var(--card); padding: 15px; border-radius: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; border-right: 6px solid var(--primaria); }
 .btn-play { background: var(--primaria) !important; color: white !important; }
-.status-sim { font-weight: bold; font-size: 14px; width: 100%; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 8px; text-align: left; }
+.btn-laudo { background: #34495e !important; color: white !important; }
 
-/* Grid de painéis do Simulador */
-#painel { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-.card { background: var(--card); padding: 20px; border-radius: 20px; border-left: 6px solid var(--primaria); backdrop-filter: blur(10px); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
-.card h3 { font-size: 11px; color: var(--primaria); text-transform: uppercase; margin-bottom: 10px; font-weight: bold; }
-.valor { font-size: 32px; font-weight: 900; margin-bottom: 10px; }
-.barra { width: 100%; height: 12px; background: rgba(0,0,0,0.1); border-radius: 6px; overflow: hidden; margin: 10px 0; }
+#painel { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
+.card { background: var(--card); padding: 20px; border-radius: 15px; border-left: 5px solid var(--primaria); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+.card h3 { font-size: 12px; color: var(--primaria); text-transform: uppercase; margin-bottom: 10px; }
+.valor { font-size: 30px; font-weight: 900; margin-bottom: 5px; }
+.barra { width: 100%; height: 10px; background: rgba(0,0,0,0.1); border-radius: 5px; overflow: hidden; margin: 10px 0; }
 .fill { height: 100%; background: var(--primaria); width: 0%; transition: 0.5s; }
 
-.input-group { margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-input { width: 110px; padding: 6px; border-radius: 6px; border: 1px solid var(--primaria); background: transparent; color: var(--txt); font-weight: bold; }
-.btn-confirmar { width: 100%; padding: 10px; background: #3498db; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 5px; }
-.btn-confirmar:hover { background: #2980b9; }
+.input-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+input { width: 100px; padding: 5px; border-radius: 5px; border: 1px solid var(--primaria); background: transparent; color: var(--txt); font-weight: bold; }
+.btn-confirmar { width: 100%; background: #3498db; color: white; border: none; margin-top: 10px; }
 
-.gps { background: rgba(0,0,0,0.05); padding: 5px; border-radius: 5px; font-family: monospace; font-size: 12px; margin-top: 5px; }
-.sub-info { font-size: 13px; font-weight: bold; opacity: 0.8; }
+.caixa-clima { margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.1); border-radius: 8px; font-weight: bold; }
+.btn-clima { width: 100%; margin-top: 5px; background: #e67e22; color: white; border: none; font-size: 12px; }
 
-.precos-market { background: rgba(0, 0, 0, 0.15); padding: 10px; border-radius: 8px; margin: 12px 0; font-size: 12px; border: 1px dashed var(--primaria); text-align: left; }
-.precos-market h4 { color: var(--primaria); margin-bottom: 5px; font-size: 11px; text-transform: uppercase; }
+.btn-manutencao { width: 100%; padding: 8px; margin-top: 10px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+.btn-manutencao:hover { background: #c0392b; }
 
-.card-log { border-left-color: #9b59b6; }
-.card-log h3 { color: #9b59b6; }
-#log-mensagens { font-family: monospace; font-size: 11px; height: 95px; overflow-y: auto; line-height: 1.5; padding: 5px; background: rgba(0,0,0,0.1); border-radius: 5px; text-align: left; }
-.log-info { color: #3498db; }
-.log-warn { color: #e67e22; font-weight: bold; }
-.log-danger { color: #e74c3c; font-weight: bold; }
-.log-ok { color: #2ecc71; }
+#log-mensagens { font-family: monospace; font-size: 12px; height: 120px; overflow-y: auto; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 5px; }
+.log-info { color: #3498db; } .log-warn { color: #e67e22; } .log-danger { color: #e74c3c; } .log-ok { color: #2ecc71; }
 
-.card-custo { border-left-color: #f1c40f; }
-.card-custo h3 { color: #f1c40f; }
-#status-custo { font-size: 13px; font-weight: bold; }
-
-.modal-erro { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); background: #e74c3c; color: white; padding: 40px; border-radius: 20px; text-align: center; z-index: 100; box-shadow: 0 0 100px rgba(0,0,0,0.5); }
-.modal-erro button { margin-top: 15px; background: white; color: #e74c3c; border: none; }
-
-@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-@media print {
-    body { background: white !important; color: black !important; }
-    header, .card-setup, .secao-introducao, .secao-instrucoes, .barra-simulador-topo, select { display: none !important; }
-    #painel { display: block !important; }
-    .card { border: 1px solid #333 !important; margin-bottom: 15px !important; page-break-inside: avoid !important; background: #fff !important; color: #000 !important; }
-    body::before { content: "RELATÓRIO OFICIAL DE TELEMETRIA AGROSTREAM - CONCURSO AGRINHO"; display: block; font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 30px; border-bottom: 2px solid #000; padding-bottom: 10px; }
-}
+.modal-erro { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); background: #e74c3c; color: white; padding: 40px; border-radius: 20px; text-align: center; z-index: 100; }
+@media print { body { background: white !important; color: black !important; } header, .secao-introducao, .secao-instrucoes, .btn-manutencao, .btn-clima { display: none !important; } .card { border: 1px solid #000; box-shadow: none; } }
