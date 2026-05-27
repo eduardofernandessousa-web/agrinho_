@@ -1,19 +1,37 @@
+/* CONFIGURAÇÃO DINÂMICA DE CORES (MODO CLARO E ESCURO) */
 :root {
-    --primaria: #2ecc71; --escura: #1a1a1a; --texto: #ffffff; --card: #252525;
+    --bg-principal: #121212;
+    --bg-card: #252525;
+    --bg-terminal: #000000;
+    --texto: #ffffff;
+    --texto-secundario: #ccc;
+    --primaria: #2ecc71;
+    --input-bg: #111;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-body { background: #121212; color: var(--texto); padding: 20px; }
+[data-theme="light"] {
+    --bg-principal: #f5f6fa;
+    --bg-card: #ffffff;
+    --bg-terminal: #eaeded;
+    --texto: #2c3e50;
+    --texto-secundario: #7f8c8d;
+    --primaria: #27ae60;
+    --input-bg: #ffffff;
+}
 
-header { background: var(--card); padding: 20px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--primaria); margin-bottom: 20px; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+body { background: var(--bg-principal); color: var(--texto); padding: 20px; transition: background 0.3s, color 0.3s; }
+
+header { background: var(--bg-card); padding: 20px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--primaria); margin-bottom: 20px; }
 h1 span { color: var(--primaria); font-size: 14px; }
 
 /* Apresentação */
-.secao-apresentacao { background: var(--card); border-radius: 20px; overflow: hidden; margin-bottom: 20px; border: 1px solid #333; }
+.secao-apresentacao { background: var(--bg-card); border-radius: 20px; overflow: hidden; margin-bottom: 20px; border: 1px solid rgba(128,128,128,0.2); }
 .intro-grid { display: grid; grid-template-columns: 400px 1fr; }
-.intro-imagem img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 800px) { .intro-grid { grid-template-columns: 1fr; } }
+.intro-imagem img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .intro-texto { padding: 30px; }
 .intro-texto h2 { color: var(--primaria); margin-bottom: 15px; font-size: 22px; }
-.intro-texto p { line-height: 1.6; margin-bottom: 20px; color: #ccc; text-align: justify; }
+.intro-texto p { line-height: 1.6; margin-bottom: 20px; color: var(--texto-secundario); text-align: justify; }
 
 /* Ajuda */
 .btn-ajuda-mestre { width: 100%; padding: 15px; background: #8e44ad; border: none; color: white; font-weight: bold; border-radius: 10px; margin-bottom: 10px; cursor: pointer; }
@@ -23,27 +41,26 @@ h1 span { color: var(--primaria); font-size: 14px; }
 .ajuda-item p { font-size: 14px; color: #ecf0f1; }
 
 /* Simulador */
-.simulador-master { background: #000; padding: 20px; border-radius: 20px; }
+.simulador-master { background: var(--bg-terminal); padding: 20px; border-radius: 20px; }
 .topo-sim { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
 #grid-painel { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
 
-.card { background: var(--card); padding: 20px; border-radius: 15px; border-left: 5px solid var(--primaria); }
+.card { background: var(--bg-card); padding: 20px; border-radius: 15px; border-left: 5px solid var(--primaria); }
 .card h3 { font-size: 12px; text-transform: uppercase; margin-bottom: 15px; color: var(--primaria); }
-.valor-grande { font-size: 40px; font-weight: bold; margin-bottom: 10px; }
-.barra { height: 12px; background: #111; border-radius: 6px; overflow: hidden; margin: 10px 0; }
+.valor-grande { font-size: 38px; font-weight: bold; margin-bottom: 10px; }
+.barra { height: 12px; background: rgba(0,0,0,0.2); border-radius: 6px; overflow: hidden; margin: 10px 0; }
 .fill { height: 100%; background: var(--primaria); width: 0%; transition: 0.5s; }
 
-.campo { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; }
-input, select { background: #111; border: 1px solid var(--primaria); color: white; padding: 5px; border-radius: 5px; }
-.market-box { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; margin: 10px 0; }
+.campo { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; align-items: center; }
+input, select { background: var(--input-bg); border: 1px solid var(--primaria); color: var(--texto); padding: 5px; border-radius: 5px; }
+.market-box { background: rgba(0,0,0,0.1); padding: 10px; border-radius: 10px; margin: 10px 0; border: 1px dashed var(--primaria); }
 
-.btn-aplicar { width: 100%; padding: 10px; background: #2980b9; border: none; color: white; border-radius: 5px; cursor: pointer; }
-.btn-start { background: var(--primaria); padding: 10px 25px; border: none; border-radius: 5px; color: white; font-weight: bold; }
-.btn-clima { background: #e67e22; color: white; border: none; padding: 8px; border-radius: 5px; width: 100%; margin-top: 10px; }
+.btn-aplicar { width: 100%; padding: 10px; background: #2980b9; border: none; color: white; border-radius: 5px; cursor: pointer; font-weight: bold; }
+.btn-start { background: var(--primaria); padding: 10px 25px; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer; }
+.btn-clima { background: #e67e22; color: white; border: none; padding: 8px; border-radius: 5px; width: 100%; margin-top: 10px; font-weight: bold; cursor: pointer; }
 
-.coordenadas { background: #111; padding: 10px; border-radius: 10px; font-family: monospace; margin-bottom: 10px; }
-
-#log-box { height: 150px; overflow-y: auto; background: #111; padding: 10px; font-family: monospace; font-size: 12px; color: #2ecc71; line-height: 1.5; }
+.coordenadas { background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px; font-family: monospace; margin-bottom: 10px; }
+#log-box { height: 150px; overflow-y: auto; background: rgba(0,0,0,0.3); padding: 10px; font-family: monospace; font-size: 12px; color: #2ecc71; line-height: 1.5; }
 
 .modal { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-.modal-content { background: #c0392b; padding: 50px; border-radius: 20px; text-align: center; }
+.modal-content { background: #c0392b; padding: 50px; border-radius: 20px; text-align: center; color: white; }
