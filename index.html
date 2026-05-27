@@ -19,137 +19,137 @@
                 <option value="en">🇺🇸 English</option>
                 <option value="es">🇪🇸 Español</option>
                 <option value="fr">🇫🇷 Français</option>
-                <option value="zh">🇨🇳 中文 (Mandarim)</option>
+                <option value="zh">🇨🇳 中文</option>
             </select>
             <button id="btn-tema" onclick="alternarTema()">☀️ MODO</button>
         </div>
     </header>
 
-    <section class="secao-apresentacao-container">
-        <div class="moldura-imagem">
-            <img src="https://images.unsplash.com/photo-1594494424759-64568625331d?auto=format&fit=crop&w=800" alt="Tecnologia Agrícola Connected">
-        </div>
-        
-        <div class="card-texto-teorico">
-            <h2 id="txt-titParanaPotencia">🌾 O Paraná como Potência da Agricultura de Precisão</h2>
-            <p id="txt-pParana1">O estado do Paraná é um dos maiores pilares do agronegócio mundial e referência em produtividade. Com uma geografia diversa e a fértil "terra roxa" (norte e oeste, polos como Rolândia), tornou-se laboratório de inovação rurais. Com o Plantio Direto, monitorar maquinário evita compactação excessiva e otimiza janelas de plantio frente ao clima dinâmico.</p>
-            
-            <h2 id="txt-titOQueESelemetria">🛰️ O que é a Telemetria de Máquinas Agrícolas?</h2>
-            <p id="txt-pTelemetria1">A telemetria é o sistema nervoso da máquina. Baseada na Internet das Coisas (IoT), tratores e colheitadeiras com barramento CAN e GPS enviam dados físicos em tempo real para nuvem. Monitora-se temperatura, consumo por hectare, velocidade e patinagem (deslizamento).</p>
+    <section class="secao-apresentacao">
+        <div class="intro-grid">
+            <div class="intro-imagem">
+                <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&w=800&q=80" alt="Agricultura Paraná">
+            </div>
+            <div class="intro-texto">
+                <h2 id="txt-titParana">🌾 O Paraná e a Fronteira da Inovação Agrícola</h2>
+                <p id="txt-pParana">O estado do Paraná é o coração pulsante do agronegócio brasileiro. Com o solo de "terra roxa" mais fértil do país, o estado lidera a produtividade de soja, milho e trigo através de um sistema de cooperativismo que é referência global. Cidades como Rolândia, Londrina e Cascavel são polos onde a tecnologia encontra a tradição. O Plantio Direto e a conservação de solos exigem precisão absoluta, e é aqui que a telemetria se torna indispensável para evitar a compactação e garantir recordes de safra sustentáveis.</p>
+                
+                <h2 id="txt-titTelemetria">🛰️ Tecnologia de Telemetria IoT</h2>
+                <p id="txt-pTelemetria">A telemetria agrícola é a ciência de medir dados à distância. Usando sensores de barramento CAN e GPS de alta precisão, o AGROSTREAM simula a transmissão de pacotes de dados via satélite. O sistema monitora instantaneamente o consumo de combustível, a patinagem das rodas em solo úmido e a eficiência térmica do motor, permitindo que o gestor tome decisões baseadas em números, não em suposições.</p>
 
-            <h2 id="txt-titParaQueServe">🎯 Para que serve o site AGROSTREAM?</h2>
-            <p id="txt-pParaQueServe1">AGROSTREAM é um Gêmeo Digital (Digital Twin). Ele traduz dados complexos de engenharia em visualizações para prever custos, analisar consumo de diesel, gerir crises mecânicas e calcular o impacto ambiental.</p>
-        </div>
-    </section>
-
-    <section class="secao-instrucoes">
-        <button id="btn-ajuda" class="btn-ajuda" onclick="toggleInstrucoes()">📖 <span id="txt-btnAjudaTexto">Como funciona o simulador? (Clique para ver)</span></button>
-        <div id="painel-instrucoes" class="instrucoes-conteudo" style="display: none;">
-            <h4 id="txt-titComoFunciona">Passo a Passo da Simulação (Motor Atualizado):</h4>
-            <ul>
-                <li id="txt-passo1Tit">1. Setup: Escolha máquina, cultura e cotações. Aplique carga.</li>
-                <li id="txt-passo2Tit">2. Clima (Paraná Weather): Se chover, pulverizador para e solo escorrega. Geada corta velocidade.</li>
-                <li id="txt-passo3Tit">3. Física IoT: Peso eleva consumo de diesel e temperatura.</li>
-                <li id="txt-passo4Tit">4. Alertas: Se chover e estiver pesado, há risco de Patinagem e Compactação de Solo.</li>
-                <li id="txt-passo5Tit">5. Manutenção: Se motor passar de 95°C, Chame Oficina ou motor fundirá.</li>
-            </ul>
+                <h2 id="txt-titObjetivo">🎯 Propósito do AGROSTREAM</h2>
+                <p id="txt-pObjetivo">Este simulador é um Gêmeo Digital projetado para educar e otimizar. Ele serve para que o operador entenda como o clima paranaense e o peso da carga influenciam diretamente no custo por hectare e na emissão de CO2. É uma ferramenta de gestão estratégica para a nova geração do campo.</p>
+            </div>
         </div>
     </section>
 
-    <section class="secao-simulador-container">
-        <div class="barra-simulador-topo">
-            <h2 id="txt-titPainelSim">🖥️ Painel Integrado de Telemetria</h2>
-            <div class="controles-simulador">
-                <select id="seletor-tipo" onchange="trocarCategoria(this.value)">
+    <section class="secao-ajuda">
+        <button class="btn-ajuda-mestre" onclick="toggleAjuda()">📖 <span id="txt-btnAjuda">MANUAL COMPLETO DO SIMULADOR (Clique aqui)</span></button>
+        <div id="painel-ajuda" class="conteudo-ajuda" style="display:none;">
+            <div class="ajuda-grid">
+                <div class="ajuda-item">
+                    <h4 id="txt-ajudaTit1">1. Planejamento</h4>
+                    <p id="txt-ajudaP1">Escolha o modelo da máquina. Máquinas maiores consomem mais diesel, mas possuem tanques de grãos maiores. Configure o preço do diesel e da saca conforme a cotação do dia na sua cooperativa.</p>
+                </div>
+                <div class="ajuda-item">
+                    <h4 id="txt-ajudaTit2">2. Operação</h4>
+                    <p id="txt-ajudaP2">Clique em 'Aplicar Carga'. No painel de Movimento, observe o clima. O simulador altera a física se estiver chovendo, aumentando o consumo e reduzindo a velocidade para evitar danos ao solo.</p>
+                </div>
+                <div class="ajuda-item">
+                    <h4 id="txt-ajudaTit3">3. Monitoramento</h4>
+                    <p id="txt-ajudaP3">Acompanhe a temperatura. Se o motor trabalhar muito pesado sob sol forte, ele pode fundir. O sistema financeiro calcula seu gasto em tempo real baseado no consumo e horas trabalhadas.</p>
+                </div>
+                <div class="ajuda-item">
+                    <h4 id="txt-ajudaTit4">4. Finalização</h4>
+                    <p id="txt-ajudaP4">Ao clicar em STOP, o sistema gera um laudo de fechamento no Log, mostrando se a sua operação deu lucro ou prejuízo líquido.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="simulador-master">
+        <div class="topo-sim">
+            <h2 id="txt-titSim">🖥️ Terminal de Telemetria</h2>
+            <div class="controles">
+                <select id="sel-tipo" onchange="trocarCategoria(this.value)">
                     <option value="trator">🚜 TRATORES</option>
                     <option value="colheitadeira">🌾 COLHEITADEIRAS</option>
                     <option value="pulverizador">💨 PULVERIZADORES</option>
                 </select>
-                <select id="seletor-modelo" onchange="mudarModelo(this.value)"></select>
-                <button id="btn-print" onclick="window.print()" class="btn-laudo">🖨️ LAUDO</button>
-                <button id="btn-start" onclick="toggleSimulacao()" class="btn-play">▶ START</button>
+                <select id="sel-modelo" onchange="mudarModelo(this.value)"></select>
+                <button onclick="window.print()" class="btn-laudo">🖨️ GERAR LAUDO PDF</button>
+                <button id="btn-start" onclick="toggleSimulacao()" class="btn-start">▶ START</button>
             </div>
-            <div class="status-sim"><span id="txt-lblStatusSim">SIMULAÇÃO:</span> <span id="status-tag">PARADA</span></div>
+            <div class="status-box">STATUS: <span id="status-tag">PARADA</span></div>
         </div>
 
-        <main id="painel">
+        <div id="grid-painel">
             <div class="card card-setup">
-                <h3 id="txt-titSetup">Configuração</h3>
-                <div class="input-group">
-                    <label id="txt-lblCultura">Cultura:</label>
-                    <select id="sel-cultura">
-                        <option value="soja">🌱 Soja</option>
-                        <option value="milho">🌽 Milho</option>
-                        <option value="trigo">🌾 Trigo</option>
-                    </select>
+                <h3 id="txt-titConfig">Configuração Inicial</h3>
+                <div class="campo"><label id="txt-lblCultura">Cultura:</label>
+                    <select id="sel-cultura"><option value="soja">Soja</option><option value="milho">Milho</option><option value="trigo">Trigo</option></select>
                 </div>
-                <div class="input-group"><label id="txt-lblDiesel">Diesel (L):</label><input type="number" id="in-diesel" value="400"></div>
-                <div class="input-group"><label id="txt-lblCargaIni">Carga (kg):</label><input type="number" id="in-carga" value="2000"></div>
-                
-                <div class="precos-market">
-                    <div class="input-group"><label id="txt-lblDieselPreco">⛽ Diesel (R$/L):</label><input type="number" id="in-preco-diesel" value="6.10" step="0.01"></div>
-                    <div class="input-group"><label id="txt-lblSacaPreco">🌾 Saca (R$):</label><input type="number" id="in-preco-saca" value="125"></div>
+                <div class="campo"><label id="txt-lblDiesel">Diesel (L):</label><input type="number" id="in-diesel" value="500"></div>
+                <div class="campo"><label id="txt-lblCarga">Carga (kg):</label><input type="number" id="in-carga" value="2500"></div>
+                <div class="market-box">
+                    <div class="campo"><label>⛽ Diesel R$:</label><input type="number" id="in-p-diesel" value="6.10" step="0.01"></div>
+                    <div class="campo"><label>🌾 Saca R$:</label><input type="number" id="in-p-saca" value="128"></div>
                 </div>
-
-                <button id="txt-btnAplicar" class="btn-confirmar" onclick="carregarDadosIniciais()">✅ APLICAR CARGA</button>
+                <button onclick="carregarDadosIniciais()" class="btn-aplicar" id="txt-btnAplicar">✅ APLICAR CARGA</button>
             </div>
 
-            <div class="card card-vel">
-                <h3 id="txt-titMovimento">Operação & Clima</h3>
-                <div class="valor"><span id="val-vel">0</span> <small>km/h</small></div>
-                <p>📍Lat: <span id="val-lat">-23.31</span> | Lon: <span id="val-lon">-51.41</span></p>
-                <p style="color: #3498db; margin-top: 5px;"><b><span id="txt-lblArea">ÁREA:</span> <span id="val-ha">0.00</span> ha</b></p>
-                <div class="caixa-clima">
-                    <span id="txt-lblClima">CLIMA:</span> 
-                    <button class="btn-clima" onclick="mudarClimaManualmente()"><span id="val-clima">☀️ ENSOLARADO</span></button>
+            <div class="card card-gps">
+                <h3 id="txt-titGps">Posicionamento & Clima</h3>
+                <div class="valor-grande"><span id="val-vel">0</span> <small>km/h</small></div>
+                <div class="coordenadas">
+                    <p>Lat: <span id="val-lat">-23.3100</span></p>
+                    <p>Lon: <span id="val-lon">-51.4100</span></p>
                 </div>
+                <p>📍 <span id="txt-lblArea">Área:</span> <span id="val-ha">0.00</span> ha</p>
+                <button class="btn-clima" onclick="mudarClima()">☁️ <span id="val-clima">SOL</span></button>
             </div>
 
-            <div class="card card-comb">
-                <h3 id="txt-titDiesel">Tanque Diesel</h3>
-                <div class="valor"><span id="val-diesel-pct">0</span>%</div>
+            <div class="card">
+                <h3 id="txt-titFinanceiro">Financeiro Acumulado</h3>
+                <div class="valor-grande" style="color: #f1c40f;">R$ <span id="val-custo">0.00</span></div>
+                <div class="barra"><div id="bar-financeiro" class="fill" style="background:#f1c40f"></div></div>
+                <p id="status-financeiro">---</p>
+            </div>
+
+            <div class="card">
+                <h3 id="txt-titCombustivel">Nível Combustível</h3>
+                <div class="valor-grande"><span id="val-diesel-pct">0</span>%</div>
                 <div class="barra"><div id="bar-diesel" class="fill"></div></div>
-                <div class="sub-info"><span id="val-diesel-l">0</span>L / <span id="max-diesel">0</span>L</div>
+                <p><span id="val-diesel-l">0</span>L / <span id="max-diesel">0</span>L</p>
             </div>
 
-            <div class="card card-temp">
-                <h3 id="txt-titTemp">Temperatura Motor</h3>
-                <div class="valor"><span id="val-temp">0</span>°C</div>
+            <div class="card">
+                <h3 id="txt-titTemp">Temperatura</h3>
+                <div class="valor-grande"><span id="val-temp">0</span>°C</div>
                 <div class="barra"><div id="bar-temp" class="fill"></div></div>
                 <p id="status-temp">ESTÁVEL</p>
-                <button id="txt-btnManutencao" class="btn-manutencao" onclick="chamarManutencao()">🔧 CHAMAR OFICINA (-15°C)</button>
             </div>
 
-            <div class="card card-carga-total">
-                <h3 id="txt-titArmazem">Carga & Produtividade</h3>
-                <div class="valor"><span id="val-carga-kg">0</span> <small style="font-size: 14px;">/ <span id="val-carga-max">0</span> kg</small></div>
+            <div class="card">
+                <h3 id="txt-titProducao">Produção IoT</h3>
+                <div class="valor-grande"><span id="val-carga-kg">0</span> <small>kg</small></div>
                 <div class="barra"><div id="bar-carga" class="fill"></div></div>
-                <p style="color: #2ecc71; font-weight: bold;"><span id="txt-lblSacasColhidas">🚜 SACAS:</span> <span id="val-sacas-cont">0</span> SC</p>
-            </div>
-
-            <div class="card card-custo">
-                <h3 id="txt-titFinancas">Financeiro</h3>
-                <div class="valor" style="color: #f1c40f;">R$ <span id="val-custo">0</span><small>/h</small></div>
-                <p id="status-custo">MÁQUINA EM REPOUSO</p>
-            </div>
-
-            <div class="card card-eco">
-                <h3 id="txt-titEco" style="color: #27ae60;">Sustentabilidade</h3>
-                <div class="valor" style="color: #2ecc71;"><span id="val-co2">0.0</span> <small>kg CO₂</small></div>
-                <p id="status-eco">MÁQUINA NEUTRA</p>
+                <p>🚜 <span id="val-sacas">0</span> SACAS</p>
             </div>
 
             <div class="card card-log" style="grid-column: 1 / -1;">
-                <h3 id="txt-titLog">Histórico de Alertas (IoT Log)</h3>
-                <div id="log-mensagens"><span class="log-ok">[OK]</span> Sistema Inicializado. Rolândia/PR.</div>
+                <h3 id="txt-titLog">Log de Eventos IoT</h3>
+                <div id="log-box"></div>
             </div>
-        </main>
+        </div>
     </section>
 
-    <div id="aviso-calor" class="modal-erro" style="display:none">
-        <h1 id="txt-txtCalorTitulo">🚨 MOTOR FUNDIDO 🚨</h1>
-        <p id="txt-txtCalorSub">Temperatura ultrapassou 102°C Critical.</p>
-        <button id="txt-txtBtnReiniciar" onclick="resetarMotor()">REINICIAR SISTEMA</button>
+    <div id="modal-calor" class="modal" style="display:none">
+        <div class="modal-content">
+            <h1>🔥 MOTOR FUNDIDO!</h1>
+            <p>A telemetria detectou falha crítica por calor.</p>
+            <button onclick="location.reload()">REINICIAR TUDO</button>
+        </div>
     </div>
 
     <script src="config.js"></script>
