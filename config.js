@@ -1,22 +1,26 @@
+// Banco de dados dos maquinários agrícolas (Capacidade do tanque em Litros)
 const frota = {
     trator: [
-        { nome: "John Deere 8R 410", tanque: 710, carga: 5000 },
-        { nome: "Case IH Magnum 400", tanque: 680, carga: 4800 }
+        { nome: "John Deere 6135M (135 cv)", tanque: 280 },
+        { nome: "Case IH Puma 230 (234 cv)", tanque: 440 },
+        { nome: "New Holland T8.430 (428 cv)", tanque: 620 }
     ],
     colheitadeira: [
-        { nome: "New Holland CR 10.90", tanque: 1300, carga: 14500 },
-        { nome: "John Deere S7 900", tanque: 1250, carga: 14100 }
+        { nome: "New Holland CR 7.90 EVO", tanque: 1000 },
+        { nome: "John Deere S780 Axial", tanque: 1250 },
+        { nome: "Case IH Axial-Flow 9250", tanque: 1130 }
     ],
     pulverizador: [
-        { nome: "Jacto Uniport 4530", tanque: 400, carga: 3500 },
-        { nome: "Stara Imperador 4000", tanque: 450, carga: 4000 }
+        { nome: "Jacto Uniport 3030", tanque: 300 },
+        { nome: "Stara Imperador 4000", tanque: 420 }
     ]
 };
 
+// Dicionário de Idiomas para a Banca
 const dicionario = {
     pt: {
         titParana: "🌾 O Paraná e a Fronteira da Inovação Agrícola",
-        pParana: "O estado do Paraná é o coração pulsante do agronegócio brasileiro. Com o solo de \"terra roxa\" mais fértil do país, o estado lidera a produtividade de soja, milho e trigo através de um sistema de cooperativismo que é referência global. Cidades como Rolândia, Londrina e Cascavel são polos onde a tecnologia encontra a tradição. O Plantio Direto e a conservação de solos exigem precisão absoluta, e é aqui que a telemetria se torna indispensável para evitar a compactação e garantir recordes de safra sustentáveis.",
+        pParana: "O estado do Paraná é o coração pulsante do agronegócio brasileiro. Com o solo de 'terra roxa' mais fértil do país, o estado lidera a produtividade de soja, milho e trigo através de um sistema de cooperativismo que é referência global. Cidades como Rolândia, Londrina e Cascavel são polos onde a tecnologia encontra a tradição. O Plantio Direto e a conservação de solos exigem precisão absoluta, e é aqui que a telemetria se torna indispensável para evitar a compactação e garantir recordes de safra sustentáveis.",
         titTelemetria: "🛰️ Tecnologia de Telemetria IoT",
         pTelemetria: "A telemetria agrícola é a ciência de medir dados à distância. Usando sensores de barramento CAN e GPS de alta precisão, o AGROSTREAM simula a transmissão de pacotes de dados via satélite. O sistema monitora instantaneamente o consumo de combustível, a patinagem das rodas em solo úmido e a eficiência térmica do motor, permitindo que o gestor tome decisões baseadas em números, não em suposições.",
         titObjetivo: "🎯 Propósito do AGROSTREAM",
@@ -53,50 +57,39 @@ const dicionario = {
     },
     en: {
         titParana: "🌾 Paraná and the Agricultural Innovation Frontier",
-        pParana: "The state of Paraná is the pulsing heart of Brazilian agribusiness. With the country's most fertile soil, it leads in precision yields across cities like Rolândia and Cascavel using intelligent data metrics.",
+        pParana: "The state of Paraná is the beating heart of Brazilian agribusiness. With the most fertile 'terra roxa' soil in the country, the state leads the productivity of soybeans, corn, and wheat through a global reference cooperative system. Cities like Rolândia, Londrina and Cascavel are hubs where technology meets tradition. No-till farming and soil conservation require absolute precision, and this is where telemetry becomes indispensable to avoid compaction and guarantee sustainable record harvests.",
         titTelemetria: "🛰️ IoT Telemetry Technology",
-        pTelemetria: "Telemetry systems log CAN bus packets dynamically. It monitors fuel consumption, live mechanical stress, and heat directly via virtual tracking models.",
-        titObjetivo: "🎯 AGROSTREAM Purpose",
-        pObjetivo: "A professional Digital Twin terminal interface allowing direct simulation of telemetry management frameworks under severe weather or logistical shifts.",
+        pTelemetria: "Agricultural telemetry is the science of measuring data from a distance. Using CAN bus sensors and high-precision GPS, AGROSTREAM simulates satellite data package transmission. The system instantly monitors fuel consumption, wheel slippage in wet soil, and engine thermal efficiency, allowing managers to make decisions based on data, not assumptions.",
+        titObjetivo: "🎯 Purpose of AGROSTREAM",
+        pObjetivo: "This simulator is a Digital Twin designed to educate and optimize. It helps operators understand how the climate of Paraná and the load weight directly influence the cost per hectare and CO2 emissions. It is a strategic management tool for the new generation of farming.",
         btnAjuda: "COMPLETE SIMULATOR MANUAL (Click here)",
         ajudaTit1: "1. Planning",
-        ajudaP1: "Select vehicle classes, load capacity constraints, and fine-tune operational parameter metrics before initialization.",
-        ajudaTit2: "2. Execution",
-        ajudaP2: "Engage real-time operations and shift climate controls to evaluate wheel slippage coefficients.",
-        ajudaTit3: "3. Telematics",
-        ajudaP3: "Track system core temperatures. High workflow environments scale up fuel thermal load parameters rapidly.",
-        ajudaTit4: "4. Telemetry Log",
-        ajudaP4: "Halting telemetry systems compiles financial logs, rendering full expenditure reports instantly.",
-        titSim: "🖥️ Telemetry Terminal Interface",
+        ajudaP1: "Choose the machine model. Larger machines consume more diesel but have larger grain tanks. Set the price of diesel and grain bags according to your local cooperative's current market quotes.",
+        ajudaTit2: "2. Operation",
+        ajudaP2: "Click 'Apply Load'. In the Movement panel, observe the weather. The simulator alters the physics if it rains, increasing consumption and reducing speed to prevent soil damage.",
+        ajudaTit3: "3. Monitoring",
+        ajudaP3: "Monitor the temperature. If the engine works too heavy under hot sun, it can fail. The financial system calculates your spending in real time based on consumption and operational hours.",
+        ajudaTit4: "4. Finalization",
+        ajudaP4: "By clicking STOP, the system generates a closing log report showing whether your operation yielded a net profit or loss.",
+        titSim: "🖥️ Telemetry Terminal",
         optTratores: "🚜 TRACTORS",
         optColheitadeiras: "🌾 COMBINES",
-        optPulverizadores: "💨 INDUSTRIAL SPRAYERS",
-        titConfig: "System Input Setup",
-        lblCultura: "Selected Crop:",
-        lblDiesel: "Fuel Capacity (L):",
-        lblCarga: "Target Weight (kg):",
-        btnAplicar: "✅ COMMIT LOAD SETUP",
-        titGps: "GPS Telematics & Climate",
-        lblArea: "Logged Area:",
-        titFinanceiro: "Financial Balance Matrix",
-        lblGastos: "Operating Cost:",
+        optPulverizadores: "💨 SPRAYERS",
+        titConfig: "Initial Configuration",
+        lblCultura: "Crop:",
+        lblDiesel: "Diesel (L):",
+        lblCarga: "Load (kg):",
+        btnAplicar: "✅ APPLY LOAD",
+        titGps: "Positioning & Weather",
+        lblArea: "Area:",
+        titFinanceiro: "Financial Balance",
+        lblGastos: "Expenses:",
         lblGanho: "Gross Income:",
-        lblSaldo: "NET BALANCE MARGIN",
-        titCombustivel: "Fuel Tank Volume",
-        titTemp: "Core Thermal Matrix",
-        titSustentavel: "Environmental Sustainability",
-        lblCo2: "🌍 KILOGRAMS OF CO2 EMITTED",
-        titLog: "System Architecture Event Logs"
+        lblSaldo: "CURRENT NET BALANCE",
+        titCombustivel: "Fuel Level",
+        titTemp: "Temperature",
+        titSustentavel: "Sustainability",
+        lblCo2: "🌍 CO2 EMISSION",
+        titLog: "IoT Event Log"
     }
 };
-
-let idiomaAtivo = 'pt';
-let modAtivo = frota.trator[0];
-
-function alternarTema() {
-    const html = document.documentElement;
-    const atual = html.getAttribute("data-theme");
-    const novo = atual === "dark" ? "light" : "dark";
-    html.setAttribute("data-theme", novo);
-    document.getElementById("btn-tema").innerText = novo === "dark" ? "☀️ MODO" : "🌙 MODO";
-}

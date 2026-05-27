@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGROSTREAM - Telemetria de Precision</title>
+    <title>AGROSTREAM - Telemetria de Precisão</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -29,36 +29,34 @@
             </div>
             <div class="intro-texto">
                 <h2 data-i18n="titParana">🌾 O Paraná e a Fronteira da Inovação Agrícola</h2>
-                <p data-i18n="pParana">O estado do Paraná é o coração pulsante do agronegócio brasileiro. Com o solo de "terra roxa" mais fértil do país, o estado lidera a produtividade de soja, milho e trigo através de um sistema de cooperativismo que é referência global. Cidades como Rolândia, Londrina e Cascavel são polos onde a tecnologia encontra a tradição. O Plantio Direto e a conservação de solos exigem precisão absoluta, e é aqui que a telemetria se torna indispensável para evitar a compactação e garantir recordes de safra sustentáveis.</p>
-                
+                <p data-i18n="pParana">Carregando...</p>
                 <h2 data-i18n="titTelemetria">🛰️ Tecnologia de Telemetria IoT</h2>
-                <p data-i18n="pTelemetria">A telemetria agrícola é a ciência de medir dados à distância. Usando sensores de barramento CAN e GPS de alta precisão, o AGROSTREAM simula a transmissão de pacotes de dados via satélite. O sistema monitora instantaneamente o consumo de combustível, a patinagem das rodas em solo úmido e a eficiência térmica do motor, permitindo que o gestor tome decisões baseadas em números, não em suposições.</p>
-
+                <p data-i18n="pParana">Carregando...</p>
                 <h2 data-i18n="titObjetivo">🎯 Propósito do AGROSTREAM</h2>
-                <p data-i18n="pObjetivo">Este simulador é um Gêmeo Digital projetado para educar e otimizar. Ele serve para que o operador entenda como o clima paranaense e o peso da carga influenciam diretamente no custo por hectare e na emissão de CO2. É uma ferramenta de gestão estratégica para a nova geração do campo.</p>
+                <p data-i18n="pObjetivo">Carregando...</p>
             </div>
         </div>
     </section>
 
     <section class="secao-ajuda">
-        <button class="btn-ajuda-mestre" onclick="toggleAjuda()">📖 <span data-i18n="btnAjuda">MANUAL COMPLETO DO SIMULADOR (Clique aqui)</span></button>
+        <button class="btn-ajuda-mestre" onclick="toggleAjuda()">📖 <span data-i18n="btnAjuda">MANUAL COMPLETO DO SIMULADOR</span></button>
         <div id="painel-ajuda" class="conteudo-ajuda" style="display:none;">
             <div class="ajuda-grid">
                 <div class="ajuda-item">
                     <h4 data-i18n="ajudaTit1">1. Planejamento</h4>
-                    <p data-i18n="ajudaP1">Escolha o modelo da máquina. Máquinas maiores consomem mais diesel, mas possuem tanques de grãos maiores. Configure o preço do diesel e da saca conforme a cotação do dia na sua cooperativa.</p>
+                    <p data-i18n="ajudaP1"></p>
                 </div>
                 <div class="ajuda-item">
                     <h4 data-i18n="ajudaTit2">2. Operação</h4>
-                    <p data-i18n="ajudaP2">Clique em 'Aplicar Carga'. No painel de Movimento, observe o clima. O simulador altera a física se estiver chovendo, aumentando o consumo e reduzindo a velocidade para evitar danos ao solo.</p>
+                    <p data-i18n="ajudaP2"></p>
                 </div>
                 <div class="ajuda-item">
                     <h4 data-i18n="ajudaTit3">3. Monitoramento</h4>
-                    <p data-i18n="ajudaP3">Acompanhe a temperatura. Se o motor trabalhar muito pesado sob sol forte, ele pode fundir. O sistema financeiro calcula seu gasto em tempo real baseado no consumo e horas trabalhadas.</p>
+                    <p data-i18n="ajudaP3"></p>
                 </div>
                 <div class="ajuda-item">
                     <h4 data-i18n="ajudaTit4">4. Finalização</h4>
-                    <p data-i18n="ajudaP4">Ao clicar em STOP, o sistema gera um laudo de fechamento no Log, mostrando se a sua operação deu lucro ou prejuízo líquido.</p>
+                    <p data-i18n="ajudaP4"></p>
                 </div>
             </div>
         </div>
@@ -84,18 +82,18 @@
                 <div class="campo"><label data-i18n="lblCultura">Cultura:</label>
                     <select id="sel-cultura"><option value="soja">Soja</option><option value="milho">Milho</option><option value="trigo">Trigo</option></select>
                 </div>
-                <div class="campo"><label data-i18n="lblDiesel">Diesel (L):</label><input type="number" id="in-diesel" value="500"></div>
-                <div class="campo"><label data-i18n="lblCarga">Carga (kg):</label><input type="number" id="in-carga" value="2500"></div>
+                <div class="campo"><label data-i18n="lblDiesel">Diesel (L):</label><input type="number" id="in-diesel" value="250"></div>
+                <div class="campo"><label data-i18n="lblCarga">Carga (kg):</label><input type="number" id="in-carga" value="2000"></div>
                 <div class="market-box">
                     <div class="campo"><label>⛽ Diesel R$:</label><input type="number" id="in-p-diesel" value="6.10" step="0.01"></div>
-                    <div class="campo"><label>🌾 Saca R$:</label><input type="number" id="in-p-saca" value="128" step="0.01"></div>
+                    <div class="campo"><label>🌾 Saca R$:</label><input type="number" id="in-p-saca" value="128.00" step="0.01"></div>
                 </div>
                 <button onclick="carregarDadosIniciais()" class="btn-aplicar" data-i18n="btnAplicar">✅ APLICAR CARGA</button>
             </div>
 
             <div class="card">
                 <h3 data-i18n="titGps">Posicionamento & Clima</h3>
-                <div class="valor-grande"><span id="val-vel">0</span> <small>km/h</small></div>
+                <div class="valor-grande"><span id="val-vel">0.0</span> <small>km/h</small></div>
                 <div class="coordenadas">
                     <p>Lat: <span id="val-lat">-23.3100</span></p>
                     <p>Lon: <span id="val-lon">-51.4100</span></p>
@@ -106,6 +104,8 @@
 
             <div class="card">
                 <h3 data-i18n="titFinanceiro">Balanço Financeiro</h3>
+                <p style="margin: 3px 0;">⏱️ Tempo Total: <span id="val-horas">0.0</span> h</p>
+                <p style="margin: 3px 0;">🌾 Produção: <span id="val-sacas-prod">0</span> sc</p>
                 <p class="txt-gasto"><span data-i18n="lblGastos">Gastos:</span> R$ <span id="val-custo">0.00</span></p>
                 <p class="txt-ganho"><span data-i18n="lblGanho">Ganho Bruto:</span> R$ <span id="val-ganho">0.00</span></p>
                 <hr class="linha-separadora">
@@ -117,14 +117,14 @@
                 <h3 data-i18n="titCombustivel">Nível Combustível</h3>
                 <div class="valor-grande"><span id="val-diesel-pct">0</span>%</div>
                 <div class="barra"><div id="bar-diesel" class="fill"></div></div>
-                <p><span id="val-diesel-l">0</span>L / <span id="max-diesel">0</span>L</p>
+                <p><span id="val-diesel-l">0.0</span>L / <span id="max-diesel">0</span>L</p>
             </div>
 
             <div class="card">
                 <h3 data-i18n="titTemp">Temperatura</h3>
                 <div class="valor-grande"><span id="val-temp">0</span>°C</div>
                 <div class="barra"><div id="bar-temp" class="fill"></div></div>
-                <p id="status-temp">ESTÁVEL</p>
+                <p id="status-temp" style="font-weight:bold; font-size:12px; color:#27ae60;">ESTÁVEL</p>
             </div>
 
             <div class="card">
@@ -134,8 +134,8 @@
                 <p data-i18n="lblCo2">🌍 EMISSÃO DE CO2</p>
             </div>
 
-            <div class="card" style="grid-column: 1 / -1; min-height: 250px;">
-                <h3 style="color: #3498db;">📈 Histórico de Rendimento (Lucro Líquido vs Tempo)</h3>
+            <div class="card" style="grid-column: 1 / -1; min-height: 260px;">
+                <h3 style="color: #3498db; margin-bottom:10px;">📈 Histórico de Rendimento (Lucro Líquido vs Tempo)</h3>
                 <div style="width: 100%; height: 200px; position: relative;">
                     <canvas id="grafico-telemetria"></canvas>
                 </div>
@@ -151,6 +151,7 @@
     <div id="modal-calor" class="modal" style="display:none">
         <div class="modal-content">
             <h1>🔥 MOTOR FUNDIDO!</h1>
+            <p>A temperatura excedeu o limite seguro de 102°C devido ao excesso de carga.</p>
             <button onclick="location.reload()">REINICIAR TUDO</button>
         </div>
     </div>
