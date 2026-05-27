@@ -6,8 +6,9 @@ let motorQueimou = false;
 let co2Total = 0, custoAcumuladoDinheiro = 0, segundosTrabalhados = 0, sacasColhidasTotal = 0;
 let tempMotor = 85;
 
-// Clima (0: Sol, 1: Chuva, 2: Geada)
+// Estado Clima base (0: Sol, 1: Chuva, 2: Geada)
 let climaEstado = 0; 
+let latBase = -23.3100, lonBase = -51.4100; // Rolândia/PR
 
 function toggleInstrucoes() {
     const p = document.getElementById("painel-instrucoes");
@@ -27,6 +28,7 @@ function mudarIdioma(lang) {
 
 function registrarLog(msg, tipo = "info") {
     const log = document.getElementById("log-mensagens");
+    if(!log) return;
     const hora = new Date().toTimeString().split(' ')[0];
     log.innerHTML += `<br><span style="opacity:0.7">[${hora}]</span> <span class="log-${tipo}">[${tipo.toUpperCase()}]</span> ${msg}`;
     log.scrollTop = log.scrollHeight;
@@ -51,9 +53,9 @@ function carregarDadosIniciais() {
     cargaAtual = parseFloat(document.getElementById("in-carga").value) || 0;
     if(cargaAtual > modAtivo.carga) cargaAtual = modAtivo.carga;
     
-    segundosTrabalhados = 0; hectares = 0; sacasColhidasTotal = 0; tempMotor = 85;
+    segundosTrabalhados = 0; hectares = 0; sacasColhidasTotal = 0; tempMotor = 85; co2Total = 0; custoAcumuladoDinheiro = 0;
     document.getElementById("val-ha").innerText = "0.00";
-    registrarLog("Dados carregados com sucesso.", "ok");
+    registrarLog("Dados IoT carregados com sucesso.", "ok");
 }
 
 function toggleSimulacao() {
@@ -81,7 +83,7 @@ function chamarManutencao() {
     if(!isRunning || motorQueimou) return;
     tempMotor -= 15;
     if(tempMotor < 85) tempMotor = 85;
-    custoAcumuladoDinheiro += 500; // Custo do mecânico
+    custoAcumuladoDinheiro += 500; // Custo do mecânico no Paraná
     registrarLog(dicionario[idiomaAtivo].msgManutencao, "info");
 }
 
@@ -91,12 +93,12 @@ function simular() {
     
     const txts = dicionario[idiomaAtivo];
     const pesoExtra = cargaAtual / 1000; 
-    let vBase = 8 + (Math.random() * 2 - 1);
+    let vBase = 8 + (Math.random() * 2 - 1); // km/h
     
-    // Efeito Clima
+    // EFEITO CLIMA AVANÇADO
     if(climaEstado === 1) { // Chuva
-        vBase *= 0.6; // Solo escorregadio
-        if(catAtiva === 'pulverizador') vBase = 0; // Não pulveriza na chuva
+        vBase *= 0.55; // Redução severa na terra roxa
+        if(catAtiva === 'pulverizador') vBase = 0; // Proibido pulverizar na chuva
     } else if(climaEstado === 2) { // Geada
         vBase *= 0.8;
     }
@@ -104,45 +106,62 @@ function simular() {
     if(dieselAtual <= 0) vBase = 0;
     document.getElementById("val-vel").innerText = vBase.toFixed(1);
 
-    // Movimento e Hectares
-    let dist = vBase / 3600;
-    km += dist;
-    document.getElementById("val-km").innerText = km.toFixed(2);
+    // MOVIMENTO, GPS E HECTARES
+    let distKm = vBase / 3600;
+    km += distKm;
     
-    let larguraTrabalho = catAtiva === 'pulverizador' ? 30 : (catAtiva === 'colheitadeira' ? 12 : 5);
-    hectares += (dist * larguraTrabalho) / 10; // Fator de conversão simples para simulação
+    // Simulação GPS Rolândia
+    latBase += (distKm * 0.0001);
+    lonBase += (distKm * 0.00008);
+    document.getElementById("val-lat").innerText = latBase.toFixed(4);
+    document.getElementById("val-lon").innerText = lonBase.toFixed(4);
+
+    // Cálculo Hectares: Largura de trabalho x Distância
+    let larguraTrabalhoHa = catAtiva === 'pulverizador' ? 30 : (catAtiva === 'colheitadeira' ? 12 : 5);
+    let areaTrabalhadaSg = (larguraTrabalhoHa * (vBase * 1000 / 3600)) / 10000;
+    hectares += areaTrabalhadaSg;
     document.getElementById("val-ha").innerText = hectares.toFixed(3);
 
-    // Consumo e Patinagem
-    dieselAtual -= (0.005 + (pesoExtra * 0.001));
+    // CONSUMO, CO2 E ALERTA PATINAGEM
+    let dieselConsumidoSg = (0.006 + (pesoExtra * 0.0015));
+    dieselAtual -= dieselConsumidoSg;
     if(dieselAtual < 0) dieselAtual = 0;
     
-    if(cargaAtual > (modAtivo.carga * 0.9) && climaEstado === 1 && Math.random() < 0.1) {
+    // Risco Patinagem: Pesado + Chuva + Sorte azarada
+    if(cargaAtual > (modAtivo.carga * 0.85) && climaEstado === 1 && Math.random() < 0.08) {
         registrarLog(txts.msgPatinagem, "danger");
     }
 
-    // Colheita
+    // COLHEITA
     if(catAtiva === 'colheitadeira' && vBase > 0) {
-        cargaAtual += 5;
+        cargaAtual += 6;
         if(segundosTrabalhados % 5 === 0) sacasColhidasTotal++;
         if(cargaAtual > modAtivo.carga) cargaAtual = modAtivo.carga;
     }
     document.getElementById("val-sacas-cont").innerText = sacasColhidasTotal;
 
-    // Financeiro e Eco
-    let custoSegundo = ((0.005 * 3600) * 6.10) / 3600;
-    custoAcumuladoDinheiro += custoSegundo;
+    // FINANCEIRO E ECO (CO2)
+    let precoDieselAtu = parseFloat(document.getElementById("in-preco-diesel").value) || 6.10;
+    custoAcumuladoDinheiro += (dieselConsumidoSg * precoDieselAtu);
     document.getElementById("val-custo").innerText = Math.round(custoAcumuladoDinheiro);
-    co2Total += (0.005 * 2.6);
+    
+    co2Total += (dieselConsumidoSg * 2.61);
     document.getElementById("val-co2").innerText = co2Total.toFixed(2);
 
-    // Temperatura
-    tempMotor += (pesoExtra * 0.02);
-    if(climaEstado === 0) tempMotor += 0.01;
-    if(vBase === 0) tempMotor -= 0.05;
+    // TEMPERATURA E QUEIMA
+    tempMotor += (pesoExtra * 0.03); // Peso frita motor
+    if(climaEstado === 0) tempMotor += 0.01; // Sol quente
+    if(vBase === 0) tempMotor -= 0.08; // Parada esfria
     
     document.getElementById("val-temp").innerText = Math.round(tempMotor);
     document.getElementById("bar-temp").style.width = Math.min(100, (tempMotor/120)*100) + "%";
+    
+    const sTemp = document.getElementById("status-temp");
+    if(tempMotor > 95) {
+        sTemp.innerText = txts.statusRisco; sTemp.style.color = "#e74c3c";
+    } else {
+        sTemp.innerText = txts.statusEstavel; sTemp.style.color = "#2ecc71";
+    }
 
     if(tempMotor >= 102) {
         motorQueimou = true;
