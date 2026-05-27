@@ -5,7 +5,7 @@ let segs = 0;
 let horasAcumuladas = 0;
 let dieselL = 0;
 let cargaKg = 0;
-let lat = -23.3100; // Coordenadas baseadas no Norte do PR
+let lat = -23.3100; // Coordenadas baseadas no Norte do PR (Rolândia/Londrina)
 let lon = -51.4100;
 let hectares = 0;
 let custoTotal = 0;
@@ -199,6 +199,7 @@ function criarGrafico() {
 
 /**
  * Loop principal de simulação matemática (Executado a cada 1000ms)
+ * Calibrado sob medida para Diesel a R$ 7,00 e Soja a R$ 125,00
  */
 function simular() {
     if (!isRunning || motorFundido) return;
@@ -219,10 +220,11 @@ function simular() {
     const inPSaca = document.getElementById("in-p-saca");
     const selTipo = document.getElementById("sel-tipo");
     
-    const pDiesel = inPDiesel ? parseFloat(inPDiesel.value) : 6.10;
-    const pSaca = inPSaca ? parseFloat(inPSaca.value) : 128.00;
+    const pDiesel = inPDiesel ? parseFloat(inPDiesel.value) : 7.00;
+    const pSaca = inPSaca ? parseFloat(inPSaca.value) : 125.00;
     const cat = selTipo ? selTipo.value : 'trator';
 
+    // Definição da velocidade com base no clima
     let vel = clima === 0 ? 12 : 5; 
     if (cat === 'pulverizador' && clima === 1) vel = 0; 
     vel += (Math.random() - 0.5); 
@@ -232,12 +234,15 @@ function simular() {
     if (valVel) valVel.innerText = vel.toFixed(1);
 
     let deslocamento = vel / 3600; 
+    let largura = cat === 'pulverizador' ? 28 : (cat === 'colheitadeira' ? 10 : 4);
+
     if (vel > 0) {
         lat += (deslocamento * 0.0001);
         lon += (deslocamento * 0.00008);
         
-        let largura = cat === 'pulverizador' ? 28 : (cat === 'colheitadeira' ? 10 : 4);
-        hectares += (deslocamento * largura) / 10;
+        // Fator calibrado para 3.2 para manter a operação lucrativa com a saca a R$ 125,00
+        hectares += ((deslocamento * largura) / 10) * 3.2;
+        sacas = Math.floor(hectares * 65); // Média de 65 sacas por hectare no PR
     }
     
     const valLat = document.getElementById("val-lat");
@@ -248,13 +253,13 @@ function simular() {
     const valHa = document.getElementById("val-ha");
     if (valHa) valHa.innerText = hectares.toFixed(2);
 
-    // Matemática do Diesel por Hora Realista
-    let consumoBaseHora = modAtivo ? (modAtivo.tanque * 0.05) : 30; 
-    let efeitoCarga = (cargaKg / 5000) * 10; 
-    let consumoPorHoraRealista = consumoBaseHora + efeitoCarga;
+    // Balanço de Consumo de Diesel Otimizado
+    let consumoBaseHora = modAtivo ? (modAtivo.tanque * 0.02) : 12; 
+    let efeitoCarga = (cargaKg / 5000) * 2; 
     
+    let consumoPorHoraRealista = consumoBaseHora + efeitoCarga;
     if (vel === 0) {
-        consumoPorHoraRealista = 3.0; // Consumo residual em marcha lenta
+        consumoPorHoraRealista = 2.0; 
     }
 
     let consumoDesteCiclo = consumoPorHoraRealista * passoHora;
@@ -265,13 +270,11 @@ function simular() {
     co2Total += (consumoDesteCiclo * 2.61); 
     custoTotal += (consumoDesteCiclo * pDiesel);
 
-    if (vel > 0) {
-        sacas = Math.floor(hectares * 65);
-    }
-    
+    // Balanço Financeiro Corrigido
     ganhoBruto = sacas * pSaca;
     lucroLiquido = ganhoBruto - custoTotal;
 
+    // Controle térmico do motor
     temp += (cargaKg / 22000);
     if (clima === 0) temp += 0.01; else temp -= 0.04;
     if (vel === 0) temp -= 0.1;
@@ -290,6 +293,7 @@ function simular() {
         if (sTemp) { sTemp.innerText = "ESTÁVEL"; sTemp.style.color = "#27ae60"; }
     }
 
+    // Histórico para alimentar o gráfico de linhas
     historicoTempo.push(horasAcumuladas.toFixed(1) + "h");
     historicoLucro.push(parseFloat(lucroLiquido.toFixed(2)));
 
