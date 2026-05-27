@@ -161,7 +161,7 @@ function mudarClima() {
     clima = clima === 0 ? 1 : 0;
     const valClima = document.getElementById("val-clima");
     if (valClima) valClima.innerText = clima === 0 ? "SOL" : "CHUVA";
-    registrarLog(clima === 1 ? "⚠️ Sensor: Chuva detectada no PR. Patinagem de pneu ativa." : "Sensor: Clima Seco.");
+    registrarLog(clima === 1 ? "⚠️ Sensor: Chuva detectada no PR. Patinagem de pneu activa." : "Sensor: Clima Seco.");
 }
 
 /**
@@ -199,7 +199,6 @@ function criarGrafico() {
 
 /**
  * Loop principal de simulação matemática (Executado a cada 1000ms)
- * ATUALIZADO: Consumo de diesel proporcional às horas simuladas aceleradas.
  */
 function simular() {
     if (!isRunning || motorFundido) return;
@@ -249,7 +248,7 @@ function simular() {
     const valHa = document.getElementById("val-ha");
     if (valHa) valHa.innerText = hectares.toFixed(2);
 
-    // Matemática Corrigida do Diesel por Hora
+    // Matemática do Diesel por Hora Realista
     let consumoBaseHora = modAtivo ? (modAtivo.tanque * 0.05) : 30; 
     let efeitoCarga = (cargaKg / 5000) * 10; 
     let consumoPorHoraRealista = consumoBaseHora + efeitoCarga;
@@ -348,8 +347,8 @@ function atualizarUI() {
 
 // Configurações de Boot do sistema
 window.onload = () => {
+    criarGrafico(); 
     trocarCategoria('trator');
     mudarIdioma('pt');
-    criarGrafico(); 
     setInterval(simular, 1000);
 };
