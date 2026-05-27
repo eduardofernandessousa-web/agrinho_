@@ -161,7 +161,7 @@ function mudarClima() {
     clima = clima === 0 ? 1 : 0;
     const valClima = document.getElementById("val-clima");
     if (valClima) valClima.innerText = clima === 0 ? "SOL" : "CHUVA";
-    registrarLog(clima === 1 ? "⚠️ Sensor: Chuva detectada no PR. Patinagem de pneu activa." : "Sensor: Clima Seco.");
+    registrarLog(clima === 1 ? "⚠️ Sensor: Chuva detectada no PR. Patinagem de pneu ativa." : "Sensor: Clima Seco.");
 }
 
 /**

@@ -30,7 +30,7 @@ const dicionario = {
         ajudaP1: "Escolha o modelo da máquina. Máquinas maiores consomem mais diesel, mas possuem tanques de grãos maiores. Configure o preço do diesel e da saca conforme a cotação do dia na sua cooperativa.",
         ajudaTit2: "2. Operação",
         ajudaP2: "Clique em 'Aplicar Carga'. No painel de Movimento, observe o clima. O simulador altera a física se estiver chovendo, aumentando o consumo e reduzindo a velocidade para evitar danos ao solo.",
-        ajudaTit3: "3. Monitoring",
+        ajudaTit3: "3. Monitoramento",
         ajudaP3: "Acompanhe a temperatura. Se o motor trabalhar muito pesado sob sol forte, ele pode fundir. O sistema financeiro calcula seu gasto em tempo real baseado no consumo e horas trabalhadas.",
         ajudaTit4: "4. Finalização",
         ajudaP4: "Ao clicar em STOP, o sistema gera um laudo de fechamento no Log, mostrando se a sua operação deu lucro ou prejuízo líquido.",
