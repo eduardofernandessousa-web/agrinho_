@@ -13,11 +13,11 @@
         <div class="fechar-menu" onclick="toggleMenu()">&times;</div>
         <h2>Navegação TCC</h2>
         <ul>
-            <li><a href="#introducao" onclick="toggleMenu()">🛰️ 1. O que é Telemetria</a></li>
-            <li><a href="#ajuda" onclick="toggleMenu()">❓ 2. Manual do Simulador</a></li>
-            <li><a href="#montagem-veiculo" onclick="toggleMenu()">🔧 3. Montagem no Veículo</a></li>
-            <li><a href="#simulador" onclick="toggleMenu()">🖥️ 4. Terminal do Simulador</a></li>
-            <li><a href="#log-eventos" onclick="toggleMenu()">📋 5. Diagnóstico de Falhas</a></li>
+            <li><a href="#" onclick="mudarAba('aba-telemetria')">🛰️ 1. O que é Telemetria (Aprofundado)</a></li>
+            <li><a href="#" onclick="mudarAba('aba-manual')">❓ 2. Manual do Simulador</a></li>
+            <li><a href="#" onclick="mudarAba('aba-montagem')">🔧 3. Montagem no Veículo</a></li>
+            <li><a href="#" onclick="mudarAba('aba-parana')">🌾 4. Impacto no Paraná</a></li>
+            <li><a href="#" onclick="mudarAba('aba-simulador')">🖥️ 5. Terminal do Simulador</a></li>
         </ul>
     </nav>
     <div id="overlay-menu" onclick="toggleMenu()"></div>
@@ -36,7 +36,7 @@
                 <div class="bar"></div>
                 <div class="bar"></div>
             </div>
-            <h1>AGROSTREAM <span>Premium v5.0</span></h1>
+            <h1>AGROSTREAM <span id="lbl-subtitulo">Premium v5.0</span></h1>
         </div>
         <div class="controles-topo">
             <button id="btn-tema" onclick="alternarTema()">🌓 Tema</button>
@@ -47,203 +47,227 @@
         </div>
     </header>
 
-    <section class="conteudo-teorico" id="introducao">
-        <div class="intro-grid">
-            <div class="intro-texto">
-                <h2>🛰️ O que é Telemetria de Máquinas Agrícolas?</h2>
-                <p>A telemetria de máquinas agrícolas é a tecnologia que permite coletar, processar e transmitir dados operacionais de tratores, colheitadeiras e pulverizadores à distância e em tempo real. Através de sensores conectados ao barramento elétrico do veículo, o sistema extrai informações cruciais como consumo exato de combustível, temperatura do motor, velocidade de deslocamento e falhas mecânicas antes mesmo que elas causem paradas imprevistas.</p>
-                
-                <h2>🌾 Como Isso Ajuda o Agronegócio no Paraná?</h2>
-                <p>O Paraná é um dos maiores pilares agrícolas do Brasil, destacando-se pela altíssima produtividade em solos ricos como a 'terra roxa'. Em polos como Londrina, Rolândia e Cascavel, as margens de lucro dependem da eficiência extrema. A telemetria ajuda o produtor paranaense a monitorar a patinagem dos pneus na lama (evitando a compactação do solo), reduzir o desperdício de óleo diesel por hectare e programar manutenções preventivas em cooperativas, garantindo a continuidade do trabalho nas janelas críticas de plantio e colheita.</p>
+    <main class="conteudo-principal">
+
+        <section id="aba-telemetria" class="aba-conteudo">
+            <h2 id="tit-oque-e" class="titulo-aba">🛰️ O que é Telemetria de Máquinas Agrícolas? (Análise Aprofundada)</h2>
+            <p>A telemetria de precisão na agricultura moderna vai além da simples localização por satélite. Trata-se da fusão entre sistemas embarcados de alta frequência e a arquitetura IoT (Internet das Coisas). Por meio de conexões eletromecânicas diretas, o hardware instalado interage diretamente com as ECUs (Unidades de Controle Eletrônico) do motor e da transmissão.</p>
+            <p>Esse fluxo constante de pacotes mapeia variáveis micro-segundadas como a curva de torque solicitada, a eficiência volumétrica da combustão do diesel e o gerenciamento de pressões hidráulicas. Ao traduzir o barramento de dados, a telemetria transforma oscilações de sensores brutos em relatórios preditivos de desgaste estrutural.</p>
+            <div class="caixa-destaque">
+                <h4>🔬 Camadas Tecnológicas da Telemetria de Borda (Edge Computing):</h4>
+                <ul>
+                    <li>• <strong>Camada Física:</strong> Transdutores piezoelétricos, termopares tipo K e medidores de fluxo por indução magnética acoplados aos componentes vitais da máquina.</li>
+                    <li>• <strong>Camada de Enlace:</strong> Protocolo de comunicação serial síncrono que trafega os dados elétricos em formato binário através de pares trançados de fios blindados para evitar interferências magnéticas induzidas pelo motor.</li>
+                    <li>• <strong>Camada de Transporte e Nuvem:</strong> Algoritmos de compressão de pacotes que otimizam o envio de telemetria via redes celulares (4G/5G rurais) ou satélites de órbita baixa (LEO), reduzindo o consumo de dados na fazenda.</li>
+                </ul>
             </div>
-            
-            <div class="intro-texto">
-                <h2>🖥️ Para que Serve Este Site?</h2>
-                <p>Este site funciona como um <strong>Gêmeo Digital (Digital Twin)</strong> educativo. Ele foi projetado para simular o comportamento de uma frota agrícola real operando sob diferentes cargas e condições climáticas do Paraná. O objetivo é demonstrar visualmente para a banca examinadora como os dados brutos de sensores veiculares são transformados instantaneamente em relatórios financeiros, gráficos de desempenho e diagnósticos de falhas de rede, servindo como uma poderosa ferramenta de tomada de decisão.</p>
-                
-                <div id="ajuda" class="secao-ajuda">
-                    <h3 style="color: var(--accent-color); margin-bottom: 10px;">❓ Manual Prático do Simulador</h3>
-                    <div class="conteudo-ajuda">
-                        <div class="ajuda-grid">
-                            <div class="ajuda-item"><h4>1. Configurar</h4><p>Selecione o modelo da máquina e insira o peso da carga inicial.</p></div>
-                            <div class="ajuda-item"><h4>2. Inicializar</h4><p>Clique no botão 'Aplicar Carga' e depois em '▶ START'.</p></div>
-                            <div class="ajuda-item"><h4>3. Clima</h4><p>Altere para Chuva para ver as rodas patinarem e o consumo subir.</p></div>
-                            <div class="ajuda-item"><h4>4. Segurança</h4><p>Cuidado com cargas excessivas ou o motor vai fundir a 102°C.</p></div>
-                        </div>
-                    </div>
+        </section>
+
+        <section id="aba-manual" class="aba-conteudo" style="display: none;">
+            <h2 id="tit-manual" class="titulo-aba">❓ Manual Prático e Técnico do Gêmeo Digital</h2>
+            <p>Este ambiente computacional é um simulador matemático calibrado para emular o comportamento operacional e financeiro de maquinários agrícolas. Utilize este manual para extrair o máximo das simulações durante os testes:</p>
+            <div class="ajuda-grid">
+                <div class="ajuda-item">
+                    <h4 id="m-tit1">1. Parametrização Inicial</h4>
+                    <p id="m-p1">Selecione o tipo de categoria (Trator, Colheitadeira ou Pulverizador) e o modelo específico no menu do terminal. Insira o peso da carga acoplada. Lembre-se: quanto maior a carga aplicada, maior será a força de tração exigida e, consequentemente, a temperatura do motor subirá mais rápido.</p>
+                </div>
+                <div class="ajuda-item">
+                    <h4 id="m-tit2">2. Inicialização do Barramento</h4>
+                    <p id="m-p2">Antes de iniciar a simulação mecânica, é obrigatório clicar em <strong>"APLICAR CARGA"</strong> para injetar as variáveis selecionadas na memória do sistema. Em seguida, clique em <strong>"START"</strong> para dar a partida eletrônica na rede e liberar a leitura dos sensores digitais.</p>
+                </div>
+                <div class="ajuda-item">
+                    <h4 id="m-tit3">3. Modulação Climática</h4>
+                    <p id="m-p3">Altere as condições de clima para testar a robustez do maquinário. Sob condições de chuva, o algoritmo reduz a velocidade real de deslocamento devido ao coeficiente de atrito do solo úmido e eleva a patinagem em 30%, disparando o consumo de óleo diesel por hectare trabalhado.</p>
+                </div>
+                <div class="ajuda-item">
+                    <h4 id="m-tit4">4. Margem de Segurança Térmica</h4>
+                    <p id="m-p4">Monitore atentamente o sensor de temperatura da água do radiador. Cargas excessivas combinadas com longos períodos de operação farão o bloco atingir o patamar crítico de 102°C, ativando o protocolo automático de corte da ECU para evitar o travamento mecânico (Motor Fundido).</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="montagem-veiculo" class="secao-montagem">
-        <h2>🔧 Como Funcionaria a Montagem do Sistema no Veículo?</h2>
-        <p class="sub-montagem">Arquitetura de Instalação Física de Hardware e Integração de Sensores</p>
-        
-        <div class="montagem-grid">
-            <div class="montagem-card">
-                <h3>1. Ponto de Coleta (Conexão Barramento CAN)</h3>
-                <p>O hardware de telemetria é acoplado diretamente à porta de diagnóstico <strong>J1939 / CAN-BUS</strong> do trator (geralmente localizada abaixo do painel da cabine). Essa conexão física permite ler os dados nativos que transitam entre a injeção eletrônica e o motor sem violar a garantia da máquina.</p>
-            </div>
-            <div class="montagem-card">
-                <h3>2. Instalação do Módulo de Processamento</h3>
-                <p>Um microcontrolador industrial (blindado contra poeira, calor extremo e vibrações fortes) é fixado na estrutura interna do painel. Ele possui isolamento galvânico para proteger os circuitos de surtos elétricos da bateria do veículo.</p>
-            </div>
-            <div class="montagem-card">
-                <h3>3. Sensores Adicionais e Calibração</h3>
-                <p>Fios blindados de alta resistência térmica são roteados até os pontos críticos do maquinário: um sensor ultrassônico é fixado na tampa do tanque de diesel, medidores de vazão eletrônicos são instalados nas linhas de calda do pulverizador e um termopar digital K é parafusado no bloco do motor.</p>
-            </div>
-            <div class="montagem-card">
-                <h3>4. Módulo de Antenas (GPS e Telemetria)</h3>
-                <p>Uma antena combinada de alta eficiência (GPS + Antena de Rádio/Satélite) é parafusada magneticamente no teto externo da cabine. Isso garante uma linha de visada limpa com o céu para atualizar a geolocalização e disparar os pacotes de dados para a nuvem.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="simulador">
-        <div class="simulador-master">
-            <div class="topo-sim">
-                <h2>🖥️ Terminal de Telemetria</h2>
-                <div class="controles">
-                    <select id="sel-tipo" onchange="trocarCategoria(this.value)">
-                        <option value="trator">🚜 TRATORES</option>
-                        <option value="colheitadeira">🌾 COLHEITADEIRAS</option>
-                        <option value="pulverizador">💨 PULVERIZADORES</option>
-                    </select>
-                    <select id="sel-modelo" onchange="mudarModelo(this.value)"></select>
-                    <button id="btn-start" onclick="toggleSimulacao()">▶ START</button>
+        <section id="aba-montagem" class="aba-conteudo" style="display: none;">
+            <h2 id="tit-montagem" class="titulo-aba">🔧 Engenharia de Instalação Física e Arquitetura do Hardware</h2>
+            <p id="sub-montagem" class="sub-montagem">Como esse sistema de telemetria IoT seria montado e integrado em um maquinário agrícola real:</p>
+            <div class="montagem-grid">
+                <div class="montagem-card">
+                    <h3 id="card-m1-tit">1. Interceptação Física da Rede CAN (J1939)</h3>
+                    <p id="card-m1-p">O módulo concentrador de dados é fixado sob o painel de instrumentos da cabine, conectado diretamente à fiação traseira do conector de diagnóstico Deutsch de 9 pinos. Essa conexão usa isoladores optoacoplados para ler as mensagens de rotação, temperatura e consumo sem injetar ruídos elétricos na rede original do fabricante.</p>
+                </div>
+                <div class="montagem-card">
+                    <h3 id="card-m2-tit">2. Central de Processamento e Telemetria</h3>
+                    <p id="card-m2-p">O gabinete central que aloja o microcontrolador de 32-bits é parafusado em suportes antivibratórios de borracha (coxins) dentro da coluna lateral da cabine. A carcaça possui vedação IP67 contra a entrada de poeira fina e jatos de água durante a lavagem pesada do trator.</p>
+                </div>
+                <div class="montagem-card">
+                    <h3 id="card-m3-tit">3. Roteamento de Sensores de Campo</h3>
+                    <p id="card-m3-p">Fios blindados com malha de aterramento e isolamento de silicone para alta temperatura correm pelo chassi do veículo. Eles são fixados com abraçadeiras de nylon de alta resistência para se conectarem ao medidor ultrassônico de combustível no tanque e aos sensores de vazão instalados nas barras de pulverização.</p>
+                </div>
+                <div class="montagem-card">
+                    <h3 id="card-m4-tit">4. Arranjo de Antenas Multi-Banda</h3>
+                    <p id="card-m4-p">No ponto mais alto e desobstruído da cabine (o teto externo), é fixada uma antena em formato de "disco" que une três sistemas de captação: receptor GNSS de alta precisão com correção RTK (margem de erro em centímetros), módulo transceptor de dados por radiofrequência celular e antena de contingência para satélite.</p>
                 </div>
             </div>
+        </section>
 
-            <div id="grid-painel">
-                <div class="card">
-                    <h3>Configuração Inicial</h3>
-                    <div class="campo">
-                        <label>Cultura:</label>
-                        <select id="sel-cultura">
-                            <option value="soja">Soja (Glycine max)</option>
-                            <option value="milho">Milho (Zea mays)</option>
-                            <option value="trigo">Trigo (Triticum aestivum)</option>
+        <section id="aba-parana" class="aba-conteudo" style="display: none;">
+            <h2 id="tit-parana" class="titulo-aba">🌾 Benefícios Práticos para o Produtor e o Agronegócio no Paraná</h2>
+            <div class="intro-grid">
+                <div class="intro-texto">
+                    <h3>Impacto Direto na Economia do Agricultor</h3>
+                    <p>Para o produtor rural, o controle milimétrico trazido pela telemetria reflete diretamente na redução dos custos operacionais (OPEX). Ao monitorar as rotações por minuto (RPM) do motor associadas à velocidade de avanço, o sistema identifica se o operador está conduzindo a máquina em uma marcha inadequada, o que pode gerar até 15% de desperdício desnecessário de diesel.</p>
+                    <p>Além disso, o alerta precoce de falhas por códigos preventivos evita a quebra catastrófica de peças mecânicas em campo. Uma máquina parada durante a curta janela climática de plantio ou colheita representa prejuízos financeiros severos, mitigados integralmente pelo agendamento preventivo de oficina.</p>
+                </div>
+                <div class="intro-texto">
+                    <h3>Eficiência Logística nas Cooperativas do Paraná</h3>
+                    <p>O estado do Paraná baseia sua força agrícola no cooperativismo de alta performance, em polos de extrema produtividade como Londrina, Rolândia, Maringá, Cascavel e Ponta Grossa. Em solos de "terra roxa" argilosa, as janelas de manejo são curtas e altamente competitivas devido ao regime de chuvas da região.</p>
+                    <p>A telemetria integrada permite que as cooperativas façam a gestão centralizada de frotas inteiras em tempo real. É possível prever exatamente a quantidade de grãos que chegarão aos silos de armazenamento nas próximas horas com base no rendimento das colheitadeiras monitoradas em campo, otimizando o fluxo de caminhões e reduzindo gargalos logísticos históricos nas rodovias paranaenses.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="aba-simulador" class="aba-conteudo" style="display: none;">
+            <div class="simulador-master">
+                <div class="topo-sim">
+                    <h2 id="tit-terminal">🖥️ Terminal de Telemetria IoT</h2>
+                    <div class="controles">
+                        <select id="sel-tipo" onchange="trocarCategoria(this.value)">
+                            <option value="trator">🚜 TRATORES</option>
+                            <option value="colheitadeira">🌾 COLHEITADEIRAS</option>
+                            <option value="pulverizador">💨 PULVERIZADORES</option>
                         </select>
+                        <select id="sel-modelo" onchange="mudarModelo(this.value)"></select>
+                        <button id="btn-start" onclick="toggleSimulacao()">▶ START</button>
                     </div>
-                    <div class="campo">
-                        <label>⛽ Diesel Inicial (L):</label>
-                        <input type="number" id="in-diesel" value="300">
-                    </div>
-                    <div class="campo">
-                        <label>💧 Água (L):</label>
-                        <input type="number" id="in-agua" value="1500">
-                    </div>
-                    <div class="campo">
-                        <label>Carga (kg):</label>
-                        <input type="number" id="in-carga" value="500">
-                    </div>
-                    
-                    <div class="market-box">
+                </div>
+
+                <div id="grid-painel">
+                    <div class="card">
+                        <h3 id="lbl-c1-tit">Configuração Inicial</h3>
                         <div class="campo">
-                            <label>⛽ Custo Diesel (R$/L):</label>
-                            <input type="number" id="in-p-diesel" value="7.00" step="0.01">
+                            <label id="lbl-cultura">Cultura:</label>
+                            <select id="sel-cultura">
+                                <option value="soja">Soja (Glycine max)</option>
+                                <option value="milho">Milho (Zea mays)</option>
+                                <option value="trigo">Trigo (Triticum aestivum)</option>
+                            </select>
                         </div>
                         <div class="campo">
-                            <label>🌾 Preço Saca (R$):</label>
-                            <input type="number" id="in-p-saca" value="125.00" step="0.01">
+                            <label id="lbl-diesel-in">⛽ Diesel Inicial (L):</label>
+                            <input type="number" id="in-diesel" value="300">
+                        </div>
+                        <div class="campo">
+                            <label id="lbl-agua-in">💧 Água (L):</label>
+                            <input type="number" id="in-agua" value="1500">
+                        </div>
+                        <div class="campo">
+                            <label id="lbl-carga-in">Carga (kg):</label>
+                            <input type="number" id="in-carga" value="500">
+                        </div>
+                        <div class="market-box">
+                            <div class="campo">
+                                <label id="lbl-custo-in">⛽ Custo Diesel (R$/L):</label>
+                                <input type="number" id="in-p-diesel" value="7.00" step="0.01">
+                            </div>
+                            <div class="campo">
+                                <label id="lbl-preco-in">🌾 Preço Saca (R$):</label>
+                                <input type="number" id="in-p-saca" value="125.00" step="0.01">
+                            </div>
+                        </div>
+                        <button id="btn-aplicar-carga" class="btn-aplicar" onclick="carregarDadosIniciais()">✅ APLICAR CARGA</button>
+                    </div>
+
+                    <div class="card">
+                        <h3 id="lbl-c2-tit">Posicionamento & Clima</h3>
+                        <div class="coordenadas">
+                            <div>LAT: <span id="val-lat">-23.3100</span></div>
+                            <div>LON: <span id="val-lon">-51.4100</span></div>
+                        </div>
+                        <hr class="linha-separadora">
+                        <div class="campo">
+                            <label id="lbl-horas">⏱️ Horas Operação:</label>
+                            <div><span id="val-horas">0.0</span> h</div>
+                        </div>
+                        <div class="campo">
+                            <label id="lbl-vel">⚡ Velocidade Atual:</label>
+                            <div><span id="val-vel">0.0</span> km/h</div>
+                        </div>
+                        <div class="campo">
+                            <label id="lbl-rend">🚜 Rendimento:</label>
+                            <div><span id="val-rendimento">0.0</span> ha/h</div>
+                        </div>
+                        <div class="campo">
+                            <label id="lbl-area">Área Coberta:</label>
+                            <div><span id="val-ha">0.00</span> ha</div>
+                        </div>
+                        <div class="campo">
+                            <label id="lbl-sacas">🌾 Sacas Produzidas:</label>
+                            <div><span id="val-sacas-prod">0</span> sc</div>
+                        </div>
+                        <button class="btn-clima" onclick="mudarClima()"><span id="lbl-btn-clima">Automático</span> (Atual: <span id="val-clima">SOL</span>)</button>
+                    </div>
+
+                    <div class="card" id="container-lucro">
+                        <h3 id="lbl-c3-tit">Balanço Financeiro</h3>
+                        <div class="campo">
+                            <label id="lbl-gastos">Gastos acumulados:</label>
+                            <div>R$ <span id="val-custo">0.00</span></div>
+                        </div>
+                        <div class="campo">
+                            <label id="lbl-ganho">Ganho Bruto:</label>
+                            <div>R$ <span id="val-ganho">0.00</span></div>
+                        </div>
+                        <hr class="linha-separadora">
+                        <label id="lbl-saldo-tit" style="font-size: 11px; font-weight: bold;">SALDO LÍQUIDO ATUAL</label>
+                        <div class="valor-grande">R$ <span id="val-lucro">0.00</span></div>
+                    </div>
+
+                    <div class="card" id="graficos" style="grid-column: span 3; height: 260px;">
+                        <h3 id="lbl-grafico-tit">Gráfico de Lucro Líquido em Tempo Real</h3>
+                        <div style="position: relative; height: 210px; width: 100%;">
+                            <canvas id="grafico-telemetria"></canvas>
                         </div>
                     </div>
-                    <button class="btn-aplicar" onclick="carregarDadosIniciais()">✅ APLICAR CARGA</button>
-                </div>
 
-                <div class="card">
-                    <h3>Posicionamento & Clima</h3>
-                    <div class="coordenadas">
-                        <div>LAT: <span id="val-lat">-23.3100</span></div>
-                        <div>LON: <span id="val-lon">-51.4100</span></div>
+                    <div class="card">
+                        <h3 id="lbl-s1">Nível Combustível</h3>
+                        <div class="barra"><div id="bar-diesel" class="fill"></div></div>
+                        <div class="campo">
+                            <div><span id="val-diesel-l">0.0</span> L</div>
+                            <div><span id="val-diesel-pct">0</span>%</div>
+                        </div>
                     </div>
-                    <hr class="linha-separadora">
-                    <div class="campo">
-                        <label>⏱️ Horas Operação:</label>
-                        <div><span id="val-horas">0.0</span> h</div>
+                    <div class="card">
+                        <h3 id="lbl-s2">Nível de Água / Calda</h3>
+                        <div class="barra" style="background:#333;"><div id="bar-agua" class="fill" style="background:#3498db;"></div></div>
+                        <div class="campo">
+                            <div><span id="val-agua-l">0.0</span> L</div>
+                            <div><span id="val-agua-pct">0</span>%</div>
+                        </div>
                     </div>
-                    <div class="campo">
-                        <label>⚡ Velocidade Atual:</label>
-                        <div><span id="val-vel">0.0</span> km/h</div>
+                    <div class="card">
+                        <h3 id="lbl-s3">Temperatura Motor</h3>
+                        <div class="barra" style="background:#333;"><div id="bar-temp" class="fill" style="background:#e67e22;"></div></div>
+                        <div class="campo">
+                            <div><span id="val-temp">0</span>°C</div>
+                            <div id="status-temp" style="font-weight:bold;">ESTÁVEL</div>
+                        </div>
                     </div>
-                    <div class="campo">
-                        <label>🚜 Rendimento:</label>
-                        <div><span id="val-rendimento">0.0</span> ha/h</div>
-                    </div>
-                    <div class="campo">
-                        <label>Área Coberta:</label>
-                        <div><span id="val-ha">0.00</span> ha</div>
-                    </div>
-                    <div class="campo">
-                        <label>🌾 Sacas Produzidas:</label>
-                        <div><span id="val-sacas-prod">0</span> sc</div>
-                    </div>
-                    <button class="btn-clima" onclick="mudarClima()">🌦️ Alterar Clima (Atual: <span id="val-clima">SOL</span>)</button>
-                </div>
 
-                <div class="card" id="container-lucro">
-                    <h3>Balanço Financeiro</h3>
-                    <div class="campo">
-                        <label>Gastos acumulados:</label>
-                        <div>R$ <span id="val-custo">0.00</span></div>
+                    <div class="card card-log" id="log-eventos" style="grid-column: span 3;">
+                        <h3 id="lbl-log-tit">Log de Eventos IoT (Barramento CAN)</h3>
+                        <div id="log-box">>> Aguardando inicialização do barramento CAN...</div>
                     </div>
-                    <div class="campo">
-                        <label>Ganho Bruto:</label>
-                        <div>R$ <span id="val-ganho">0.00</span></div>
-                    </div>
-                    <hr class="linha-separadora">
-                    <label style="font-size: 11px; font-weight: bold;">SALDO LÍQUIDO ATUAL</label>
-                    <div class="valor-grande">R$ <span id="val-lucro">0.00</span></div>
-                </div>
-
-                <div class="card" id="graficos" style="grid-column: span 3; height: 260px;">
-                    <h3>Gráfico de Lucro Líquido em Tempo Real</h3>
-                    <div style="position: relative; height: 210px; width: 100%;">
-                        <canvas id="grafico-telemetria"></canvas>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3>Nível Combustível</h3>
-                    <div class="barra"><div id="bar-diesel" class="fill"></div></div>
-                    <div class="campo">
-                        <div><span id="val-diesel-l">0.0</span> L</div>
-                        <div><span id="val-diesel-pct">0</span>%</div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h3>Nível de Água / Calda</h3>
-                    <div class="barra" style="background:#333;"><div id="bar-agua" class="fill" style="background:#3498db;"></div></div>
-                    <div class="campo">
-                        <div><span id="val-agua-l">0.0</span> L</div>
-                        <div><span id="val-agua-pct">0</span>%</div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3>Temperatura Motor</h3>
-                    <div class="barra" style="background:#333;"><div id="bar-temp" class="fill" style="background:#e67e22;"></div></div>
-                    <div class="campo">
-                        <div><span id="val-temp">0</span>°C</div>
-                        <div id="status-temp" style="font-weight:bold;">ESTÁVEL</div>
-                    </div>
-                </div>
-
-                <div class="card card-log" id="log-eventos" style="grid-column: span 3;">
-                    <h3>Log de Eventos IoT (Barramento CAN)</h3>
-                    <div id="log-box">>> Aguardando inicialização do barramento CAN...</div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+    </main>
 
     <div id="modal-calor" class="modal" style="display: none;">
         <div class="modal-content">
-            <h1>❌ MOTOR FUNDIDO!</h1>
-            <p>O sensor acusou temperatura acima de 102°C por excesso de carga ou velocidade inadequada.</p>
-            <button onclick="carregarDadosIniciais()">Resetar Maquinário</button>
+            <h1 id="lbl-modal-tit">❌ MOTOR FUNDIDO!</h1>
+            <p id="lbl-modal-p">O sensor acusou temperatura acima de 102°C por excesso de carga ou velocidade inadequada.</p>
+            <button id="lbl-modal-btn" onclick="carregarDadosIniciais()">Resetar Maquinário</button>
         </div>
     </div>
 
