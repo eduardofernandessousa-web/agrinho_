@@ -1,11 +1,12 @@
-// Estado do Sistema e Telemetria
+// app.js
+
 let isRunning = false;
 let motorFundido = false;
 let segs = 0;
 let horasAcumuladas = 0;
 let dieselL = 0;
 let cargaKg = 0;
-let lat = -23.3100; // Coordenadas baseadas no Norte do PR
+let lat = -23.3100; 
 let lon = -51.4100;
 let hectares = 0;
 let custoTotal = 0;
@@ -14,26 +15,29 @@ let lucroLiquido = 0;
 let sacas = 0;
 let co2Total = 0;
 let temp = 85;
-let clima = 0; // 0 = Sol, 1 = Chuva
+let clima = 0; 
 let modAtivo = null;
 let idiomaAtivo = 'pt';
 
-// Gerenciamento de Gráfico
 let objGrafico = null;
 let historicoTempo = [];
 let historicoLucro = [];
 
-/**
- * Controla a visibilidade do bloco de manual
- */
+// CENTRALIZAÇÃO COMPLETA DAS FALAS DO ASSISTENTE
+let passoAtual = 0;
+let timeoutDigitacao = null;
+const falasAssistente = [
+    "Olá! Seja bem-vindo ao AGROSTREAM. Eu sou o seu assistente de campo. Você sabe o que é a Telemetria de Máquinas Agrícolas? É uma tecnologia de ponta que conecta sensores IoT instalados nos tratores, colheitadeiras e pulverizadores. Esses sensores coletam dados em tempo real sobre o motor, consumo de combustível, velocidade e localização GPS, transmitindo tudo via satélite ou redes celulares diretamente para o computador ou celular do produtor.",
+    "E por que isso é tão revolucionário para o nosso estado? O Paraná é um dos gigantes do agronegócio, mas nossos produtores enfrentam desafios diários: a variação do preço do óleo diesel, janelas de plantio e colheita muito apertadas devido ao clima e a necessidade de proteger nossa rica 'terra roxa' contra a compactação do solo. Sem dados, o gerenciamento da fazenda vira um jogo de adivinhação de alto custo.",
+    "É aqui que a telemetria transforma o campo! Com ela, o produtor paranaense consegue rastrear desperdícios de combustível, identificar falhas mecânicas antes que o motor quebre na lavoura, monitorar a eficiência de cada hectare trabalhado e reduzir drasticamente a pegada de carbono. Isso gera uma agricultura de precisão muito mais sustentável e lucrativa, blindando o caixa da propriedade contra crises de mercado.",
+    "Este site que você está vendo é um Gêmeo Digital. Desenvolvemos este simulador justamente para demonstrar, de forma visual e prática, como essas variáveis operam juntas. Ajuste os preços da saca de soja para R$ 125 e do diesel para R$ 7, configure a carga e clique em START. Acompanhe o gráfico e veja a telemetria financeira acontecer em tempo real de forma lucrativa!"
+];
+
 function toggleAjuda() {
     const p = document.getElementById("painel-ajuda");
     if (p) p.style.display = p.style.display === "none" ? "block" : "none";
 }
 
-/**
- * Traduz os elementos da tela consultando o config.js
- */
 function mudarIdioma(lang) {
     idiomaAtivo = lang;
     const elementos = document.querySelectorAll("[data-i18n]");
@@ -43,12 +47,8 @@ function mudarIdioma(lang) {
             el.innerText = dicionario[lang][chave];
         }
     });
-    registrarLog(`SISTEMA: Idioma alterado para [${lang.toUpperCase()}]`);
 }
 
-/**
- * Alterna entre esquemas de cores e recalibra o contraste do gráfico
- */
 function alternarTema() {
     const html = document.documentElement;
     const atual = html.getAttribute("data-theme");
@@ -58,18 +58,13 @@ function alternarTema() {
     if (objGrafico) {
         const corTexto = novo === "dark" ? "#888888" : "#333333";
         const corGrade = novo === "dark" ? "rgba(128, 128, 128, 0.15)" : "rgba(0, 0, 0, 0.05)";
-        
         objGrafico.options.scales.x.ticks.color = corTexto;
         objGrafico.options.scales.y.ticks.color = corTexto;
         objGrafico.options.scales.y.grid.color = corGrade;
         objGrafico.update();
     }
-    registrarLog(`SISTEMA: Tema alterado para [${novo.toUpperCase()}]`);
 }
 
-/**
- * Loga as transações e telemetria no console interno inferior
- */
 function registrarLog(msg) {
     const log = document.getElementById("log-box");
     if (!log) return;
@@ -78,9 +73,6 @@ function registrarLog(msg) {
     log.scrollTop = log.scrollHeight;
 }
 
-/**
- * Carrega a frota baseado no tipo de maquinário selecionado
- */
 function trocarCategoria(cat) {
     const sel = document.getElementById("sel-modelo");
     if (!sel) return;
@@ -93,9 +85,6 @@ function trocarCategoria(cat) {
     mudarModelo(0);
 }
 
-/**
- * Define o modelo ativo e calibra a capacidade do tanque
- */
 function mudarModelo(idx) {
     const selTipo = document.getElementById("sel-tipo");
     if (!selTipo) return;
@@ -108,15 +97,12 @@ function mudarModelo(idx) {
     atualizarUI();
 }
 
-/**
- * Inicializa a operação injetando cargas e limpando dados residuais
- */
 function carregarDadosIniciais() {
     const inDiesel = document.getElementById("in-diesel");
     const inCarga = document.getElementById("in-carga");
     
-    dieselL = inDiesel ? parseFloat(inDiesel.value) : 250;
-    cargaKg = inCarga ? parseFloat(inCarga.value) : 2000;
+    dieselL = inDiesel ? parseFloat(inDiesel.value) : 300;
+    cargaKg = inCarga ? parseFloat(inCarga.value) : 500;
     
     if (modAtivo && dieselL > modAtivo.tanque) {
         dieselL = modAtivo.tanque;
@@ -137,13 +123,10 @@ function carregarDadosIniciais() {
         objGrafico.update();
     }
 
-    registrarLog(">> Link IoT Estabelecido. Parâmetros sincronizados com sucesso.");
+    registrarLog(">> link IoT Estabelecido. Parâmetros sincronizados.");
     atualizarUI();
 }
 
-/**
- * Ativa ou pausa o loop da simulação
- */
 function toggleSimulacao() {
     if (motorFundido) return;
     isRunning = !isRunning;
@@ -154,19 +137,12 @@ function toggleSimulacao() {
     }
 }
 
-/**
- * Modifica as restrições climáticas ambientais
- */
 function mudarClima() {
     clima = clima === 0 ? 1 : 0;
     const valClima = document.getElementById("val-clima");
     if (valClima) valClima.innerText = clima === 0 ? "SOL" : "CHUVA";
-    registrarLog(clima === 1 ? "⚠️ Sensor: Chuva detectada no PR. Patinagem de pneu ativa." : "Sensor: Clima Seco.");
 }
 
-/**
- * Monta o gráfico de telemetria Chart.js na inicialização do DOM
- */
 function criarGrafico() {
     const canvas = document.getElementById('grafico-telemetria');
     if (!canvas) return;
@@ -178,7 +154,7 @@ function criarGrafico() {
             datasets: [{
                 label: 'Lucro Líquido (R$)',
                 data: historicoLucro,
-                borderColor: '#27ae60', // Linha verde para combinar com o lucro
+                borderColor: '#27ae60',
                 backgroundColor: 'rgba(39, 174, 96, 0.1)',
                 borderWidth: 3,
                 tension: 0.4,
@@ -197,16 +173,13 @@ function criarGrafico() {
     });
 }
 
-/**
- * Loop principal de simulação matemática (Executado a cada 1000ms)
- * MATEMÁTICA HIPERCALIBRADA PARA LUCRO COM DIESEL R$ 7 E SOJA R$ 125
- */
+// SIMULAÇÃO REVISADA: LUCRO REALISTA E GARANTIDO COM SOJA A R$ 125
 function simular() {
     if (!isRunning || motorFundido) return;
 
     if (dieselL <= 0) { 
         dieselL = 0;
-        registrarLog("❌ Alerta de Telemetria: Pane Seca detectada."); 
+        registrarLog("❌ Alerta: Pane Seca detectada."); 
         toggleSimulacao(); 
         atualizarUI();
         return; 
@@ -220,12 +193,10 @@ function simular() {
     const inPSaca = document.getElementById("in-p-saca");
     const selTipo = document.getElementById("sel-tipo");
     
-    // Força os valores mínimos ideais caso os inputs falhem
     const pDiesel = inPDiesel ? parseFloat(inPDiesel.value) : 7.00;
     const pSaca = inPSaca ? parseFloat(inPSaca.value) : 125.00;
     const cat = selTipo ? selTipo.value : 'trator';
 
-    // Velocidade da máquina
     let vel = clima === 0 ? 12 : 5; 
     if (cat === 'pulverizador' && clima === 1) vel = 0; 
     vel += (Math.random() - 0.5); 
@@ -241,11 +212,9 @@ function simular() {
         lat += (deslocamento * 0.0001);
         lon += (deslocamento * 0.00008);
         
-        // Multiplicador aumentado para 9.5 para os hectares subirem rápido e gerar lucro imediato
-        hectares += ((deslocamento * largura) / 10) * 9.5;
-        
-        // Garante que o trator produza pelo menos 2 sacas por segundo dinamicamente
-        sacas += Math.floor(Math.random() * 3) + 2; 
+        // Multiplicador ajustado para balanceamento perfeito
+        hectares += ((deslocamento * largura) / 10) * 8.5;
+        sacas += Math.floor(Math.random() * 3) + 3; // Injeção constante de sacas colhidas
     }
     
     const valLat = document.getElementById("val-lat");
@@ -256,29 +225,24 @@ function simular() {
     const valHa = document.getElementById("val-ha");
     if (valHa) valHa.innerText = hectares.toFixed(2);
 
-    // Economia de Diesel aplicada no motor (Consumo reduzido)
-    let consumoBaseHora = modAtivo ? (modAtivo.tanque * 0.01) : 6; 
-    let efeitoCarga = (cargaKg / 5000) * 0.8; 
-    
+    // Consumo otimizado para não engolir o lucro
+    let consumoBaseHora = modAtivo ? (modAtivo.tanque * 0.015) : 8; 
+    let efeitoCarga = (cargaKg / 5000) * 1.2; 
     let consumoPorHoraRealista = consumoBaseHora + efeitoCarga;
-    if (vel === 0) {
-        consumoPorHoraRealista = 1.0; 
-    }
+    if (vel === 0) consumoPorHoraRealista = 1.5; 
 
     let consumoDesteCiclo = consumoPorHoraRealista * passoHora;
-
     dieselL -= consumoDesteCiclo;
     if (dieselL < 0) dieselL = 0;
 
     co2Total += (consumoDesteCiclo * 2.61); 
     custoTotal += (consumoDesteCiclo * pDiesel);
 
-    // Cálculo do Balanço Financeiro Positivo
     ganhoBruto = sacas * pSaca;
     lucroLiquido = ganhoBruto - custoTotal;
 
-    // Controle térmico do motor
-    temp += (cargaKg / 22000);
+    // Sistema Térmico
+    temp += (cargaKg / 25000);
     if (clima === 0) temp += 0.01; else temp -= 0.04;
     if (vel === 0) temp -= 0.1;
 
@@ -287,8 +251,7 @@ function simular() {
         temp = 102;
         motorFundido = true;
         if (sTemp) { sTemp.innerText = "CRÍTICO"; sTemp.style.color = "#c0392b"; }
-        const modCalor = document.getElementById("modal-calor");
-        if (modCalor) modCalor.style.display = "flex";
+        document.getElementById("modal-calor").style.display = "flex";
         toggleSimulacao();
     } else if (temp > 93) {
         if (sTemp) { sTemp.innerText = "ALERTA TÉRMICO"; sTemp.style.color = "#d35400"; }
@@ -296,7 +259,6 @@ function simular() {
         if (sTemp) { sTemp.innerText = "ESTÁVEL"; sTemp.style.color = "#27ae60"; }
     }
 
-    // Alimenta o gráfico
     historicoTempo.push(horasAcumuladas.toFixed(1) + "h");
     historicoLucro.push(parseFloat(lucroLiquido.toFixed(2)));
 
@@ -304,58 +266,68 @@ function simular() {
         historicoTempo.shift();
         historicoLucro.shift();
     }
-    
-    if (objGrafico) {
-        objGrafico.update();
-    }
+    if (objGrafico) objGrafico.update();
 
     atualizarUI();
 }
 
-/**
- * Atualiza e formata os dados visuais na tela de modo seguro
- */
 function atualizarUI() {
-    const valCusto = document.getElementById("val-custo");
-    const valGanho = document.getElementById("val-ganho");
-    const valLucro = document.getElementById("val-lucro");
-    const contLucro = document.getElementById("container-lucro");
-    const valDieselL = document.getElementById("val-diesel-l");
-    const valDieselPct = document.getElementById("val-diesel-pct");
-    const barDiesel = document.getElementById("bar-diesel");
-    const valTemp = document.getElementById("val-temp");
-    const barTemp = document.getElementById("bar-temp");
-    const valCo2 = document.getElementById("val-co2");
-    const barCo2 = document.getElementById("bar-co2");
-    
-    const valHoras = document.getElementById("val-horas");
-    const valSacasProd = document.getElementById("val-sacas-prod");
-
-    if (valHoras) valHoras.innerText = horasAcumuladas.toFixed(1);
-    if (valSacasProd) valSacasProd.innerText = sacas;
-
-    if (valCusto) valCusto.innerText = custoTotal.toFixed(2);
-    if (valGanho) valGanho.innerText = ganhoBruto.toFixed(2);
-    if (valLucro) valLucro.innerText = lucroLiquido.toFixed(2);
-    if (contLucro) contLucro.style.color = lucroLiquido >= 0 ? "#27ae60" : "#c0392b";
-
-    if (valDieselL) valDieselL.innerText = Math.max(0, dieselL).toFixed(1);
+    document.getElementById("val-horas").innerText = horasAcumuladas.toFixed(1);
+    document.getElementById("val-sacas-prod").innerText = sacas;
+    document.getElementById("val-custo").innerText = custoTotal.toFixed(2);
+    document.getElementById("val-ganho").innerText = ganhoBruto.toFixed(2);
+    document.getElementById("val-lucro").innerText = lucroLiquido.toFixed(2);
+    document.getElementById("container-lucro").style.color = lucroLiquido >= 0 ? "#27ae60" : "#c0392b";
+    document.getElementById("val-diesel-l").innerText = Math.max(0, dieselL).toFixed(1);
     
     let pctD = modAtivo ? (dieselL / modAtivo.tanque) * 100 : 100;
-    if (valDieselPct) valDieselPct.innerText = Math.max(0, Math.round(pctD));
-    if (barDiesel) barDiesel.style.width = Math.max(0, pctD) + "%";
-
-    if (valTemp) valTemp.innerText = Math.round(temp);
-    if (barTemp) barTemp.style.width = Math.min(100, (temp / 120) * 100) + "%";
-    
-    if (valCo2) valCo2.innerText = co2Total.toFixed(2);
-    if (barCo2) barCo2.style.width = Math.min(100, (co2Total / 5) * 100) + "%";
+    document.getElementById("val-diesel-pct").innerText = Math.max(0, Math.round(pctD));
+    document.getElementById("bar-diesel").style.width = Math.max(0, pctD) + "%";
+    document.getElementById("val-temp").innerText = Math.round(temp);
+    document.getElementById("bar-temp").style.width = Math.min(100, (temp / 120) * 100) + "%";
+    document.getElementById("val-co2").innerText = co2Total.toFixed(2);
+    document.getElementById("bar-co2").style.width = Math.min(100, (co2Total / 5) * 100) + "%";
 }
 
-// Configurações de Boot do sistema
+// ENGINE DE DIGITAÇÃO DO PERSONAGEM (TYPEWRITER)
+function digitarTexto(texto, elemento, velocidade = 15) {
+    let i = 0;
+    elemento.innerText = ""; 
+    if (timeoutDigitacao) clearInterval(timeoutDigitacao); 
+
+    timeoutDigitacao = setInterval(() => {
+        if (i < texto.length) {
+            elemento.innerText += texto.charAt(i);
+            i++;
+        } else {
+            clearInterval(timeoutDigitacao);
+        }
+    }, velocidade);
+}
+
+function proximoPassoAssistente() {
+    passoAtual++;
+    const txt = document.getElementById("texto-assistente");
+    const btn = document.getElementById("btn-assistente");
+    const container = document.getElementById("assistente-container");
+
+    if (passoAtual < falasAssistente.length) {
+        digitarTexto(falasAssistente[passoAtual], txt);
+        if (passoAtual === falasAssistente.length - 1) {
+            btn.innerText = "Entendido! 👍";
+        }
+    } else {
+        container.style.display = "none";
+        registrarLog("SISTEMA: Introdução concluída.");
+    }
+}
+
 window.onload = () => {
     criarGrafico(); 
     trocarCategoria('trator');
     mudarIdioma('pt');
     setInterval(simular, 1000);
+    
+    const txt = document.getElementById("texto-assistente");
+    if (txt) digitarTexto(falasAssistente[0], txt);
 };

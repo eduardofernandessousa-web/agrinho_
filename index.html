@@ -3,156 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGROSTREAM - Telemetria de Precisão</title>
+    <title>AGROSTREAM - Telemetria IoT</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
+    <div id="assistente-container" class="assistente-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/1995/1995531.png" alt="Assistente Agro" class="avatar-assistente">
+        <div class="balao-fala">
+            <p id="texto-assistente">Carregando telemetria...</p>
+            <button onclick="proximoPassoAssistente()" id="btn-assistente" class="btn-assistente">Avançar ➡️</button>
+        </div>
+    </div>
+
     <header>
         <div class="logo-area">
-            <h1>AGROSTREAM <span>Premium</span></h1>
+            <h1>AGROSTREAM <span>Premium v3.5</span></h1>
         </div>
         <div class="controles-topo">
+            <button id="btn-tema" onclick="alternarTema()">Double-click 🌓 Tema</button>
             <select id="seletor-idioma" onchange="mudarIdioma(this.value)">
-                <option value="pt">🇧🇷 Português</option>
-                <option value="en">🇺🇸 English</option>
+                <option value="pt">Português (BR)</option>
             </select>
-            <button id="btn-tema" onclick="alternarTema()">☀️ MODO</button>
         </div>
     </header>
 
-    <section class="secao-apresentacao">
+    <section class="conteudo-teorico">
         <div class="intro-grid">
-            <div class="intro-imagem">
-                <img src="https://images.unsplash.com/photo-1624439151520-21396b79761e?auto=format&fit=crop&w=600&q=80" alt="Maquinário">
-            </div>
             <div class="intro-texto">
                 <h2 data-i18n="titParana">🌾 O Paraná e a Fronteira da Inovação Agrícola</h2>
-                <p data-i18n="pParana">Carregando...</p>
+                <p data-i18n="pParana">O estado do Paraná é o coração pulsante do agronegócio brasileiro...</p>
+                
                 <h2 data-i18n="titTelemetria">🛰️ Tecnologia de Telemetria IoT</h2>
-                <p data-i18n="pTelemetria">Carregando...</p>
+                <p data-i18n="pTelemetria">A telemetria agrícola é a ciência de medir dados à distância...</p>
+            </div>
+            <div class="intro-texto">
                 <h2 data-i18n="titObjetivo">🎯 Propósito do AGROSTREAM</h2>
-                <p data-i18n="pObjetivo">Carregando...</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="secao-ajuda">
-        <button class="btn-ajuda-mestre" onclick="toggleAjuda()">📖 <span data-i18n="btnAjuda">MANUAL COMPLETO DO SIMULADOR</span></button>
-        <div id="painel-ajuda" class="conteudo-ajuda" style="display:none;">
-            <div class="ajuda-grid">
-                <div class="ajuda-item">
-                    <h4 data-i18n="ajudaTit1">1. Planejamento</h4>
-                    <p data-i18n="ajudaP1"></p>
-                </div>
-                <div class="ajuda-item">
-                    <h4 data-i18n="ajudaTit2">2. Operação</h4>
-                    <p data-i18n="ajudaP2"></p>
-                </div>
-                <div class="ajuda-item">
-                    <h4 data-i18n="ajudaTit3">3. Monitoramento</h4>
-                    <p data-i18n="ajudaP3"></p>
-                </div>
-                <div class="ajuda-item">
-                    <h4 data-i18n="ajudaTit4">4. Finalização</h4>
-                    <p data-i18n="ajudaP4"></p>
+                <p data-i18n="pObjetivo">Este simulador é um Gêmeo Digital projetado para educar e otimizar...</p>
+                
+                <div class="secao-ajuda">
+                    <button class="btn-ajuda-mestre" onclick="toggleAjuda()">
+                        ❓ <span data-i18n="btnAjuda">MANUAL COMPLETO DO SIMULADOR (Clique aqui)</span>
+                    </button>
+                    <div id="painel-ajuda" class="conteudo-ajuda" style="display: none;">
+                        <div class="ajuda-grid">
+                            <div class="ajuda-item"><h4 data-i18n="ajudaTit1">1. Planejamento</h4><p data-i18n="ajudaP1">Escolha o modelo da máquina...</p></div>
+                            <div class="ajuda-item"><h4 data-i18n="ajudaTit2">2. Operação</h4><p data-i18n="ajudaP2">Clique em 'Aplicar Carga'...</p></div>
+                            <div class="ajuda-item"><h4 data-i18n="ajudaTit3">3. Monitoramento</h4><p data-i18n="ajudaP3">Acompanhe a temperatura...</p></div>
+                            <div class="ajuda-item"><h4 data-i18n="ajudaTit4">4. Finalização</h4><p data-i18n="ajudaP4">Ao clicar em STOP, o sistema gera o laudo...</p></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="simulador-master">
-        <div class="topo-sim">
-            <h2 data-i18n="titSim">🖥️ Terminal de Telemetria</h2>
-            <div class="controles">
-                <select id="sel-tipo" onchange="trocarCategoria(this.value)">
-                    <option value="trator" data-i18n="optTratores">🚜 TRATORES</option>
-                    <option value="colheitadeira" data-i18n="optColheitadeiras">🌾 COLHEITADEIRAS</option>
-                    <option value="pulverizador" data-i18n="optPulverizadores">💨 PULVERIZADORES</option>
-                </select>
-                <select id="sel-modelo" onchange="mudarModelo(this.value)"></select>
-                <button id="btn-start" onclick="toggleSimulacao()" class="btn-start">▶ START</button>
-            </div>
-        </div>
-
-        <div id="grid-painel">
-            <div class="card">
-                <h3 data-i18n="titConfig">Configuração Inicial</h3>
-                <div class="campo"><label data-i18n="lblCultura">Cultura:</label>
-                    <select id="sel-cultura"><option value="soja">Soja</option><option value="milho">Milho</option><option value="trigo">Trigo</option></select>
-                </div>
-                <div class="campo"><label data-i18n="lblDiesel">Diesel (L):</label><input type="number" id="in-diesel" value="250"></div>
-                <div class="campo"><label data-i18n="lblCarga">Carga (kg):</label><input type="number" id="in-carga" value="2000"></div>
-                <div class="market-box">
-                    <div class="campo"><label>⛽ Diesel R$:</label><input type="number" id="in-p-diesel" value="6.10" step="0.01"></div>
-                    <div class="campo"><label>🌾 Saca R$:</label><input type="number" id="in-p-saca" value="128.00" step="0.01"></div>
-                </div>
-                <button onclick="carregarDadosIniciais()" class="btn-aplicar" data-i18n="btnAplicar">✅ APLICAR CARGA</button>
-            </div>
-
-            <div class="card">
-                <h3 data-i18n="titGps">Posicionamento & Clima</h3>
-                <div class="valor-grande"><span id="val-vel">0.0</span> <small>km/h</small></div>
-                <div class="coordenadas">
-                    <p>Lat: <span id="val-lat">-23.3100</span></p>
-                    <p>Lon: <span id="val-lon">-51.4100</span></p>
-                </div>
-                <p>📍 <span data-i18n="lblArea">Área:</span> <span id="val-ha">0.00</span> ha</p>
-                <button class="btn-clima" onclick="mudarClima()">☁️ CLIMA: <span id="val-clima">SOL</span></button>
-            </div>
-
-            <div class="card">
-                <h3 data-i18n="titFinanceiro">Balanço Financeiro</h3>
-                <p style="margin: 3px 0;">⏱️ Tempo Total: <span id="val-horas">0.0</span> h</p>
-                <p style="margin: 3px 0;">🌾 Produção: <span id="val-sacas-prod">0</span> sc</p>
-                <p class="txt-gasto"><span data-i18n="lblGastos">Gastos:</span> R$ <span id="val-custo">0.00</span></p>
-                <p class="txt-ganho"><span data-i18n="lblGanho">Ganho Bruto:</span> R$ <span id="val-ganho">0.00</span></p>
-                <hr class="linha-separadora">
-                <div class="valor-grande" id="container-lucro">R$ <span id="val-lucro">0.00</span></div>
-                <p style="font-size: 11px; opacity:0.8;" data-i18n="lblSaldo">SALDO LÍQUIDO ATUAL</p>
-            </div>
-
-            <div class="card">
-                <h3 data-i18n="titCombustivel">Nível Combustível</h3>
-                <div class="valor-grande"><span id="val-diesel-pct">0</span>%</div>
-                <div class="barra"><div id="bar-diesel" class="fill"></div></div>
-                <p><span id="val-diesel-l">0.0</span>L / <span id="max-diesel">0</span>L</p>
-            </div>
-
-            <div class="card">
-                <h3 data-i18n="titTemp">Temperatura</h3>
-                <div class="valor-grande"><span id="val-temp">0</span>°C</div>
-                <div class="barra"><div id="bar-temp" class="fill"></div></div>
-                <p id="status-temp" style="font-weight:bold; font-size:12px; color:#27ae60;">ESTÁVEL</p>
-            </div>
-
-            <div class="card">
-                <h3 data-i18n="titSustentavel">Sustentabilidade</h3>
-                <div class="valor-grande" style="color: #27ae60;"><span id="val-co2">0.00</span> <small>kg</small></div>
-                <div class="barra"><div id="bar-co2" class="fill" style="background: #27ae60;"></div></div>
-                <p data-i18n="lblCo2">🌍 EMISSÃO DE CO2</p>
-            </div>
-
-            <div class="card" style="grid-column: 1 / -1; min-height: 260px;">
-                <h3 style="color: #3498db; margin-bottom:10px;">📈 Histórico de Rendimento (Lucro Líquido vs Tempo)</h3>
-                <div style="width: 100%; height: 200px; position: relative;">
-                    <canvas id="grafico-telemetria"></canvas>
+    <section>
+        <div class="simulador-master">
+            <div class="topo-sim">
+                <h2 data-i18n="titSim">🖥️ Terminal de Telemetria</h2>
+                <div class="controles">
+                    <select id="sel-tipo" onchange="trocarCategoria(this.value)">
+                        <option value="trator" data-i18n="optTratores">🚜 TRATORES</option>
+                        <option value="colheitadeira" data-i18n="optColheitadeiras">🌾 COLHEITADEIRAS</option>
+                        <option value="pulverizador" data-i18n="optPulverizadores">💨 PULVERIZADORES</option>
+                    </select>
+                    <select id="sel-modelo" onchange="mudarModelo(this.value)"></select>
+                    <button id="btn-start" onclick="toggleSimulacao()">▶ START</button>
                 </div>
             </div>
 
-            <div class="card card-log" style="grid-column: 1 / -1;">
-                <h3 data-i18n="titLog">Log de Eventos IoT</h3>
-                <div id="log-box"></div>
+            <div id="grid-painel">
+                <div class="card">
+                    <h3 data-i18n="titConfig">Configuração Inicial</h3>
+                    <div class="campo">
+                        <label data-i18n="lblCultura">Cultura:</label>
+                        <select><option>Soja (Glycine max)</option></select>
+                    </div>
+                    <div class="campo">
+                        <label>⛽ Diesel Inicial (L):</label>
+                        <input type="number" id="in-diesel" value="300">
+                    </div>
+                    <div class="campo">
+                        <label data-i18n="lblCarga">Carga (kg):</label>
+                        <input type="number" id="in-carga" value="500">
+                    </div>
+                    
+                    <div class="market-box">
+                        <div class="campo">
+                            <label>⛽ Custo Diesel (R$/L):</label>
+                            <input type="number" id="in-p-diesel" value="7.00" step="0.01">
+                        </div>
+                        <div class="campo">
+                            <label>🌾 Preço Saca (R$/60kg):</label>
+                            <input type="number" id="in-p-saca" value="125.00" step="0.01">
+                        </div>
+                    </div>
+                    <button class="btn-aplicar" onclick="carregarDadosIniciais()" data-i18n="btnAplicar">✅ APLICAR CARGA</button>
+                </div>
+
+                <div class="card">
+                    <h3 data-i18n="titGps">Posicionamento & Clima</h3>
+                    <div class="coordenadas">
+                        <div>LAT: <span id="val-lat">-23.3100</span></div>
+                        <div>LON: <span id="val-lon">-51.4100</span></div>
+                    </div>
+                    <hr class="linha-separadora">
+                    <div class="campo">
+                        <label>⏱️ Horas Operação:</label>
+                        <div><span id="val-horas">0.0</span> h</div>
+                    </div>
+                    <div class="campo">
+                        <label>⚡ Velocidade Atual:</label>
+                        <div><span id="val-vel">0.0</span> km/h</div>
+                    </div>
+                    <div class="campo">
+                        <label data-i18n="lblArea">Área Coberta:</label>
+                        <div><span id="val-ha">0.00</span> ha</div>
+                    </div>
+                    <div class="campo">
+                        <label>🌾 Sacas Produzidas:</label>
+                        <div><span id="val-sacas-prod">0</span> sc</div>
+                    </div>
+                    <button class="btn-clima" onclick="mudarClima()">🌦️ Alterar Clima (Atual: <span id="val-clima">SOL</span>)</button>
+                </div>
+
+                <div class="card" id="container-lucro">
+                    <h3 data-i18n="titFinanceiro">Balanço Financeiro</h3>
+                    <div class="campo">
+                        <label data-i18n="lblGastos">Gastos acumulados:</label>
+                        <div>R$ <span id="val-custo">0.00</span></div>
+                    </div>
+                    <div class="campo">
+                        <label data-i18n="lblGanho">Ganho Bruto:</label>
+                        <div>R$ <span id="val-ganho">0.00</span></div>
+                    </div>
+                    <hr class="linha-separadora">
+                    <label style="font-size: 11px; font-weight: bold;" data-i18n="lblSaldo">SALDO LÍQUIDO ATUAL</label>
+                    <div class="valor-grande">R$ <span id="val-lucro">0.00</span></div>
+                </div>
+
+                <div class="card" style="grid-column: span 3; height: 260px;">
+                    <h3>Gráfico de Lucro Líquido em Tempo Real</h3>
+                    <div style="position: relative; height: 210px; width: 100%;">
+                        <canvas id="grafico-telemetria"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 data-i18n="titCombustivel">Nível Combustível</h3>
+                    <div class="barra"><div id="bar-diesel" class="fill"></div></div>
+                    <div class="campo">
+                        <div><span id="val-diesel-l">0.0</span> L</div>
+                        <div><span id="val-diesel-pct">0</span>% / <span id="max-diesel">0</span>L</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 data-i18n="titTemp">Temperatura Motor</h3>
+                    <div class="barra" style="background:#333;"><div id="bar-temp" class="fill" style="background:#e67e22;"></div></div>
+                    <div class="campo">
+                        <div><span id="val-temp">0</span>°C</div>
+                        <div id="status-temp" style="font-weight:bold;">ESTÁVEL</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 data-i18n="titSustentavel">Sustentabilidade</h3>
+                    <div class="barra" style="background:#333;"><div id="bar-co2" class="fill" style="background:#9b59b6;"></div></div>
+                    <div class="campo">
+                        <label data-i18n="lblCo2">🌍 EMISSÃO DE CO2:</label>
+                        <div><span id="val-co2">0.00</span> kg</div>
+                    </div>
+                </div>
+
+                <div class="card card-log" style="grid-column: span 3;">
+                    <h3 data-i18n="titLog">Log de Eventos IoT</h3>
+                    <div id="log-box">>> Aguardando inicialização do barramento CAN...</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <div id="modal-calor" class="modal" style="display:none">
+    <div id="modal-calor" class="modal" style="display: none;">
         <div class="modal-content">
-            <h1>🔥 MOTOR FUNDIDO!</h1>
-            <p>A temperatura excedeu o limite seguro de 102°C devido ao excesso de carga.</p>
-            <button onclick="location.reload()">REINICIAR TUDO</button>
+            <h1>❌ MOTOR FUNDIDO!</h1>
+            <p>O sensor acusou temperatura acima de 102°C por excesso de carga ou velocidade inadequada.</p>
+            <button onclick="carregarDadosIniciais()">Resetar Maquinário</button>
         </div>
     </div>
 
