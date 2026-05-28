@@ -19,7 +19,7 @@
 
     <header>
         <div class="logo-area">
-            <h1>AGROSTREAM <span>Premium v3.5</span></h1>
+            <h1>AGROSTREAM <span>Premium v4.0</span></h1>
         </div>
         <div class="controles-topo">
             <button id="btn-tema" onclick="alternarTema()">🌓 Alternar Tema</button>
@@ -34,14 +34,14 @@
         <div class="intro-grid">
             <div class="intro-texto">
                 <h2 data-i18n="titParana">🌾 O Paraná e a Fronteira da Inovação Agrícola</h2>
-                <p data-i18n="pParana">O estado do Paraná é o coração pulsante do agronegócio brasileiro...</p>
+                <p data-i18n="pParana">O estado do Paraná é o coração pulsante do agronegócio brasileiro. Com o solo de 'terra roxa' mais fértil do país, o estado lidera a produtividade de soja, milho e trigo através de um sistema de cooperativismo que é referência global. Cidades como Rolândia, Londrina e Cascavel são polos onde a tecnologia encontra a tradição. O Plantio Direto e a conservação de solos exigem precisão absoluta, e é aqui que a telemetria se torna indispensável para evitar a compactação e garantir recordes de safra sustentáveis.</p>
                 
                 <h2 data-i18n="titTelemetria">🛰️ Tecnologia de Telemetria IoT</h2>
-                <p data-i18n="pTelemetria">A telemetria agrícola é a ciência de medir dados à distância...</p>
+                <p data-i18n="pTelemetria">A telemetria agrícola é a ciência de medir dados à distância. Usando sensores de barramento CAN e GPS de alta precisão, o AGROSTREAM simula a transmissão de pacotes de dados via satélite. O sistema monitora instantaneamente o consumo de combustível, a patinagem das rodas em solo úmido e a eficiência térmica do motor, permitindo que o gestor tome decisões baseadas em números, não em suposições.</p>
             </div>
             <div class="intro-texto">
                 <h2 data-i18n="titObjetivo">🎯 Propósito do AGROSTREAM</h2>
-                <p data-i18n="pObjetivo">Este simulador é um Gêmeo Digital projetado para educar e otimizar...</p>
+                <p data-i18n="pObjetivo">Este simulador é um Gêmeo Digital projetado para educar e otimizar. Ele serve para que o operador entenda como o clima paranaense e o peso da carga influenciam diretamente no custo por hectare e na emissão de CO2. É uma ferramenta de gestão estratégica para a nova geração do campo.</p>
                 
                 <div class="secao-ajuda">
                     <button class="btn-ajuda-mestre" onclick="toggleAjuda()">
@@ -80,11 +80,19 @@
                     <h3 data-i18n="titConfig">Configuração Inicial</h3>
                     <div class="campo">
                         <label data-i18n="lblCultura">Cultura:</label>
-                        <select><option>Soja (Glycine max)</option></select>
+                        <select id="sel-cultura">
+                            <option value="soja">Soja (Glycine max)</option>
+                            <option value="milho">Milho (Zea mays)</option>
+                            <option value="trigo">Trigo (Triticum aestivum)</option>
+                        </select>
                     </div>
                     <div class="campo">
-                        <label>⛽ Diesel Inicial (L):</label>
+                        <label data-i18n="lblDiesel">⛽ Diesel Inicial (L):</label>
                         <input type="number" id="in-diesel" value="300">
+                    </div>
+                    <div class="campo">
+                        <label data-i18n="lblAgua">💧 Água (L):</label>
+                        <input type="number" id="in-agua" value="1500">
                     </div>
                     <div class="campo">
                         <label data-i18n="lblCarga">Carga (kg):</label>
@@ -97,7 +105,7 @@
                             <input type="number" id="in-p-diesel" value="7.00" step="0.01">
                         </div>
                         <div class="campo">
-                            <label>🌾 Preço Saca (R$/60kg):</label>
+                            <label>🌾 Preço Saca (R$):</label>
                             <input type="number" id="in-p-saca" value="125.00" step="0.01">
                         </div>
                     </div>
@@ -118,6 +126,10 @@
                     <div class="campo">
                         <label>⚡ Velocidade Atual:</label>
                         <div><span id="val-vel">0.0</span> km/h</div>
+                    </div>
+                    <div class="campo">
+                        <label>🚜 Rendimento:</label>
+                        <div><span id="val-rendimento">0.0</span> ha/h</div>
                     </div>
                     <div class="campo">
                         <label data-i18n="lblArea">Área Coberta:</label>
@@ -157,7 +169,16 @@
                     <div class="barra"><div id="bar-diesel" class="fill"></div></div>
                     <div class="campo">
                         <div><span id="val-diesel-l">0.0</span> L</div>
-                        <div><span id="val-diesel-pct">0</span>% / <span id="max-diesel">0</span>L</div>
+                        <div><span id="val-diesel-pct">0</span>%</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 data-i18n="titAguaSensor">Nível de Água / Calda</h3>
+                    <div class="barra" style="background:#333;"><div id="bar-agua" class="fill" style="background:#3498db;"></div></div>
+                    <div class="campo">
+                        <div><span id="val-agua-l">0.0</span> L</div>
+                        <div><span id="val-agua-pct">0</span>%</div>
                     </div>
                 </div>
 
@@ -167,15 +188,6 @@
                     <div class="campo">
                         <div><span id="val-temp">0</span>°C</div>
                         <div id="status-temp" style="font-weight:bold;">ESTÁVEL</div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3 data-i18n="titSustentavel">Sustentabilidade</h3>
-                    <div class="barra" style="background:#333;"><div id="bar-co2" class="fill" style="background:#9b59b6;"></div></div>
-                    <div class="campo">
-                        <label data-i18n="lblCo2">🌍 EMISSÃO DE CO2:</label>
-                        <div><span id="val-co2">0.00</span> kg</div>
                     </div>
                 </div>
 
