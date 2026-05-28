@@ -1,4 +1,4 @@
-// app.js
+// app.js - Lógica matemática de simulação local, menus e internacionalização
 
 let isRunning = false;
 let motorFundido = false;
@@ -11,11 +11,10 @@ let cargaKg = 0;
 let lat = -23.3100; 
 let lon = -51.4100;
 let hectares = 0;
-let sacasFracionadas = 0; // Ajuda a subir o lucro de forma suave
+let sacasFracionadas = 0; 
 let custoTotal = 0;
 let ganhoBruto = 0;
 let lucroLiquido = 0;
-let co2Total = 0;
 let temp = 85;
 let clima = 0; 
 let modAtivo = null;
@@ -25,30 +24,20 @@ let objGrafico = null;
 let historicoTempo = [];
 let historicoLucro = [];
 
-let passoAtual = 0;
-let timeoutDigitacao = null;
-
-const falasAssistente = [
-    "Olá! Seja bem-vindo ao AGROSTREAM. Eu sou o seu assistente de campo. Você sabe o que é a Telemetria de Máquinas Agrícolas? É uma tecnologia de ponta que conecta sensores IoT instalados nas máquinas. Eles coletam dados em tempo real sobre motor, consumo e GPS, transmitindo tudo via satélite.",
-    "O Paraná é um dos gigantes do agronegócio, mas enfrentamos desafios diários: o preço do diesel, janelas de plantio e a necessidade de proteger nossa 'terra roxa'. Sem dados, o gerenciamento da fazenda vira um jogo de adivinhação.",
-    "É aqui que a telemetria transforma o campo! Com ela, você rastreia desperdícios, evita que o motor quebre e reduz a pegada de carbono. Isso gera uma agricultura muito mais lucrativa.",
-    "Ajuste os preços da saca e do diesel, configure a carga e clique em APLICAR CARGA, depois em START. Acompanhe a telemetria financeira em tempo real!"
-];
-
-function toggleAjuda() {
-    const p = document.getElementById("painel-ajuda");
-    if (p) p.style.display = p.style.display === "none" ? "block" : "none";
-}
-
-function mudarIdioma(lang) {
-    idiomaAtivo = lang;
-    const elementos = document.querySelectorAll("[data-i18n]");
-    elementos.forEach(el => {
-        const chave = el.getAttribute("data-i18n");
-        if (typeof dicionario !== 'undefined' && dicionario[lang] && dicionario[lang][chave]) {
-            el.innerText = dicionario[lang][chave];
+// CONTROLE DO MENU HAMBÚRGUER
+function toggleMenu() {
+    const menu = document.getElementById("menu-lateral");
+    const overlay = document.getElementById("overlay-menu");
+    if (menu && overlay) {
+        menu.classList.toggle("ativo");
+        if (menu.classList.contains("ativo")) {
+            overlay.style.display = "block";
+            setTimeout(() => overlay.classList.add("ativo"), 10);
+        } else {
+            overlay.classList.remove("ativo");
+            setTimeout(() => overlay.style.display = "none", 300);
         }
-    });
+    }
 }
 
 function alternarTema() {
@@ -112,7 +101,7 @@ function carregarDadosIniciais() {
         if (inDiesel) inDiesel.value = dieselL;
     }
     
-    custoTotal = 0; ganhoBruto = 0; lucroLiquido = 0; segs = 0; horasAcumuladas = 0; hectares = 0; sacasFracionadas = 0; temp = 85; co2Total = 0;
+    custoTotal = 0; ganhoBruto = 0; lucroLiquido = 0; segs = 0; horasAcumuladas = 0; hectares = 0; sacasFracionadas = 0; temp = 85;
     motorFundido = false;
     
     const modCalor = document.getElementById("modal-calor");
@@ -126,7 +115,8 @@ function carregarDadosIniciais() {
         objGrafico.update();
     }
 
-    registrarLog(`>> Link IoT Estabelecido. Parâmetros sincronizados.`);
+    const logMsg = idiomaAtivo === 'pt' ? ">> Link IoT Estabelecido. Parâmetros sincronizados." : ">> IoT Link Established. Parameters synchronized.";
+    registrarLog(logMsg);
     atualizarUI();
 }
 
@@ -139,15 +129,23 @@ function toggleSimulacao() {
         btn.style.background = isRunning ? "#e74c3c" : "#2ecc71";
     }
     if(!isRunning) {
-        registrarLog(`>> SIMULAÇÃO PAUSADA. Saldo Líquido Final: R$ ${lucroLiquido.toFixed(2)}`);
+        const logMsg = idiomaAtivo === 'pt' ? `>> SIMULAÇÃO PAUSADA. Saldo Líquido Final: R$ ${lucroLiquido.toFixed(2)}` : `>> SIMULATION PAUSED. Final Net Balance: R$ ${lucroLiquido.toFixed(2)}`;
+        registrarLog(logMsg);
     }
 }
 
 function mudarClima() {
     clima = clima === 0 ? 1 : 0;
     const valClima = document.getElementById("val-clima");
-    if (valClima) valClima.innerText = clima === 0 ? "SOL" : "CHUVA";
-    registrarLog(`>> Sensor Climático: Alterado para ${clima === 0 ? 'SOL' : 'CHUVA'}.`);
+    if (valClima) {
+        if (idiomaAtivo === 'pt') {
+            valClima.innerText = clima === 0 ? "SOL" : "CHUVA";
+        } else {
+            valClima.innerText = clima === 0 ? "SUNNY" : "RAINY";
+        }
+    }
+    const logMsg = idiomaAtivo === 'pt' ? `>> Sensor Climático: Alterado para ${clima === 0 ? 'SOL' : 'CHUVA'}.` : `>> Weather Sensor: Changed to ${clima === 0 ? 'SUNNY' : 'RAINY'}.`;
+    registrarLog(logMsg);
 }
 
 function criarGrafico() {
@@ -159,7 +157,7 @@ function criarGrafico() {
         data: {
             labels: historicoTempo,
             datasets: [{
-                label: 'Lucro Líquido (R$)',
+                label: 'Lucro Líquido / Net Profit (R$)',
                 data: historicoLucro,
                 borderColor: '#27ae60',
                 backgroundColor: 'rgba(39, 174, 96, 0.1)',
@@ -185,14 +183,14 @@ function simular() {
 
     if (dieselL <= 0) { 
         dieselL = 0;
-        registrarLog("❌ Alerta Telemetria: PANE SECA! O combustível acabou."); 
+        const msgSeca = idiomaAtivo === 'pt' ? "❌ Alerta Telemetria: PANE SECA! O combustível acabou." : "❌ Telemetry Alert: FUEL OUTAGE! Running on empty.";
+        registrarLog(msgSeca); 
         toggleSimulacao(); 
         atualizarUI();
         return; 
     }
 
     segs++;
-    // Passo de tempo reduzido para deixar a simulação financeira MUITO MAIS REALISTA e cadenciada.
     const passoHora = 0.005; 
     horasAcumuladas += passoHora;
 
@@ -228,14 +226,12 @@ function simular() {
         haDesteCiclo = rendimentoHora * passoHora;
         hectares += haDesteCiclo;
         
-        // Multiplicadores reais baseados na cultura escolhida
-        let sacasPorHa = 65; // Soja
+        let sacasPorHa = 65; 
         if(cultura === 'milho') sacasPorHa = 110;
         if(cultura === 'trigo') sacasPorHa = 50;
 
         sacasFracionadas += (haDesteCiclo * sacasPorHa);
         
-        // Consumo de Água (Apenas cai se estiver andando, mais rápido para pulverizadores)
         if (aguaL > 0) {
             let consumoAgua = cat === 'pulverizador' ? (haDesteCiclo * 50) : (haDesteCiclo * 2);
             aguaL -= consumoAgua;
@@ -257,7 +253,6 @@ function simular() {
     dieselL -= consumoDesteCiclo;
     if (dieselL < 0) dieselL = 0;
 
-    co2Total += (consumoDesteCiclo * 2.61); 
     custoTotal += (consumoDesteCiclo * pDiesel);
 
     let sacasInteiras = Math.floor(sacasFracionadas);
@@ -275,14 +270,24 @@ function simular() {
     if (temp >= 102) {
         temp = 102;
         motorFundido = true;
-        if (sTemp) { sTemp.innerText = "CRÍTICO"; sTemp.style.color = "#c0392b"; }
+        if (sTemp) { 
+            sTemp.innerText = idiomaAtivo === 'pt' ? "CRÍTICO" : "CRITICAL"; 
+            sTemp.style.color = "#c0392b"; 
+        }
         document.getElementById("modal-calor").style.display = "flex";
-        registrarLog("❌ CRÍTICO: Temperatura atingiu 102°C! Motor fundido.");
+        const msgFusao = idiomaAtivo === 'pt' ? "❌ CRÍTICO: Temperatura atingiu 102°C! Motor fundido." : "❌ CRITICAL: Temperature reached 102°C! Engine blown.";
+        registrarLog(msgFusao);
         toggleSimulacao();
     } else if (temp > 93) {
-        if (sTemp) { sTemp.innerText = "ALERTA TÉRMICO"; sTemp.style.color = "#d35400"; }
+        if (sTemp) { 
+            sTemp.innerText = idiomaAtivo === 'pt' ? "ALERTA TÉRMICO" : "THERMAL ALERT"; 
+            sTemp.style.color = "#d35400"; 
+        }
     } else {
-        if (sTemp) { sTemp.innerText = "ESTÁVEL"; sTemp.style.color = "#27ae60"; }
+        if (sTemp) { 
+            sTemp.innerText = idiomaAtivo === 'pt' ? "ESTÁVEL" : "STABLE"; 
+            sTemp.style.color = "#27ae60"; 
+        }
     }
 
     historicoTempo.push(horasAcumuladas.toFixed(2) + "h");
@@ -309,13 +314,11 @@ function atualizarUI() {
         containerLucro.style.color = lucroLiquido >= 0 ? "#27ae60" : "#c0392b";
     }
     
-    // Atualiza Diesel
     document.getElementById("val-diesel-l").innerText = Math.max(0, dieselL).toFixed(1);
     let pctD = modAtivo ? (dieselL / modAtivo.tanque) * 100 : 100;
     document.getElementById("val-diesel-pct").innerText = Math.max(0, Math.round(pctD));
     document.getElementById("bar-diesel").style.width = Math.max(0, pctD) + "%";
     
-    // Atualiza Água
     document.getElementById("val-agua-l").innerText = Math.max(0, aguaL).toFixed(1);
     let pctA = (aguaL / maxAgua) * 100;
     document.getElementById("val-agua-pct").innerText = Math.max(0, Math.round(pctA));
@@ -325,45 +328,123 @@ function atualizarUI() {
     document.getElementById("bar-temp").style.width = Math.min(100, (temp / 120) * 100) + "%";
 }
 
-// VELOCIDADE REDUZIDA (De 15 para 45) para ele falar devagar
-function digitarTexto(texto, elemento, velocidade = 45) {
-    let i = 0;
-    elemento.textContent = ""; 
-    if (timeoutDigitacao) clearInterval(timeoutDigitacao); 
+function inicializarAssistenteTemporario() {
+    const box = document.getElementById("assistente-container");
+    const textoEl = document.getElementById("texto-assistente");
+    if (!box || !textoEl) return;
 
-    timeoutDigitacao = setInterval(() => {
-        if (i < texto.length) {
-            elemento.textContent += texto.charAt(i);
+    const mensagem = "Olá, banca examinadora! Sejam bem-vindos ao AGROSTREAM. Este simulador interativo exibe em tempo real o comportamento de redes veiculares CAN e sensores IoT aplicados ao agronegócio do Paraná. Bons testes!";
+    
+    let i = 0;
+    const timer = setInterval(() => {
+        if (i < mensagem.length) {
+            textoEl.textContent += mensagem.charAt(i);
             i++;
         } else {
-            clearInterval(timeoutDigitacao);
+            clearInterval(timer);
+            setTimeout(() => {
+                box.style.opacity = "0";
+                box.style.transform = "translateY(20px)";
+                setTimeout(() => {
+                    box.style.display = "none";
+                }, 500);
+            }, 5000);
         }
-    }, velocidade);
+    }, 30);
 }
 
-function proximoPassoAssistente() {
-    passoAtual++;
-    const txt = document.getElementById("texto-assistente");
-    const btn = document.getElementById("btn-assistente");
-    const container = document.getElementById("assistente-container");
-
-    if (passoAtual < falasAssistente.length) {
-        digitarTexto(falasAssistente[passoAtual], txt, 45);
-        if (passoAtual === falasAssistente.length - 1) {
-            btn.innerText = "Entendido! 👍";
+// SISTEMA DE INTERNACIONALIZAÇÃO (PT/EN) EXIGIDO
+function mudarIdioma(lang) {
+    idiomaAtivo = lang;
+    const d = {
+        pt: {
+            sub: "Premium v5.0", oqueTit: "🛰️ O que é Telemetria de Máquinas Agrícolas?",
+            oqueP: "A telemetria de máquinas agrícolas é a tecnologia que permite coletar, processar e transmitir dados operacionais de tratores, colheitadeiras e pulverizadores à distância e em tempo real...",
+            prTit: "🌾 Como Isso Ajuda o Agronegócio no Paraná?",
+            prP: "O Paraná é um dos maiores pilares agrícolas do Brasil, destacando-se pela altíssima produtividade em solos ricos como a 'terra roxa'...",
+            siteTit: "🖥️ Para que Serve Este Site?",
+            siteP: "Este site funciona como um Gêmeo Digital (Digital Twin) educativo. Ele foi projetado para simular o comportamento de uma frota agrícola real operando sob diferentes cargas e condições climáticas do Paraná...",
+            manual: "❓ Manual Prático do Simulador", m1:"1. Configurar", mp1:"Selecione o modelo da máquina e insira o peso da carga inicial.",
+            m2:"2. Inicializar", mp2:"Clique no botão 'Aplicar Carga' e depois em '▶ START'.", m3:"3. Clima", mp3:"Altere para Chuva para ver as rodas patinarem e o consumo subir.",
+            m4:"4. Segurança", mp4:"Cuidado com cargas excessivas ou o motor vai fundir a 102°C.",
+            montagem: "🔧 Como Funcionaria a Montagem do Sistema no Veículo?", subM: "Arquitetura de Instalação Física de Hardware e Integração de Sensores",
+            term: "🖥️ Terminal de Telemetria", c1: "Configuração Inicial", cult: "Cultura:", dIn: "⛽ Diesel Inicial (L):", aIn: "💧 Água (L):", cgIn: "Carga (kg):",
+            ctIn: "⛽ Custo Diesel (R$/L):", prIn: "🌾 Preço Saca (R$):", btnAp: "✅ APLICAR CARGA", c2: "Posicionamento & Clima", hrs: "⏱️ Horas Operação:", vl: "⚡ Velocidade Atual:",
+            rd: "🚜 Rendimento:", ar: "Área Coberta:", sc: "🌾 Sacas Produzidas:", btnCl: "Alterar Clima", c3: "Balanço Financeiro", gst: "Gastos acumulados:", gnh: "Ganho Bruto:",
+            sld: "SALDO LÍQUIDO ATUAL", graf: "Gráfico de Lucro Líquido em Tempo Real", s1: "Nível Combustível", s2: "Nível de Água / Calda", s3: "Temperatura Motor",
+            logTit: "Log de Eventos IoT (Barramento CAN)", mH1: "❌ MOTOR FUNDIDO!", mHp: "O sensor acusou temperatura acima de 102°C por excesso de carga ou velocidade inadequada.", mHb: "Resetar Maquinário"
+        },
+        en: {
+            sub: "Premium v5.0 Pro", oqueTit: "🛰️ What is Agricultural Machine Telemetry?",
+            oqueP: "Agricultural machine telemetry is the technology that allows collecting, processing, and transmitting operational data from tractors, combines, and sprayers remotely and in real time...",
+            prTit: "🌾 How Does This Help Agribusiness in Paraná?",
+            prP: "Paraná is one of the largest agricultural pillars in Brazil, stands out for its high productivity in rich soils like 'terra roxa'...",
+            siteTit: "🖥️ What is the Purpose of This Website?",
+            siteP: "This website works as an educational Digital Twin. It was designed to simulate the behavior of a real agricultural fleet operating under different loads and weather conditions in Paraná...",
+            manual: "❓ Simulator Practical Manual", m1:"1. Configure", mp1:"Select the machine model and input the initial cargo load.",
+            m2:"2. Initialize", mp2:"Click on 'Apply Cargo' button and then click '▶ START'.", m3:"3. Weather", mp3:"Change to Rain to watch the wheels slip and consumption rise.",
+            m4:"4. Safety", mp4:"Beware of excessive loads or the engine will blow at 102°C.",
+            montagem: "🔧 How Would the System Be Mounted on the Vehicle?", subM: "Physical Hardware Installation Architecture and Sensor Integration",
+            term: "🖥️ Telemetry Terminal", c1: "Initial Configuration", cult: "Crop type:", dIn: "⛽ Initial Diesel (L):", aIn: "💧 Water (L):", cgIn: "Load weight (kg):",
+            ctIn: "⛽ Diesel Cost (R$/L):", prIn: "🌾 Bag Price (R$):", btnAp: "✅ APPLY CARGO", c2: "Positioning & Weather", hrs: "⏱️ Operating Hours:", vl: "⚡ Current Speed:",
+            rd: "🚜 Yield Rate:", ar: "Covered Area:", sc: "🌾 Produced Bags:", btnCl: "Change Weather", c3: "Financial Balance", gst: "Accumulated Expenses:", gnh: "Gross Earnings:",
+            sld: "CURRENT NET BALANCE", graf: "Real-Time Net Profit Graph", s1: "Fuel Level", s2: "Water / Spray Mixture Level", s3: "Engine Temperature",
+            logTit: "IoT Event Log (CAN-BUS Network)", mH1: "❌ ENGINE BLOWN!", mHp: "The sensor reported a temperature above 102°C due to excessive load or inappropriate speed.", mHb: "Reset Machinery"
         }
-    } else {
-        container.style.display = "none";
-        registrarLog("SISTEMA: Módulo de boas-vindas concluído.");
-    }
+    };
+
+    document.getElementById("lbl-subtitulo").innerText = d[lang].sub;
+    document.getElementById("tit-oque-e").innerText = d[lang].oqueTit;
+    document.getElementById("tit-parana").innerText = d[lang].prTit;
+    document.getElementById("tit-site").innerText = d[lang].siteTit;
+    document.getElementById("tit-manual").innerText = d[lang].manual;
+    document.getElementById("m-tit1").innerText = d[lang].m1;
+    document.getElementById("m-p1").innerText = d[lang].mp1;
+    document.getElementById("m-tit2").innerText = d[lang].m2;
+    document.getElementById("m-p2").innerText = d[lang].mp2;
+    document.getElementById("m-tit3").innerText = d[lang].m3;
+    document.getElementById("m-p3").innerText = d[lang].mp3;
+    document.getElementById("m-tit4").innerText = d[lang].m4;
+    document.getElementById("m-p4").innerText = d[lang].mp4;
+    document.getElementById("tit-montagem").innerText = d[lang].montagem;
+    document.getElementById("sub-montagem").innerText = d[lang].subM;
+    document.getElementById("tit-terminal").innerText = d[lang].term;
+    document.getElementById("lbl-c1-tit").innerText = d[lang].c1;
+    document.getElementById("lbl-cultura").innerText = d[lang].cult;
+    document.getElementById("lbl-diesel-in").innerText = d[lang].dIn;
+    document.getElementById("lbl-agua-in").innerText = d[lang].aIn;
+    document.getElementById("lbl-carga-in").innerText = d[lang].cgIn;
+    document.getElementById("lbl-custo-in").innerText = d[lang].ctIn;
+    document.getElementById("lbl-preco-in").innerText = d[lang].prIn;
+    document.getElementById("btn-aplicar-carga").innerText = d[lang].btnAp;
+    document.getElementById("lbl-c2-tit").innerText = d[lang].c2;
+    document.getElementById("lbl-horas").innerText = d[lang].hrs;
+    document.getElementById("lbl-vel").innerText = d[lang].vl;
+    document.getElementById("lbl-rend").innerText = d[lang].rd;
+    document.getElementById("lbl-area").innerText = d[lang].ar;
+    document.getElementById("lbl-sacas").innerText = d[lang].sc;
+    document.getElementById("lbl-btn-clima").innerText = d[lang].btnCl;
+    document.getElementById("lbl-c3-tit").innerText = d[lang].c3;
+    document.getElementById("lbl-gastos").innerText = d[lang].gst;
+    document.getElementById("lbl-ganho").innerText = d[lang].gnh;
+    document.getElementById("lbl-saldo-tit").innerText = d[lang].sld;
+    document.getElementById("lbl-grafico-tit").innerText = d[lang].graf;
+    document.getElementById("lbl-s1").innerText = d[lang].s1;
+    document.getElementById("lbl-s2").innerText = d[lang].s2;
+    document.getElementById("lbl-s3").innerText = d[lang].s3;
+    document.getElementById("lbl-log-tit").innerText = d[lang].logTit;
+    document.getElementById("lbl-modal-tit").innerText = d[lang].mH1;
+    document.getElementById("lbl-modal-p").innerText = d[lang].mHp;
+    document.getElementById("lbl-modal-btn").innerText = d[lang].mHb;
+
+    const logLang = lang === 'pt' ? `>> Sistema: Idioma alterado para [${lang.toUpperCase()}].` : `>> System: Language updated to [${lang.toUpperCase()}].`;
+    registrarLog(logLang);
 }
 
 window.onload = () => {
     criarGrafico(); 
     trocarCategoria('trator'); 
-    mudarIdioma('pt');
     setInterval(simular, 1000);
-    
-    const txt = document.getElementById("texto-assistente");
-    if (txt) digitarTexto(falasAssistente[0], txt, 45);
+    inicializarAssistenteTemporario();
+    registrarLog("SISTEMA: Barramento CAN J1939 mapeado localmente.");
 };

@@ -1,99 +1,62 @@
-// config.js
-
+// config.js - Central de Parâmetros Avançados IoT e Frota Agrícola (Versão TCC)
 const frota = {
     trator: [
-        { nome: "John Deere 6135M (135 cv)", tanque: 280 },
-        { nome: "Case IH Puma 230 (234 cv)", tanque: 440 },
-        { nome: "New Holland T8.430 (428 cv)", tanque: 620 }
+        { nome: "John Deere 6115J", tanque: 210, consumoNominal: 12, pesoProprio: 4800 },
+        { nome: "New Holland T7.245", tanque: 395, consumoNominal: 18, pesoProprio: 7200 },
+        { nome: "Massey Ferguson MF 4707", tanque: 105, consumoNominal: 8, pesoProprio: 3100 },
+        { nome: "Valtra T250 CVT", tanque: 500, consumoNominal: 22, pesoProprio: 9300 },
+        { nome: "Case IH Puma 230", tanque: 440, consumoNominal: 20, pesoProprio: 8100 }
     ],
     colheitadeira: [
-        { nome: "New Holland CR 7.90 EVO", tanque: 1000 },
-        { nome: "John Deere S780 Axial", tanque: 1250 },
-        { nome: "Case IH Axial-Flow 9250", tanque: 1130 }
+        { nome: "Case IH Axial-Flow 4150", tanque: 510, consumoNominal: 30, pesoProprio: 14000 },
+        { nome: "New Holland CR 7.90", tanque: 1000, consumoNominal: 45, pesoProprio: 18200 },
+        { nome: "John Deere S780", tanque: 1250, consumoNominal: 52, pesoProprio: 20100 },
+        { nome: "Fendt Ideal 9T", tanque: 1500, consumoNominal: 60, pesoProprio: 22300 }
     ],
     pulverizador: [
-        { nome: "Jacto Uniport 3030", tanque: 300 },
-        { nome: "Stara Imperador 4000", tanque: 420 }
+        { nome: "Jacto Uniport 3030", tanque: 400, consumoNominal: 15, pesoProprio: 9800 },
+        { nome: "Stara Imperador 4000", tanque: 450, consumoNominal: 17, pesoProprio: 11200 },
+        { nome: "John Deere M4040", tanque: 400, consumoNominal: 16, pesoProprio: 10500 },
+        { nome: "Case IH Patriot 350", tanque: 454, consumoNominal: 18, pesoProprio: 10800 }
     ]
 };
 
-const dicionario = {
-    pt: {
-        titParana: "🌾 O Paraná e a Fronteira da Inovação Agrícola",
-        pParana: "O estado do Paraná é o coração pulsante do agronegócio brasileiro. Com o solo de 'terra roxa' mais fértil do país, o estado lidera a produtividade de soja, milho e trigo através de um sistema de cooperativismo que é referência global. Cidades como Rolândia, Londrina e Cascavel são polos onde a tecnologia encontra a tradição. O Plantio Direto e a conservação de solos exigem precisão absoluta, e é aqui que a telemetria se torna indispensável para evitar a compactação e garantir recordes de safra sustentáveis.",
-        titTelemetria: "🛰️ Tecnologia de Telemetria IoT",
-        pTelemetria: "A telemetria agrícola é a ciência de medir dados à distância. Usando sensores de barramento CAN e GPS de alta precisão, o AGROSTREAM simula a transmissão de pacotes de dados via satélite. O sistema monitora instantaneamente o consumo de combustível, a patinagem das rodas em solo úmido e a eficiência térmica do motor, permitindo que o gestor tome decisões baseadas em números, não em suposições.",
-        titObjetivo: "🎯 Propósito do AGROSTREAM",
-        pObjetivo: "Este simulador é um Gêmeo Digital projetado para educar e otimizar. Ele serve para que o operador entenda como o clima paranaense e o peso da carga influenciam diretamente no custo por hectare e na emissão de CO2. É uma ferramenta de gestão estratégica para a nova geração do campo.",
-        btnAjuda: "MANUAL COMPLETO DO SIMULADOR (Clique aqui)",
-        ajudaTit1: "1. Planejamento",
-        ajudaP1: "Escolha o modelo da máquina. Máquinas maiores consomem mais diesel, mas possuem tanques de grãos maiores. Configure o preço do diesel e da saca conforme a cotação do dia na sua cooperativa.",
-        ajudaTit2: "2. Operação",
-        ajudaP2: "Clique em 'Aplicar Carga'. No painel de Movimento, observe o clima. O simulador altera a física se estiver chovendo, aumentando o consumo e reduzindo a velocidade para evitar danos ao solo.",
-        ajudaTit3: "3. Monitoramento",
-        ajudaP3: "Acompanhe a temperatura. Se o motor trabalhar muito pesado sob sol forte, ele pode fundir. O sistema financeiro calcula seu gasto em tempo real baseado no consumo e horas trabalhadas.",
-        ajudaTit4: "4. Finalização",
-        ajudaP4: "Ao clicar em STOP, o sistema gera um laudo de fechamento no Log, mostrando se a sua operação deu lucro ou prejuízo líquido.",
-        titSim: "🖥️ Terminal de Telemetria",
-        optTratores: "🚜 TRATORES",
-        optColheitadeiras: "🌾 COLHEITADEIRAS",
-        optPulverizadores: "💨 PULVERIZADORES",
-        titConfig: "Configuração Inicial",
-        lblCultura: "Cultura:",
-        lblDiesel: "Diesel (L):",
-        lblAgua: "Água (L):",
-        lblCarga: "Carga (kg):",
-        btnAplicar: "✅ APLICAR CARGA",
-        titGps: "Posicionamento & Clima",
-        lblArea: "Área:",
-        titFinanceiro: "Balanço Financeiro",
-        lblGastos: "Gastos:",
-        lblGanho: "Ganho Bruto:",
-        lblSaldo: "SALDO LÍQUIDO ATUAL",
-        titCombustivel: "Nível Combustível",
-        titTemp: "Temperatura Motor",
-        titSustentavel: "Sustentabilidade",
-        lblCo2: "🌍 EMISSÃO DE CO2",
-        titLog: "Log de Eventos IoT",
-        titAguaSensor: "Nível de Água / Calda"
-    },
-    en: {
-        titParana: "🌾 Paraná and the Agricultural Innovation Frontier",
-        pParana: "The state of Paraná is the heartbeat of Brazilian agribusiness. Featuring the country's most fertile 'terra roxa' soil, the state leads in soybean, corn, and wheat productivity through a world-class cooperative system. Cities like Rolândia, Londrina, and Cascavel are hubs where technology meets tradition. Direct Planting requires absolute precision, making telemetry indispensable.",
-        titTelemetria: "🛰️ IoT Telemetry Technology",
-        pTelemetria: "Agricultural telemetry is the science of measuring data from a distance. Using CAN bus sensors and high-precision GPS, AGROSTREAM simulates satellite data transmission. The system instantly monitors fuel consumption, weather physics, and engine thermal efficiency, allowing decisions based on hard data.",
-        titObjetivo: "🎯 AGROSTREAM Purpose",
-        pObjetivo: "This simulator is a Digital Twin designed to educate and optimize. It helps operators understand how climate and load weight directly influence the cost per hectare and CO2 emissions. It is a strategic tool for modern farming.",
-        btnAjuda: "COMPLETE SIMULATOR MANUAL (Click here)",
-        ajudaTit1: "1. Planning",
-        ajudaP1: "Select the machine model. Larger machines consume more diesel. Configure the diesel and sack price according to your daily market quote.",
-        ajudaTit2: "2. Operation",
-        ajudaP2: "Click 'Apply Load'. Watch the weather dynamic. Rain changes physics, increasing consumption and reducing speed to avoid soil compaction.",
-        ajudaTit3: "3. Monitoring",
-        ajudaP3: "Track temperature. Heavy loads under a hot sun can blow the engine. The financial system calculates spending in real-time.",
-        ajudaTit4: "4. Wrapping Up",
-        ajudaP4: "Clicking STOP generates a closing report in the Log area, displaying net profit or loss.",
-        titSim: "🖥️ Telemetry Terminal",
-        optTratores: "🚜 TRACTORS",
-        optColheitadeiras: "🌾 HARVESTERS",
-        optPulverizadores: "💨 SPRAYERS",
-        titConfig: "Initial Configuration",
-        lblCultura: "Crop:",
-        lblDiesel: "Diesel (L):",
-        lblAgua: "Water (L):",
-        lblCarga: "Load (kg):",
-        btnAplicar: "✅ APPLY LOAD",
-        titGps: "Positioning & Weather",
-        lblArea: "Area:",
-        titFinanceiro: "Financial Balance",
-        lblGastos: "Expenses:",
-        lblGanho: "Gross Revenue:",
-        lblSaldo: "CURRENT NET BALANCE",
-        titCombustivel: "Fuel Level",
-        titTemp: "Engine Temperature",
-        titSustentavel: "Sustainability",
-        lblCo2: "🌍 CO2 EMISSION",
-        titLog: "IoT Event Log",
-        titAguaSensor: "Water / Spray Level"
-    }
+// Mapeamento de Parâmetros de Telas e Interface
+const configInterface = {
+    TaxaAtualizacaoGraficoMs: 1000,
+    LimitePontosGrafico: 20,
+    EscalaGeograficaPasso: 0.0001,
+    FatorPatinagemChuva: 1.3,
+    TemperaturaCriticaMotor: 102
 };
+
+// Dicionário de Códigos de Falha Oficiais da Rede CAN-BUS (SAE J1939) para o Diagnóstico
+const dicionarioErrosCAN = {
+    "SPN_91_FMI_3": { code: "ERR-091-03", desc: "Sinal do sensor de posição do acelerador acima do normal (Curto com o positivo)." },
+    "SPN_91_FMI_4": { code: "ERR-091-04", desc: "Sinal do sensor de posição do acelerador abaixo do normal (Curto com a massa)." },
+    "SPN_100_FMI_1": { code: "ERR-100-01", desc: "Pressão do óleo do motor criticamente baixa. Risco iminente de travamento." },
+    "SPN_105_FMI_0": { code: "ERR-105-00", desc: "Temperatura do coletor de admissão do motor acima da faixa máxima de trabalho." },
+    "SPN_110_FMI_0": { code: "ERR-110-00", desc: "Temperatura do líquido de arrefecimento do motor acima do limite (Motor superaquecido)." },
+    "SPN_110_FMI_15": { code: "ERR-110-15", desc: "Advertência de alta temperatura do líquido de arrefecimento (Fase inicial de alerta)." },
+    "SPN_158_FMI_2": { code: "ERR-158-02", desc: "Dados intermitentes ou incorretos na alimentação elétrica pós-chave da ECU." },
+    "SPN_168_FMI_1": { code: "ERR-168-01", desc: "Tensão da bateria do veículo abaixo da faixa operacional mínima de 11.5V." },
+    "SPN_190_FMI_0": { code: "ERR-190-00", desc: "Rotação do motor (RPM) excedeu o limite máximo seguro de operação (Overspeed)." },
+    "SPN_639_FMI_2": { code: "ERR-639-02", desc: "Erro de integridade de dados na linha física principal do barramento CAN (CAN-H / CAN-L)." },
+    "SPN_639_FMI_12": { code: "ERR-639-12", desc: "Falha de hardware interno no chip controlador do barramento CAN principal." },
+    "SPN_84_FMI_2":  { code: "ERR-084-02", desc: "Sensor de velocidade do veículo enviando dados inconsistentes com a rotação de roda." },
+    "SPN_94_FMI_1":  { code: "ERR-094-01", desc: "Pressão de entrega de combustível na linha de baixa pressão fora dos limites." },
+    "SPN_102_FMI_3": { code: "ERR-102-03", desc: "Sensor de pressão do turbo compressor em curto-circuito com circuito de alta." },
+    "SPN_108_FMI_2": { code: "ERR-108-02", desc: "Sensor de pressão barométrica ambiente incompatível com dados de altitude do GPS." },
+    "SPN_174_FMI_0": { code: "ERR-174-00", desc: "Temperatura do combustível no circuito de retorno acima da especificação de segurança." },
+    "SPN_175_FMI_0": { code: "ERR-175-00", desc: "Temperatura do óleo lubrificante do motor excedeu o patamar seguro de viscosidade." },
+    "SPN_524_FMI_11":{ code: "ERR-524-11", desc: "Inconformidade física ou falha de engate no atuador da transmissão hidrostática." },
+    "SPN_701_FMI_3": { code: "ERR-701-03", desc: "Solenoide de controle de vazão da bomba hidráulica principal em curto-circuito." },
+    "SPN_1079_FMI_3":{ code: "ERR-1079-03", desc: "Falha na tensão de referência de 5V gerada pela ECU para alimentação dos sensores." }
+};
+
+// Trava de segurança para garantir exportação global no ambiente do navegador
+if (typeof window !== 'undefined') {
+    window.frota = frota;
+    window.configInterface = configInterface;
+    window.dicionarioErrosCAN = dicionarioErrosCAN;
+}

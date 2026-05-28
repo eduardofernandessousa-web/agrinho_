@@ -1,4 +1,4 @@
-/* style.css */
+/* style.css - Layout responsivo com transições e animações fluidas */
 
 :root {
     --bg-color: #121212;
@@ -20,6 +20,10 @@
     --shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -38,61 +42,104 @@ header {
     align-items: center;
     border-bottom: 1px solid var(--border-color);
     box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 999;
 }
 
-.logo-area h1 { font-size: 22px; }
-.logo-area span { color: var(--accent-color); font-size: 14px; margin-left: 5px; }
+.header-esquerda {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+header h1 { font-size: 22px; }
+header span { color: var(--accent-color); font-size: 14px; margin-left: 5px; }
 .controles-topo { display: flex; gap: 10px; }
 
-select#seletor-idioma, button#btn-tema {
+select, button#btn-tema {
     padding: 6px 12px; background-color: var(--input-bg); color: var(--text-color);
     border: 1px solid var(--border-color); border-radius: 4px;
 }
 
-section { padding: 20px 25px; max-width: 1200px; margin: 0 auto; }
+section { padding: 30px 25px; max-width: 1200px; margin: 0 auto; }
 .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
 
-/* REVISÃO: TEXTOS DA APRESENTAÇÃO MAIORES PARA A BANCA */
-.intro-texto h2 { font-size: 24px; margin-bottom: 15px; color: var(--accent-color); }
-.intro-texto p { margin-bottom: 20px; font-size: 16px; line-height: 1.7; opacity: 0.95; }
+.intro-texto h2 { font-size: 22px; margin-bottom: 10px; color: var(--accent-color); margin-top: 15px; }
+.intro-texto p { margin-bottom: 15px; font-size: 15px; line-height: 1.6; opacity: 0.9; text-align: justify; }
 
-.btn-ajuda-mestre { background: none; border: none; color: var(--accent-color); font-weight: bold; margin-top: 10px; cursor: pointer; font-size: 15px; }
-.conteudo-ajuda { margin-top: 15px; background: var(--input-bg); padding: 15px; border-radius: 6px; }
-.ajuda-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 14px; }
+.conteudo-ajuda { margin-top: 10px; background: var(--input-bg); padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); }
+.ajuda-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 13px; }
+.ajuda-item h4 { color: var(--accent-color); margin-bottom: 5px; }
 
-.simulador-master { background-color: var(--card-bg); border-radius: 8px; border: 1px solid var(--border-color); padding: 20px; }
-.topo-sim { display: flex; justify-content: space-between; margin-bottom: 20px; }
+/* SEÇÃO DE MONTAGEM NO VEÍCULO */
+.secao-montagem { border-top: 1px solid var(--border-color); margin-top: 20px; padding-top: 40px; }
+.secao-montagem h2 { color: var(--accent-color); font-size: 24px; margin-bottom: 5px; }
+.sub-montagem { font-size: 14px; opacity: 0.6; margin-bottom: 25px; font-style: italic; }
+.montagem-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.montagem-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 20px; border-radius: 6px; box-shadow: var(--shadow); }
+.montagem-card h3 { font-size: 16px; margin-bottom: 10px; color: var(--text-color); border-left: 4px solid var(--accent-color); padding-left: 10px; }
+.montagem-card p { font-size: 14px; line-height: 1.6; opacity: 0.85; text-align: justify; }
+
+/* SIMULADOR COMPONENTES */
+.simulador-master { background-color: var(--card-bg); border-radius: 8px; border: 1px solid var(--border-color); padding: 20px; margin-top: 40px; box-shadow: var(--shadow); }
+.topo-sim { display: flex; justify-content: space-between; margin-bottom: 20px; align-items: center; }
 .controles { display: flex; gap: 10px; }
 
 #grid-painel { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
 .card { background-color: var(--input-bg); border-radius: 6px; border: 1px solid var(--border-color); padding: 15px; }
-.card h3 { font-size: 14px; color: var(--accent-color); margin-bottom: 10px; }
+.card h3 { font-size: 14px; color: var(--accent-color); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
 .linha-separadora { border: none; border-top: 1px solid var(--border-color); margin: 10px 0; }
 
 .campo { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; align-items: center; }
-.campo input, .campo select { width: 50%; padding: 3px; background: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); }
+.campo input, .campo select { width: 50%; padding: 4px; background: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 4px; }
 
-.market-box { background: var(--bg-color); padding: 8px; margin-top: 8px; border-radius: 4px; }
-.btn-aplicar { width: 100%; padding: 10px; background: var(--accent-color); color: white; border: none; font-weight: bold; margin-top: 10px; cursor: pointer; border-radius: 4px;}
-.valor-grande { font-size: 28px; font-weight: bold; color: var(--accent-color); }
-.btn-clima { width: 100%; padding: 8px; background: none; border: 1px solid var(--border-color); color: var(--text-color); margin-top: 10px; cursor: pointer; border-radius: 4px; }
+.coordenadas { display: flex; justify-content: space-between; font-family: monospace; font-size: 12px; color: var(--accent-color); font-weight: bold; }
 
-.barra { width: 100%; height: 8px; background: var(--bg-color); margin-bottom: 5px; border-radius: 4px; overflow: hidden; }
-.barra .fill { height: 100%; background: var(--accent-color); width: 100%; transition: width 0.3s ease; }
+.market-box { background: var(--bg-color); padding: 8px; margin-top: 8px; border-radius: 4px; border: 1px solid var(--border-color); }
+.btn-aplicar { width: 100%; padding: 10px; background: var(--accent-color); color: white; border: none; font-weight: bold; margin-top: 10px; cursor: pointer; border-radius: 4px; font-size: 13px; }
+.valor-grande { font-size: 28px; font-weight: bold; color: var(--accent-color); margin-top: 5px; }
+.btn-clima { width: 100%; padding: 8px; background: none; border: 1px solid var(--border-color); color: var(--text-color); margin-top: 10px; cursor: pointer; border-radius: 4px; font-weight: bold; font-size: 12px; }
 
-#log-box { font-family: monospace; font-size: 12px; height: 80px; overflow-y: auto; }
+.barra { width: 100%; height: 8px; background: var(--bg-color); margin-bottom: 5px; border-radius: 4px; overflow: hidden; border: 1px solid var(--border-color); }
+.barra .fill { height: 100%; background: var(--accent-color); width: 0%; transition: width 0.3s ease; }
 
-/* BALÃO DO ASSISTENTE */
-.assistente-box { position: fixed; bottom: 25px; left: 25px; display: flex; align-items: flex-end; z-index: 10000; font-family: 'Consolas', monospace; animation: surgirAssistente 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-@keyframes surgirAssistente { 0% { opacity: 0; transform: translateY(100px) scale(0.8); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
-.avatar-assistente { width: 95px; height: 95px; background: #27ae60; border-radius: 50%; border: 3px solid #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.4); image-rendering: pixelated; animation: flutuarAvatar 2.5s ease-in-out infinite alternate; }
-@keyframes flutuarAvatar { 0% { transform: translateY(0); } 100% { transform: translateY(-8px); } }
+#log-box { font-family: monospace; font-size: 11px; height: 90px; overflow-y: auto; background: #0c0c0c; color: #2ecc71; padding: 10px; border-radius: 4px; border: 1px solid #222; }
 
-.balao-fala { background: #ffffff; color: #333333; border: 3px solid #27ae60; padding: 18px; border-radius: 18px 18px 18px 0; margin-left: 10px; width: 460px; max-width: 85vw; min-height: 100px; white-space: normal; word-wrap: break-word; word-break: normal; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
-.balao-fala p { margin-bottom: 12px; font-size: 14px; line-height: 1.6; font-weight: 600; white-space: pre-wrap; }
-.btn-assistente { background: #27ae60; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; }
+/* ASSISTENTE ANIMADO */
+.assistente-box { position: fixed; bottom: 25px; left: 25px; display: flex; align-items: flex-end; z-index: 10000; transition: opacity 0.5s ease, transform 0.5s ease; }
+.avatar-assistente { width: 85px; height: 85px; background: #27ae60; border-radius: 50%; border: 3px solid #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
 
-/* MODAL */
+.balao-fala { background: #ffffff; color: #333333; border: 3px solid #27ae60; padding: 15px; border-radius: 15px 15px 15px 0; margin-left: 10px; width: 380px; max-width: 80vw; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
+.chat-historico { font-size: 13px; font-weight: 600; line-height: 1.5; font-family: sans-serif; }
+
+/* BOTÃO HAMBÚRGUER */
+.hamburger-menu { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
+.hamburger-menu .bar { width: 24px; height: 3px; background-color: var(--text-color); transition: 0.3s; border-radius: 2px; }
+
+/* MENU LATERAL DRAWER */
+.menu-lateral {
+    position: fixed; top: 0; left: -310px; width: 290px; height: 100%;
+    background-color: var(--card-bg); border-right: 1px solid var(--border-color);
+    box-shadow: var(--shadow); z-index: 10005; transition: left 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
+    padding: 40px 25px;
+}
+.menu-lateral.ativo { left: 0; }
+.menu-lateral h2 { font-size: 18px; color: var(--accent-color); margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; }
+.menu-lateral ul { list-style: none; }
+.menu-lateral ul li { margin-bottom: 10px; }
+.menu-lateral ul li a {
+    color: var(--text-color); text-decoration: none; font-size: 14px; font-weight: 600;
+    display: block; padding: 12px 15px; border-radius: 6px; transition: background 0.2s, color 0.2s;
+}
+.menu-lateral ul li a:hover { background-color: var(--input-bg); color: var(--accent-color); }
+.fechar-menu { position: absolute; top: 15px; right: 20px; font-size: 32px; cursor: pointer; color: var(--text-color); line-height: 1; }
+
+#overlay-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10004; display: none; opacity: 0; transition: opacity 0.3s ease; }
+#overlay-menu.ativo { opacity: 1; }
+
+/* MODAL TÉRMICO */
 .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 20000; }
-.modal-content { background: var(--card-bg); padding: 30px; border-radius: 6px; text-align: center; border: 2px solid #c0392b; }
+.modal-content { background: var(--card-bg); padding: 30px; border-radius: 6px; text-align: center; border: 2px solid #c0392b; max-width: 400px; }
+.modal-content h1 { color: #c0392b; font-size: 22px; margin-bottom: 10px; }
 .modal-content button { margin-top: 15px; padding: 10px 20px; background: #c0392b; color: white; border: none; cursor: pointer; border-radius: 4px; font-weight: bold; }
