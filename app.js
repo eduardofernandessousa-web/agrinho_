@@ -23,7 +23,6 @@ let objGrafico = null;
 let historicoTempo = [];
 let historicoLucro = [];
 
-// CENTRALIZAÇÃO COMPLETA DAS FALAS DO ASSISTENTE
 let passoAtual = 0;
 let timeoutDigitacao = null;
 const falasAssistente = [
@@ -173,7 +172,6 @@ function criarGrafico() {
     });
 }
 
-// SIMULAÇÃO REVISADA: LUCRO REALISTA E GARANTIDO COM SOJA A R$ 125
 function simular() {
     if (!isRunning || motorFundido) return;
 
@@ -211,21 +209,14 @@ function simular() {
     if (vel > 0) {
         lat += (deslocamento * 0.0001);
         lon += (deslocamento * 0.00008);
-        
-        // Multiplicador ajustado para balanceamento perfeito
         hectares += ((deslocamento * largura) / 10) * 8.5;
-        sacas += Math.floor(Math.random() * 3) + 3; // Injeção constante de sacas colhidas
+        sacas += Math.floor(Math.random() * 3) + 3; 
     }
     
-    const valLat = document.getElementById("val-lat");
-    const valLon = document.getElementById("val-lon");
-    if (valLat) valLat.innerText = lat.toFixed(4);
-    if (valLon) valLon.innerText = lon.toFixed(4);
+    document.getElementById("val-lat").innerText = lat.toFixed(4);
+    document.getElementById("val-lon").innerText = lon.toFixed(4);
+    document.getElementById("val-ha").innerText = hectares.toFixed(2);
 
-    const valHa = document.getElementById("val-ha");
-    if (valHa) valHa.innerText = hectares.toFixed(2);
-
-    // Consumo otimizado para não engolir o lucro
     let consumoBaseHora = modAtivo ? (modAtivo.tanque * 0.015) : 8; 
     let efeitoCarga = (cargaKg / 5000) * 1.2; 
     let consumoPorHoraRealista = consumoBaseHora + efeitoCarga;
@@ -241,7 +232,6 @@ function simular() {
     ganhoBruto = sacas * pSaca;
     lucroLiquido = ganhoBruto - custoTotal;
 
-    // Sistema Térmico
     temp += (cargaKg / 25000);
     if (clima === 0) temp += 0.01; else temp -= 0.04;
     if (vel === 0) temp -= 0.1;
@@ -289,15 +279,15 @@ function atualizarUI() {
     document.getElementById("bar-co2").style.width = Math.min(100, (co2Total / 5) * 100) + "%";
 }
 
-// ENGINE DE DIGITAÇÃO DO PERSONAGEM (TYPEWRITER)
+// ENGINE DE DIGITAÇÃO ROBUSTA COM RETENÇÃO DE ESPAÇOS (textContent)
 function digitarTexto(texto, elemento, velocidade = 15) {
     let i = 0;
-    elemento.innerText = ""; 
+    elemento.textContent = ""; 
     if (timeoutDigitacao) clearInterval(timeoutDigitacao); 
 
     timeoutDigitacao = setInterval(() => {
         if (i < texto.length) {
-            elemento.innerText += texto.charAt(i);
+            elemento.textContent += texto.charAt(i);
             i++;
         } else {
             clearInterval(timeoutDigitacao);
